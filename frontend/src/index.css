@@ -118,57 +118,43 @@ html.light .hero-glow-cyan {
 
 /* ========================================================
    SUPER SCROLL-DOWN ANIMATIONS (GRIDPRO / APPLE STYLE)
+   Fail-safe: 100% Visible Baseline (Never Blank!)
    ======================================================== */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+.scroll-reveal,
+.scroll-reveal-left,
+.scroll-reveal-right,
+.scroll-reveal-scale,
+.reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.scroll-reveal.is-revealed,
-.scroll-reveal.is-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-.scroll-reveal-scale {
+/* Only below-the-fold elements marked by JS get smoothly revealed on scroll */
+html.js-ready .anim-scroll-pending:not(.is-revealed) {
   opacity: 0;
-  transform: scale(0.94) translateY(24px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(28px);
 }
 
-.scroll-reveal-scale.is-revealed,
-.scroll-reveal-scale.is-visible {
-  opacity: 1 !important;
-  transform: scale(1) translateY(0) !important;
-}
-
-.scroll-reveal-left {
+html.js-ready .anim-scroll-pending.scroll-reveal-left:not(.is-revealed) {
   opacity: 0;
-  transform: translateX(-32px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateX(-28px);
 }
 
-.scroll-reveal-left.is-revealed,
-.scroll-reveal-left.is-visible {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
-}
-
-.scroll-reveal-right {
+html.js-ready .anim-scroll-pending.scroll-reveal-right:not(.is-revealed) {
   opacity: 0;
-  transform: translateX(32px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateX(28px);
 }
 
-.scroll-reveal-right.is-revealed,
-.scroll-reveal-right.is-visible {
+html.js-ready .anim-scroll-pending.scroll-reveal-scale:not(.is-revealed) {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+}
+
+html.js-ready .anim-scroll-pending.is-revealed {
   opacity: 1 !important;
-  transform: translateX(0) !important;
+  transform: translate(0, 0) scale(1) !important;
 }
 
 /* Stagger Delays for Cascade Entrance */
@@ -181,17 +167,4 @@ html.light .hero-glow-cyan {
 .delay-400 { transition-delay: 400ms; }
 .delay-500 { transition-delay: 500ms; }
 .delay-600 { transition-delay: 600ms; }
-
-/* Backward Compatibility */
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-on-scroll.is-revealed {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
 

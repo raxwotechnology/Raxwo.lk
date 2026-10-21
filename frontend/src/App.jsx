@@ -165,28 +165,36 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Scroll reveal animation observer with fluid scroll-down support
+  // Scroll reveal animation observer with progressive enhancement (Fail-safe: NEVER blank!)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const revealElements = () => {
-      const elements = document.querySelectorAll('.scroll-reveal:not(.is-revealed), .reveal-on-scroll:not(.is-revealed)');
-      const windowHeight = window.innerHeight;
+    document.documentElement.classList.add('js-ready');
+    const selector = '[class*="scroll-reveal"], .reveal-on-scroll';
+    const allAnimElements = document.querySelectorAll(selector);
+    const windowHeight = window.innerHeight;
 
-      elements.forEach((el) => {
+    // Elements already in view stay visible immediately without delay
+    allAnimElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < windowHeight * 0.95) {
+        el.classList.add('is-revealed');
+      } else {
+        el.classList.add('anim-scroll-pending');
+      }
+    });
+
+    const revealElements = () => {
+      const pending = document.querySelectorAll('.anim-scroll-pending:not(.is-revealed)');
+      const currentH = window.innerHeight;
+      pending.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        // Trigger reveal when element top enters within 90% of viewport height
-        if (rect.top <= windowHeight * 0.90) {
+        if (rect.top <= currentH * 0.92) {
           el.classList.add('is-revealed');
         }
       });
     };
 
-    // Run immediately and after a short render delay
-    revealElements();
-    const timer = setTimeout(revealElements, 80);
-
-    // Also observe via IntersectionObserver for maximum performance
     let observer = null;
     if ('IntersectionObserver' in window) {
       observer = new IntersectionObserver(
@@ -198,14 +206,14 @@ export default function App() {
             }
           });
         },
-        { threshold: 0.05, rootMargin: '0px 0px -30px 0px' }
+        { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
       );
 
-      document.querySelectorAll('.scroll-reveal, .reveal-on-scroll').forEach((el) => observer.observe(el));
+      document.querySelectorAll('.anim-scroll-pending').forEach((el) => observer.observe(el));
     }
 
-    // Passive scroll listener ensures animations fire consistently as user scrolls down
     window.addEventListener('scroll', revealElements, { passive: true });
+    const timer = setTimeout(revealElements, 100);
 
     return () => {
       clearTimeout(timer);
