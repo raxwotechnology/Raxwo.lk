@@ -1,0 +1,9 @@
+# ==========================================
+# RAXWO.LK - Hostinger LiteSpeed Configuration
+# ==========================================
+
+<IfModule LiteSpeed>
+    RewriteEngine On
+    # Disable LiteSpeed Captcha/Bot Verification loop
+    RewriteRule .* - [E=verifycaptcha:off]
+</IfModule>

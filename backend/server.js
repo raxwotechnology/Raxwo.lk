@@ -18,10 +18,12 @@ const { verifyToken, requireRole } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5050;
+const HOST = process.env.HOST || '0.0.0.0';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/raxwo';
 
 let isMongoConnected = false;
 
+app.set('trust proxy', 1);
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 app.use(cors());
 app.use(express.json());
@@ -791,6 +793,6 @@ if (distPath) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`[Raxwo Backend] Server running on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`[Raxwo Backend] Server running on http://${HOST}:${PORT}`);
 });
