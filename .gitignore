@@ -3,7 +3,7 @@ node_modules/
 .npm/
 
 # Build artifacts
-dist/
+# dist/
 build/
 
 # Logs
