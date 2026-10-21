@@ -199,8 +199,9 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, theme = 'da
         {/* Quick Demo Credentials Tabs (All in crisp Blue) */}
         {mode === 'login' && (
           <div className="mb-5 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80">
-            <span className="block text-[11px] font-medium uppercase tracking-wider text-slate-400 mb-2">
-              ⚡ Instant 1-Click Login:
+            <span className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400 mb-2">
+              <Zap className="w-3.5 h-3.5 text-blue-400" />
+              Instant 1-Click Login:
             </span>
             <div className="grid grid-cols-3 gap-2">
               <button

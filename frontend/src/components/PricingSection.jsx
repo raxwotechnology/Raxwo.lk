@@ -100,12 +100,12 @@ export default function PricingSection({ currency = 'LKR', currencyRates, onOpen
         {plans.map((plan, index) => (
           <div
             key={index}
-            className={`relative rounded-3xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 ${
+            className={`relative rounded-3xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 interactive-card ${
               plan.popular
-                ? 'bg-gradient-to-b from-[#111838] to-[#0c1024] text-white border-2 border-indigo-500 shadow-[0_0_35px_rgba(99,102,241,0.25)] scale-[1.02] lg:-translate-y-2'
+                ? 'bg-gradient-to-b from-[#111838] to-[#0c1024] text-white border-2 border-indigo-500 shadow-[0_0_35px_rgba(99,102,241,0.25)] scale-[1.02] lg:-translate-y-2 hover:border-indigo-400' 
                 : isDark 
-                  ? 'bg-[#0b1022]/80 border border-slate-800 hover:border-slate-700' 
-                  : 'bg-white border border-slate-200 shadow-xl hover:border-slate-300'
+                  ? 'bg-[#0b1022]/80 border border-slate-800 hover:border-blue-500/50' 
+                  : 'bg-white border border-slate-200 shadow-xl hover:border-blue-400'
             }`}
           >
             {plan.popular && (

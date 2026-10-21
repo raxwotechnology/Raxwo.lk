@@ -209,10 +209,10 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
           return (
             <div
               key={index}
-              className={`p-6 rounded-3xl transition-all duration-300 group flex flex-col justify-between border ${
+              className={`p-6 rounded-3xl transition-all duration-300 group flex flex-col justify-between border interactive-card ${
                 isDark 
-                  ? `bg-[#0c1024]/70 border-slate-800 hover:bg-slate-800/40 ${themeColor.hoverBorder}` 
-                  : `bg-white border-slate-200 shadow-md hover:shadow-xl ${themeColor.hoverBorder}`
+                  ? `bg-[#0c1024]/75 border-slate-800 hover:bg-slate-800/40 ${themeColor.hoverBorder}` 
+                  : `bg-white border-slate-200 shadow-md hover:shadow-2xl ${themeColor.hoverBorder}`
               }`}
             >
               <div>

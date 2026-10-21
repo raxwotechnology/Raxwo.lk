@@ -87,7 +87,6 @@ export default function HeroDashboardMockup({
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
                   {t('greeting')}
-                  <span className="text-base">👋</span>
                 </h3>
                 <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
                   {t('overviewSub')}

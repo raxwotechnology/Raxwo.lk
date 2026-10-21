@@ -25,7 +25,11 @@ import {
   Printer,
   ScanBarcode,
   Monitor,
-  Headphones
+  Headphones,
+  PlayCircle,
+  Tag,
+  Settings,
+  PhoneCall
 } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
@@ -425,26 +429,30 @@ export default function ContactUsPage({
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
-                    { id: 'demo', label: '🚀 Live Demo' },
-                    { id: 'quote', label: '💰 Price Quote' },
-                    { id: 'custom', label: '⚙️ Custom Build' },
-                    { id: 'support', label: '📞 Call Me Back' }
-                  ].map(tab => (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      onClick={() => setInquiryType(tab.id)}
-                      className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer border text-center ${
-                        inquiryType === tab.id
-                          ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30'
-                          : isDark 
-                            ? 'bg-slate-900/90 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800' 
-                            : 'bg-slate-50 border-slate-300 text-slate-800 hover:bg-slate-100'
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
+                    { id: 'demo', label: 'Live Demo', icon: PlayCircle },
+                    { id: 'quote', label: 'Price Quote', icon: Tag },
+                    { id: 'custom', label: 'Custom Build', icon: Settings },
+                    { id: 'support', label: 'Call Me Back', icon: PhoneCall }
+                  ].map(tab => {
+                    const TabIcon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setInquiryType(tab.id)}
+                        className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center justify-center gap-1.5 text-center ${
+                          inquiryType === tab.id
+                            ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30'
+                            : isDark 
+                              ? 'bg-slate-900/90 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800' 
+                              : 'bg-slate-50 border-slate-300 text-slate-800 hover:bg-slate-100'
+                        }`}
+                      >
+                        <TabIcon className="w-3.5 h-3.5 shrink-0" />
+                        <span>{tab.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -601,26 +609,30 @@ export default function ContactUsPage({
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {[
-                        { id: 'whatsapp', label: '💬 WhatsApp' },
-                        { id: 'call', label: '📞 Direct Call' },
-                        { id: 'visit', label: '🏢 Colombo Lab' },
-                        { id: 'email', label: '✉️ Email SLA' }
-                      ].map(mode => (
-                        <button
-                          key={mode.id}
-                          type="button"
-                          onClick={() => setPreferredContact(mode.id)}
-                          className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                            preferredContact === mode.id
-                              ? 'bg-cyan-600 text-white border-cyan-500 shadow-sm'
-                              : isDark
-                                ? 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800'
-                                : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
-                          }`}
-                        >
-                          {mode.label}
-                        </button>
-                      ))}
+                        { id: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
+                        { id: 'call', label: 'Direct Call', icon: Phone },
+                        { id: 'visit', label: 'Colombo Lab', icon: Building2 },
+                        { id: 'email', label: 'Email SLA', icon: Mail }
+                      ].map(mode => {
+                        const ModeIcon = mode.icon;
+                        return (
+                          <button
+                            key={mode.id}
+                            type="button"
+                            onClick={() => setPreferredContact(mode.id)}
+                            className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                              preferredContact === mode.id
+                                ? 'bg-cyan-600 text-white border-cyan-500 shadow-sm'
+                                : isDark
+                                  ? 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800'
+                                  : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
+                            }`}
+                          >
+                            <ModeIcon className="w-3.5 h-3.5 shrink-0" />
+                            <span>{mode.label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -685,8 +697,9 @@ export default function ContactUsPage({
                   </button>
 
                   <div className="flex items-center justify-between text-[11px] pt-1">
-                    <span className={isDark ? 'text-slate-400' : 'text-slate-600'}>
-                      🔒 Zero spam guarantee. Direct engineer callback.
+                    <span className={`inline-flex items-center gap-1.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <ShieldCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      Zero spam guarantee. Direct engineer callback.
                     </span>
                     <span className="text-emerald-500 font-bold">
                       Avg. Response: 12 Mins

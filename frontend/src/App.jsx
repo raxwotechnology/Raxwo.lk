@@ -312,7 +312,7 @@ export default function App() {
       const data = await res.json();
       if (data.success) {
         setStats(data.stats);
-        triggerToast(`🎉 Sale recorded! Dashboard stats updated in real-time.`);
+        triggerToast('Sale recorded! Dashboard stats updated in real-time.');
         setIsNewSaleModalOpen(false);
       }
     } catch (err) {
@@ -337,7 +337,7 @@ export default function App() {
       if (data.success) {
         setContactSuccess(true);
         setInquiryResult(data);
-        triggerToast('✅ Inquiry recorded in database! Our tech specialist will reach out.');
+        triggerToast('Inquiry recorded in database! Our tech specialist will reach out.');
       } else {
         throw new Error(data.message);
       }
@@ -347,7 +347,7 @@ export default function App() {
         inquiryId: `INQ-${Date.now()}`,
         message: 'Thank you! Our technical team will reach out within 15 minutes.'
       });
-      triggerToast('✅ Inquiry recorded in database!');
+      triggerToast('Inquiry recorded in database!');
     } finally {
       setIsSubmitting(false);
     }
@@ -469,7 +469,7 @@ export default function App() {
         setLatestOrder(data.order);
         setUserOrders(prev => [data.order, ...prev]);
         handleRouteChange('order-success');
-        triggerToast(`🎉 Order confirmed! Order ID: ${data.order.orderId}`);
+        triggerToast(`Order confirmed! Order ID: ${data.order.orderId}`);
         return;
       }
     } catch (e) {
@@ -497,7 +497,7 @@ export default function App() {
     setLatestOrder(fallbackOrder);
     setUserOrders(prev => [fallbackOrder, ...prev]);
     handleRouteChange('order-success');
-    triggerToast(`🎉 Order received! Order ID: ${orderNumber}`);
+    triggerToast(`Order received! Order ID: ${orderNumber}`);
   };
 
   const isDark = theme === 'dark';
@@ -564,9 +564,21 @@ export default function App() {
                   lang={lang}
                 />
               </div>
+
+              {/* Section Division Bar */}
+              <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
+                <div className="section-divider" />
+              </div>
+
               <div className="reveal-on-scroll">
                 <ValueGrid theme={theme} lang={lang} />
               </div>
+
+              {/* Section Division Bar */}
+              <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
+                <div className="section-divider" />
+              </div>
+
               <div id="solutions" className="reveal-on-scroll">
                 <SolutionsSection 
                   onExploreClick={() => handleRouteChange('products')} 
@@ -574,6 +586,12 @@ export default function App() {
                   lang={lang}
                 />
               </div>
+
+              {/* Section Division Bar */}
+              <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
+                <div className="section-divider" />
+              </div>
+
               <div className="reveal-on-scroll">
                 <ContactSection 
                   onSubmitInquiry={handleSubmitInquiry}

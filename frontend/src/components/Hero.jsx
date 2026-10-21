@@ -36,11 +36,12 @@ export default function Hero({
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center">
           
           {/* Badge: Enter The Digital World */}
-          <div className={`inline-block px-4 py-1.5 rounded-full text-[11px] font-medium tracking-wide mb-6 border shadow-sm ${
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide mb-6 border shadow-sm transition-all duration-300 hover:scale-105 ${
             isDark 
-              ? 'text-slate-200 bg-white/10 border-white/15 backdrop-blur-md' 
-              : 'text-slate-700 bg-white border-slate-200'
+              ? 'text-cyan-300 bg-cyan-950/40 border-cyan-800/50 backdrop-blur-md animate-pulse-glow' 
+              : 'text-blue-700 bg-blue-50 border-blue-200 shadow-sm'
           }`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
             Enter The Digital World
           </div>
 
@@ -52,7 +53,7 @@ export default function Hero({
           </h1>
 
           {/* Brand Accent: Raxwo */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-black text-[#0094ff] tracking-tight mt-1 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-black bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-400 bg-clip-text text-transparent tracking-tight mt-1 mb-4 hover:scale-[1.02] transition-transform">
             Raxwo
           </h2>
 
@@ -80,6 +81,9 @@ export default function Hero({
 
 
       </section>
+
+      {/* Visual Section Divider */}
+      <div className="w-full section-divider" />
 
       {/* ========================================================
           2. ABOUT RAXWO SECTION (Adapts gracefully in Dark/Light)

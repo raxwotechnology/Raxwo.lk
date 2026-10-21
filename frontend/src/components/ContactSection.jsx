@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, ExternalLink, ShieldCheck } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
 export default function ContactSection({ 
@@ -323,8 +323,9 @@ export default function ContactSection({
                   </button>
 
                   <div className="flex flex-wrap items-center justify-between text-[11px] pt-1 gap-2">
-                    <span className={isDark ? 'text-slate-400' : 'text-slate-600'}>
-                      🔒 Direct engineer response. No pushy sales calls.
+                    <span className={`inline-flex items-center gap-1.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <ShieldCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      Direct engineer response. No pushy sales calls.
                     </span>
                     <span className="text-emerald-500 font-bold">
                       Avg Response: 12 Mins

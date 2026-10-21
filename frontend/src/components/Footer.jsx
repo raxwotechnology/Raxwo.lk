@@ -1,4 +1,5 @@
 import React from 'react';
+import { Smartphone, Scissors, Utensils, Building2 } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
 export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
@@ -258,8 +259,8 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                   onClick={() => handleNav('products')} 
                   className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
+                  <Smartphone className="w-3.5 h-3.5 text-blue-400 opacity-80" />
                   <span>{lang === 'si' ? 'ජංගම දුරකථන වෙළඳසැල් ERP' : lang === 'ta' ? 'மொபைல் கடை ERP' : 'Mobile Shop ERP'}</span>
-                  <span>📱</span>
                 </button>
               </li>
               <li>
@@ -267,8 +268,8 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                   onClick={() => handleNav('products')} 
                   className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
+                  <Scissors className="w-3.5 h-3.5 text-amber-400 opacity-80" />
                   <span>{lang === 'si' ? 'රූපලාවණ්‍යාගාර කළමනාකරණ ERP' : lang === 'ta' ? 'சலூன் மேலாண்மை ERP' : 'Salon Management ERP'}</span>
-                  <span>💇</span>
                 </button>
               </li>
               <li>
@@ -276,8 +277,8 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                   onClick={() => handleNav('products')} 
                   className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
+                  <Utensils className="w-3.5 h-3.5 text-rose-400 opacity-80" />
                   <span>{lang === 'si' ? 'ආපනශාලා සහ හෝටල් ERP' : lang === 'ta' ? 'உணவகம் & ஹோட்டல் ERP' : 'Restaurant & Hotel ERP'}</span>
-                  <span>🍽️</span>
                 </button>
               </li>
               <li>
@@ -285,8 +286,8 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                   onClick={() => handleNav('products')} 
                   className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
+                  <Building2 className="w-3.5 h-3.5 text-purple-400 opacity-80" />
                   <span>{lang === 'si' ? 'දෘඩාංග සහ බෙදාහැරීම් ERP' : lang === 'ta' ? 'வன்பொருள் & விநியோக ERP' : 'Hardware & Distribution ERP'}</span>
-                  <span>🏗️</span>
                 </button>
               </li>
             </ul>

@@ -119,7 +119,7 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
 
     setSalesLog([newTx, ...salesLog]);
     setCart([]);
-    setNotification(`✅ Bill Printed & Inventory Deducted (LKR ${cartTotal.toLocaleString()})!`);
+    setNotification(`Bill Printed & Inventory Deducted (LKR ${cartTotal.toLocaleString()})!`);
     setTimeout(() => setNotification(''), 3000);
   };
 
@@ -130,7 +130,7 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
     setSalesLog([
       { id: 'TX-802', time: '10:14 AM', total: 6200, itemsCount: 1, payment: 'Cash' }
     ]);
-    setNotification('🔄 Sandbox restored to default baseline (US2.2 Reset Complete)!');
+    setNotification('Sandbox restored to default baseline (Reset Complete)!');
     setTimeout(() => setNotification(''), 3000);
   };
 
