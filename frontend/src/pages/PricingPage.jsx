@@ -77,10 +77,7 @@ export default function PricingPage({
 
       {/* Top Header Banner — Identical #0c0827 match to Home Page Header */}
       <section 
-        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
-        }}
+        className="w-full pt-10 pb-14 md:pt-14 md:pb-16 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
       >
         <div className="max-w-4xl mx-auto">
           <span className="text-[11px] font-bold tracking-[0.25em] uppercase mb-3 inline-block text-cyan-400">

@@ -295,11 +295,8 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
 
         </div>
 
-        {/* Dotted Divider Line (Exact match to image) */}
-        <div className="w-full border-t border-dotted border-slate-700/80 mb-6"></div>
-
         {/* Bottom Bar: Copyright & Privacy / Terms */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-slate-400 gap-3">
+        <div className="pt-6 border-t border-slate-800/40 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-slate-400 gap-3">
           <p>©2026 – Raxwo (Pvt) Ltd. | {t('allRightsReserved')}</p>
           
           <div className="flex items-center gap-2">

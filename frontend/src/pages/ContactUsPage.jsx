@@ -157,10 +157,7 @@ export default function ContactUsPage({
       
       {/* 1. HERO HEADER — Identical #0c0827 match to Home Page Header */}
       <section 
-        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
-        }}
+        className="w-full pt-10 pb-14 md:pt-14 md:pb-16 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
       >
         <div className="max-w-4xl mx-auto text-center">
           

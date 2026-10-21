@@ -30,10 +30,7 @@ export default function Hero({
           PERSISTENT in both Dark and Light modes as requested.
          ======================================================== */}
       <section 
-        className="relative w-full pt-14 pb-20 md:pt-20 md:pb-28 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white overflow-hidden"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 32px), 50% 100%, 0 calc(100% - 32px))'
-        }}
+        className="relative w-full pt-14 pb-16 md:pt-20 md:pb-20 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white overflow-hidden"
       >
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center">
           

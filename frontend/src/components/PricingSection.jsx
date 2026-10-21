@@ -69,9 +69,7 @@ export default function PricingSection({ currency = 'LKR', currencyRates, onOpen
   ];
 
   return (
-    <section id="pricing" className={`relative w-full py-20 px-6 sm:px-10 lg:px-16 xl:px-20 border-t ${
-      isDark ? 'border-slate-800/60' : 'border-slate-200'
-    }`}>
+    <section id="pricing" className="relative w-full py-20 px-6 sm:px-10 lg:px-16 xl:px-20">
       
       {/* Background glow */}
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>

@@ -157,10 +157,7 @@ export default function AboutUsPage({
       
       {/* 1. TOP HERO SECTION — Identical #0c0827 match to Home Page Header */}
       <section 
-        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12 sm:mb-16"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
-        }}
+        className="w-full pt-10 pb-14 md:pt-14 md:pb-16 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12 sm:mb-16"
       >
         <div className="max-w-5xl mx-auto text-center">
           
@@ -293,8 +290,8 @@ export default function AboutUsPage({
       </section>
 
       {/* 2. STATS STRIP (Clear, Inspiring Numbers) */}
-      <section className={`w-full py-10 px-4 sm:px-8 lg:px-12 xl:px-16 border-y mb-16 reveal-on-scroll ${
-        isDark ? 'border-slate-800/80 bg-[#060916]' : 'border-slate-200 bg-white'
+      <section className={`w-full py-10 px-4 sm:px-8 lg:px-12 xl:px-16 mb-16 reveal-on-scroll ${
+        isDark ? 'bg-[#060916]' : 'bg-white shadow-sm'
       }`}>
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {stats.map((s, idx) => (
@@ -372,8 +369,8 @@ export default function AboutUsPage({
       </section>
 
       {/* 4. HOW IT WORKS IN 4 EASY STEPS */}
-      <section className={`w-full py-16 px-4 sm:px-8 lg:px-12 xl:px-16 border-y mb-20 reveal-on-scroll ${
-        isDark ? 'border-slate-800/80 bg-[#060916]' : 'border-slate-200 bg-white'
+      <section className={`w-full py-16 px-4 sm:px-8 lg:px-12 xl:px-16 mb-20 reveal-on-scroll ${
+        isDark ? 'bg-[#060916]' : 'bg-white shadow-sm'
       }`}>
         <div className="max-w-5xl mx-auto">
           
