@@ -3,7 +3,7 @@
 # ==========================================
 
 <IfModule LiteSpeed>
+    LsRecaptcha 0
     RewriteEngine On
-    # Disable LiteSpeed Captcha/Bot Verification loop
     RewriteRule .* - [E=verifycaptcha:off]
 </IfModule>

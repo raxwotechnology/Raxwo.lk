@@ -1,4 +1,5 @@
 <IfModule LiteSpeed>
+    LsRecaptcha 0
     RewriteEngine On
     RewriteRule .* - [E=verifycaptcha:off]
 </IfModule>
