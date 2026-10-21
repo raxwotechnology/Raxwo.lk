@@ -165,31 +165,52 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Scroll reveal animation observer
+  // Scroll reveal animation observer with fluid scroll-down support
   useEffect(() => {
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-revealed');
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
-      }
-    );
+    if (typeof window === 'undefined') return;
 
-    // Initial check and observation
-    const elements = document.querySelectorAll('.reveal-on-scroll');
-    elements.forEach((el) => observer.observe(el));
+    const revealElements = () => {
+      const elements = document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)');
+      const windowHeight = window.innerHeight;
+
+      elements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // Trigger reveal when element top enters within 85% of viewport height
+        if (rect.top <= windowHeight * 0.88) {
+          el.classList.add('is-revealed');
+        }
+      });
+    };
+
+    // Run immediately and after a short render delay
+    revealElements();
+    const timer = setTimeout(revealElements, 100);
+
+    // Also observe via IntersectionObserver for maximum performance
+    let observer = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
+      );
+
+      document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+    }
+
+    // Passive scroll listener ensures animations fire consistently as user scrolls down
+    window.addEventListener('scroll', revealElements, { passive: true });
 
     return () => {
-      elements.forEach((el) => observer.unobserve(el));
-      observer.disconnect();
+      clearTimeout(timer);
+      window.removeEventListener('scroll', revealElements);
+      if (observer) observer.disconnect();
     };
   }, [currentRoute]);
 
@@ -565,18 +586,8 @@ export default function App() {
                 />
               </div>
 
-              {/* Section Division Bar */}
-              <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
-                <div className="section-divider" />
-              </div>
-
               <div className="reveal-on-scroll">
                 <ValueGrid theme={theme} lang={lang} />
-              </div>
-
-              {/* Section Division Bar */}
-              <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
-                <div className="section-divider" />
               </div>
 
               <div id="solutions" className="reveal-on-scroll">
@@ -585,11 +596,6 @@ export default function App() {
                   theme={theme}
                   lang={lang}
                 />
-              </div>
-
-              {/* Section Division Bar */}
-              <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
-                <div className="section-divider" />
               </div>
 
               <div className="reveal-on-scroll">

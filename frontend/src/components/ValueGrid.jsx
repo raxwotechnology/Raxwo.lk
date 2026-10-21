@@ -30,24 +30,25 @@ export default function ValueGrid({ theme = 'dark', lang = 'en' }) {
   ];
 
   return (
-    <section className="relative w-full px-6 sm:px-10 lg:px-16 xl:px-20 -mt-4 mb-20 z-20">
+    <section className={`relative w-full py-16 px-6 sm:px-10 lg:px-16 xl:px-20 z-20 transition-colors duration-300 ${
+      isDark ? 'bg-[#0d122b]' : 'bg-[#f8fafc]'
+    }`}>
       
       {/* Section Header Accent */}
-      <div className="flex items-center justify-center mb-4">
-        <span className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase border shadow-sm ${
+      <div className="flex items-center justify-center mb-6">
+        <span className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase border ${
           isDark 
-            ? 'text-cyan-400 bg-cyan-950/60 border-cyan-800/40' 
+            ? 'text-cyan-400 bg-cyan-950/60 border-cyan-800/50' 
             : 'text-cyan-800 bg-cyan-100 border-cyan-200'
         }`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
           {lang === 'si' ? 'ප්‍රධාන වේදිකා වාසි' : 'Core Architecture Advantages'}
         </span>
       </div>
 
-      <div className={`rounded-3xl backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-300 border interactive-card ${
+      <div className={`rounded-3xl shadow-xl overflow-hidden transition-all duration-300 border ${
         isDark 
-          ? 'bg-[#0b0f24]/85 border-slate-800/90 shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:border-cyan-500/40' 
-          : 'bg-white/95 border-slate-200 shadow-xl hover:border-blue-400/50'
+          ? 'bg-[#090d1f] border-slate-800/80' 
+          : 'bg-white border-slate-200/90 shadow-sm'
       }`}>
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x ${
           isDark ? 'divide-slate-800/80' : 'divide-slate-200'
@@ -57,17 +58,17 @@ export default function ValueGrid({ theme = 'dark', lang = 'en' }) {
             return (
               <div 
                 key={index}
-                className={`p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-4 group transition-all duration-300 ${
+                className={`p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-4 group transition-colors duration-200 ${
                   isDark ? 'hover:bg-slate-800/30' : 'hover:bg-slate-50'
                 }`}
               >
-                {/* Rounded Cyan Icon Box */}
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${
+                {/* Rounded Cyan Icon Box - Clean & Matte */}
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 ${
                   isDark 
-                    ? 'bg-cyan-950/60 border border-cyan-800/40 text-cyan-400' 
-                    : 'bg-cyan-100 border border-cyan-300 text-cyan-700 shadow-sm'
+                    ? 'bg-slate-800/90 border border-slate-700/80 text-cyan-400' 
+                    : 'bg-slate-100 border border-slate-200 text-cyan-700'
                 }`}>
-                  <Icon className="w-6 h-6" />
+                  <Icon className="w-5 h-5" />
                 </div>
 
                 {/* Text content */}

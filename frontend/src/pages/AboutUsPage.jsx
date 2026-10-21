@@ -151,26 +151,29 @@ export default function AboutUsPage({
   ];
 
   return (
-    <div className={`w-full pt-4 sm:pt-6 pb-28 transition-colors overflow-hidden ${
+    <div className={`w-full pb-28 transition-colors overflow-hidden ${
       isDark ? 'text-white bg-[#080b18]' : 'text-slate-900 bg-slate-50/70'
     }`}>
       
-      {/* 1. TOP HERO SECTION */}
-      <section className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 mb-12 sm:mb-16 reveal-on-scroll">
+      {/* 1. TOP HERO SECTION — Identical #0c0827 match to Home Page Header */}
+      <section 
+        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12 sm:mb-16"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
+        }}
+      >
         <div className="max-w-5xl mx-auto text-center">
           
           {/* Pill Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 border shadow-sm backdrop-blur-md bg-blue-500/10 text-blue-500 border-blue-500/30">
-            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 border backdrop-blur-md bg-white/10 text-cyan-300 border-white/15">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>
               {isSi ? 'RAXWO ගැන සරලව • අපගේ කතාව' : 'ABOUT RAXWO • HONEST BUSINESS SOFTWARE'}
             </span>
           </div>
 
           {/* Clean Main Title */}
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight ${
-            isDark ? 'text-white' : 'text-slate-950'
-          }`}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight text-white">
             {isSi ? 'ඔබගේ ව්‍යාපාරයට සරල හා විශ්වාසනීය' : 'Simple, Reliable Software That You'}{' '}
             <span className="text-[#0094ff]">
               {isSi ? 'එක්වරක් පමණක් ගෙවන මෘදුකාංග' : 'Truly Own Forever'}
@@ -178,9 +181,7 @@ export default function AboutUsPage({
           </h1>
 
           {/* Simple, Readable Subtitle for Everyone */}
-          <p className={`text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed ${
-            isDark ? 'text-slate-300' : 'text-slate-700'
-          }`}>
+          <p className="text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed text-slate-200/90">
             {isSi
               ? 'අපගේ අරමුණ වන්නේ සිල්ලර කඩ, සුපිරි වෙළඳසැල්, ආපනශාලා හෝ කර්මාන්තශාලා පවත්වාගෙන යන ඕනෑම කෙනෙකුට මාසික ගාස්තු හෝ පරිගණක ගැටලු නැතිව, පහසුවෙන් බිල්පත් ගසමින් ව්‍යාපාරය දියුණු කරගැනීමට අවශ්‍ය මෘදුකාංග සාධාරණ මිලකට ලබාදීමයි.'
               : 'At Raxwo, we believe software should be simple, honest, and affordable. We build modern retail and business management systems that you pay for once and own permanently — with zero monthly fees, full offline reliability, and friendly Sri Lankan support.'}
@@ -188,22 +189,16 @@ export default function AboutUsPage({
 
           {/* 3 Quick Simple Value Badges */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mt-6 text-xs font-semibold">
-            <div className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border ${
-              isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-            }`}>
-              <Check className="w-3.5 h-3.5 text-emerald-500 font-bold" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border bg-white/10 border-white/15 text-slate-200">
+              <Check className="w-3.5 h-3.5 text-emerald-400 font-bold" />
               <span>{isSi ? 'මාසික ගාස්තු නෑ (One-Time Purchase)' : 'Pay Once, Keep Forever'}</span>
             </div>
-            <div className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border ${
-              isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-            }`}>
-              <Check className="w-3.5 h-3.5 text-blue-500 font-bold" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border bg-white/10 border-white/15 text-slate-200">
+              <Check className="w-3.5 h-3.5 text-cyan-400 font-bold" />
               <span>{isSi ? 'ඉන්ටනෙට් නැතත් බිල්පත් මුද්‍රණය' : 'Works 100% Offline'}</span>
             </div>
-            <div className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border ${
-              isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-            }`}>
-              <Check className="w-3.5 h-3.5 text-purple-500 font-bold" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border bg-white/10 border-white/15 text-slate-200">
+              <Check className="w-3.5 h-3.5 text-blue-400 font-bold" />
               <span>{isSi ? 'විනාඩි 15න් හුරු විය හැකි සරල ක්‍රමය' : '15-Minute Staff Training'}</span>
             </div>
           </div>

@@ -46,27 +46,30 @@ export default function SupportCenterPage({
   };
 
   return (
-    <div className="w-full pt-8 pb-28 px-6 sm:px-10 lg:px-16 xl:px-20">
+    <div className="w-full pb-28">
       
-      {/* Page Header */}
-      <div className="max-w-4xl mx-auto text-center mb-14">
-        <span className="text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3 block">
-          FRIENDLY, RELIABLE GUIDANCE
-        </span>
-        <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 ${
-          isDark ? 'text-white' : 'text-slate-900'
-        }`}>
-          Support Center
-        </h1>
-        <p className={`text-sm sm:text-base ${
-          isDark ? 'text-slate-400' : 'text-slate-600'
-        }`}>
-          We are here to help.
-        </p>
-      </div>
+      {/* Page Header Banner — Identical #0c0827 match to Home Page Header */}
+      <section 
+        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
+        }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3 block">
+            FRIENDLY, RELIABLE GUIDANCE
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 text-white">
+            Support Center
+          </h1>
+          <p className="text-sm sm:text-base text-slate-200/90">
+            We are here to help.
+          </p>
+        </div>
+      </section>
 
       {/* Main Content Grid: Left FAQs + Right Need Help Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="px-6 sm:px-10 lg:px-16 xl:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         
         {/* Left Column: Common Questions */}
         <div className="lg:col-span-8 w-full">

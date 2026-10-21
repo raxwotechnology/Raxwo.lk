@@ -28,8 +28,8 @@ export default function ContactSection({
   };
 
   return (
-    <section id="contact" className={`relative w-full py-16 sm:py-20 px-4 sm:px-8 lg:px-12 xl:px-16 border-t overflow-hidden ${
-      isDark ? 'border-slate-800/80 bg-[#080b18]' : 'border-slate-200 bg-slate-50/70'
+    <section id="contact" className={`relative w-full py-16 sm:py-20 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-hidden transition-colors duration-300 ${
+      isDark ? 'bg-[#0c1026]' : 'bg-[#f8fafc]'
     }`}>
       
 

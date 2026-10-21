@@ -73,47 +73,47 @@ export default function PricingPage({
   ];
 
   return (
-    <div className="w-full pt-10 pb-28 px-6 sm:px-10 lg:px-16 xl:px-20">
+    <div className="w-full pb-28">
 
-      {/* Header */}
-      <div className="text-center max-w-4xl mx-auto mb-10">
-        <span className={`text-[11px] font-bold tracking-[0.25em] uppercase mb-4 inline-block ${
-          isDark ? 'text-cyan-400' : 'text-blue-700'
-        }`}>
-          CLEAR COSTS, LASTING VALUE
-        </span>
-        <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 ${
-          isDark ? 'text-white' : 'text-slate-900'
-        }`}>
-          Simple &amp; Transparent Pricing
-        </h1>
-        <p className={`text-base sm:text-lg max-w-xl mx-auto ${
-          isDark ? 'text-slate-400' : 'text-slate-600'
-        }`}>
-          One-time purchase. 100% full source code ownership. No recurring monthly fees.
-        </p>
+      {/* Top Header Banner — Identical #0c0827 match to Home Page Header */}
+      <section 
+        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
+        }}
+      >
+        <div className="max-w-4xl mx-auto">
+          <span className="text-[11px] font-bold tracking-[0.25em] uppercase mb-3 inline-block text-cyan-400">
+            CLEAR COSTS, LASTING VALUE
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 text-white">
+            Simple &amp; Transparent Pricing
+          </h1>
+          <p className="text-base sm:text-lg max-w-xl mx-auto text-slate-200/90">
+            One-time purchase. 100% full source code ownership. No recurring monthly fees.
+          </p>
 
-        {/* Currency Switcher — Pill Bar */}
-        <div className={`inline-flex items-center p-1.5 rounded-2xl border shadow-md mt-8 ${
-          isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
-        }`}>
-          {currenciesList.map((cur) => (
-            <button
-              key={cur}
-              onClick={() => onCurrencyChange(cur)}
-              className={`px-5 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all duration-200 ${
-                currency === cur
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
-                  : isDark 
-                    ? 'text-slate-400 hover:text-white hover:bg-slate-800'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              {cur}
-            </button>
-          ))}
+          {/* Currency Switcher — Pill Bar */}
+          <div className="inline-flex items-center p-1.5 rounded-2xl border shadow-md mt-7 bg-slate-900/90 border-slate-800">
+            {currenciesList.map((cur) => (
+              <button
+                key={cur}
+                onClick={() => onCurrencyChange(cur)}
+                className={`px-5 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all duration-200 ${
+                  currency === cur
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                {cur}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Main Pricing Cards Container */}
+      <div className="px-6 sm:px-10 lg:px-16 xl:px-20 pt-10">
 
       {/* Pricing Cards Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch max-w-6xl mx-auto mt-12">
@@ -229,6 +229,7 @@ export default function PricingPage({
             </div>
           );
         })}
+      </div>
       </div>
 
     </div>

@@ -153,24 +153,25 @@ export default function ContactUsPage({
   };
 
   return (
-    <div className={`w-full pt-6 pb-28 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
+    <div className={`w-full pb-28 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
       
-      {/* 1. HERO HEADER */}
-      <section className="w-full px-4 sm:px-8 lg:px-16 xl:px-20 mb-12 reveal-on-scroll">
+      {/* 1. HERO HEADER — Identical #0c0827 match to Home Page Header */}
+      <section 
+        className="w-full pt-10 pb-16 md:pt-14 md:pb-22 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px))'
+        }}
+      >
         <div className="max-w-4xl mx-auto text-center">
           
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-4 ${
-            isDark ? 'text-white' : 'text-slate-950'
-          }`}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-4 text-white">
             {lang === 'si' ? 'ඔබගේ ව්‍යාපාරයට ගැළපෙන' : "Let's Build Your"}{' '}
             <span className="text-[#0094ff]">
               {lang === 'si' ? 'ERP හා POS පද්ධතිය' : 'Business Software'}
             </span>
           </h1>
 
-          <p className={`text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed ${
-            isDark ? 'text-slate-300' : 'text-slate-700'
-          }`}>
+          <p className="text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed text-slate-200/90">
             {lang === 'si'
               ? 'ඔබගේ වෙළඳසැලට, හෝටලයට, ෆාමසියට හෝ කර්මාන්තශාලාවට සජීවී අත්හදාබැලීමක් (Live Demo), මිල ගණන් ලේඛනයක් හෝ තාක්ෂණික උපදෙස් ලබාගැනීමට කොළඹ ප්‍රධාන ඉංජිනේරු මධ්‍යස්ථානය සෘජුව අමතන්න.'
               : 'Direct access to senior ERP software architects in Colombo. Schedule a live hands-on demo, test your thermal printers in our lab, or receive a formal commercial proposal.'}
@@ -178,26 +179,19 @@ export default function ContactUsPage({
 
           {/* Trust Guarantees Quick Pill Strip */}
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 text-xs font-semibold">
-            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${
-              isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-            }`}>
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-white/10 border-white/15 text-slate-200">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>100% Lifetime Source Code Ownership</span>
             </div>
-            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${
-              isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-            }`}>
-              <Zap className="w-4 h-4 text-amber-500" />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-white/10 border-white/15 text-slate-200">
+              <Zap className="w-4 h-4 text-amber-400" />
               <span>Zero Monthly Recurring Fees</span>
             </div>
-            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${
-              isDark ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-            }`}>
-              <MapPin className="w-4 h-4 text-blue-500" />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-white/10 border-white/15 text-slate-200">
+              <MapPin className="w-4 h-4 text-blue-400" />
               <span>Islandwide On-Site Installation</span>
             </div>
           </div>
-
         </div>
       </section>
 

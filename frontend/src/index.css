@@ -92,33 +92,13 @@ html.light .hero-glow-cyan {
   background: radial-gradient(circle at 10% 80%, rgba(6, 182, 212, 0.12) 0%, rgba(14, 165, 233, 0.05) 35%, transparent 70%);
 }
 
-/* Animations & Modern Interactive Styles */
+/* Animations & Clean Micro-Interactions */
 @keyframes floatSlow {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
-    border-color: rgba(14, 165, 233, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(59, 130, 246, 0.35);
-    border-color: rgba(59, 130, 246, 0.55);
-  }
-}
-
-@keyframes shimmerEffect {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
+    transform: translateY(-6px);
   }
 }
 
@@ -126,64 +106,26 @@ html.light .hero-glow-cyan {
   animation: floatSlow 6s ease-in-out infinite;
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 4s ease-in-out infinite;
-}
-
-/* Card Interactive Hover Lift */
+/* Card Interactive Hover Lift - Clean, No Neon Glow */
 .interactive-card {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-  will-change: transform, box-shadow;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.25s ease;
+  will-change: transform;
 }
 
 .interactive-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 35px -10px rgba(14, 165, 233, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
 }
 
-/* Visual Section Dividers */
-.section-divider {
-  position: relative;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.2) 20%, rgba(14, 165, 233, 0.45) 50%, rgba(99, 102, 241, 0.2) 80%, transparent 100%);
-}
-
-.section-divider-dots {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 0;
-}
-
-.section-divider-dots::before,
-.section-divider-dots::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(148, 163, 184, 0.25) 50%, transparent 100%);
-}
-
-/* Section Framing / Boundary Backgrounds */
-.section-frame {
-  position: relative;
-  border-top: 1px solid var(--card-border);
-  border-bottom: 1px solid var(--card-border);
-}
-
-/* Scroll-Down Reveal Animation */
+/* Scroll-Down Reveal Animation (Fluid Glide Up) */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.25, 1, 0.5, 1), transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: opacity, transform;
 }
 
 .reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 

@@ -109,8 +109,8 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
   ];
 
   return (
-    <section id="solutions" className={`relative w-full py-20 px-6 sm:px-10 lg:px-16 xl:px-20 border-t transition-colors duration-300 ${
-      isDark ? 'border-slate-800/60 bg-[#0c1024]/50' : 'border-slate-200 bg-[#f8fafc]'
+    <section id="solutions" className={`relative w-full py-20 px-6 sm:px-10 lg:px-16 xl:px-20 transition-colors duration-300 ${
+      isDark ? 'bg-[#060815]' : 'bg-[#ffffff]'
     }`}>
       
 

@@ -68,9 +68,6 @@ export default function Hero({
         </div>
       </section>
 
-      {/* Visual Section Divider */}
-      <div className="w-full section-divider" />
-
       {/* ========================================================
           2. ABOUT RAXWO SECTION (Adapts gracefully in Dark/Light)
           Matching media_1791915432625_6bddae32.png
@@ -79,8 +76,8 @@ export default function Hero({
         id="about-raxwo" 
         className={`w-full py-16 md:py-24 px-6 sm:px-10 lg:px-16 xl:px-20 relative z-10 transition-colors duration-300 ${
           isDark 
-            ? 'bg-[#080b18] text-white border-b border-slate-800/80' 
-            : 'bg-white text-slate-900 border-b border-slate-200'
+            ? 'bg-[#070a16] text-white' 
+            : 'bg-white text-slate-900'
         }`}
       >
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
