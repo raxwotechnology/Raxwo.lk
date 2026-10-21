@@ -17,8 +17,7 @@ const ordersRouter = require('./routes/orders');
 const { verifyToken, requireRole } = require('./middleware/auth');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || 5050;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/raxwo';
 
 let isMongoConnected = false;
@@ -789,29 +788,45 @@ if (distPath) {
     if (req.path.startsWith('/api')) {
       return next();
     }
-    res.sendFile(path.join(distPath, 'index.html'));
+    res.sendFile(path.join(distPath, 'index.html'), (err) => {
+      if (err && !res.headersSent) {
+        next(err);
+      }
+    });
+  });
+} else {
+  console.warn('[Raxwo] Notice: No static frontend dist folder found. Serving API status fallback.');
+  app.get('/', (req, res) => {
+    res.status(200).send(`
+      <!DOCTYPE html>
+      <html>
+        <head><title>Raxwo.lk Backend</title></head>
+        <body style="font-family:sans-serif;text-align:center;padding:50px;background:#0c0827;color:#fff;">
+          <h2>Raxwo ERP Platform API is Online</h2>
+          <p>Static build is being generated. Please run build:frontend.</p>
+        </body>
+      </html>
+    `);
   });
 }
 
-const server = app.listen(PORT, HOST, () => {
-  console.log(`[Raxwo Backend] Server running on http://${HOST}:${PORT}`);
+// Global Express Error Handler (prevents hung requests and 504 timeouts)
+app.use((err, req, res, next) => {
+  console.error('[Raxwo Server Error]:', err.message || err);
+  if (!res.headersSent) {
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
 });
 
-// Dual-listener fallback: ensure both port 3000 (Hostinger default) and 5050 are supported
-if (Number(PORT) !== 3000) {
-  try {
-    const s3000 = require('http').createServer(app);
-    s3000.listen(3000, HOST, () => {
-      console.log(`[Raxwo Backend] Dual listener active on port 3000`);
-    }).on('error', () => {});
-  } catch (err) {}
-}
+// Process-level unhandled exception/rejection safety nets
+process.on('uncaughtException', (err) => {
+  console.error('[Uncaught Exception]:', err.message || err);
+});
 
-if (Number(PORT) !== 5050) {
-  try {
-    const s5050 = require('http').createServer(app);
-    s5050.listen(5050, HOST, () => {
-      console.log(`[Raxwo Backend] Dual listener active on port 5050`);
-    }).on('error', () => {});
-  } catch (err) {}
-}
+process.on('unhandledRejection', (reason) => {
+  console.error('[Unhandled Rejection]:', reason);
+});
+
+const server = app.listen(PORT, () => {
+  console.log(`[Raxwo Backend] Server running on port ${PORT}`);
+});
