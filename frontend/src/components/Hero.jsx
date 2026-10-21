@@ -26,60 +26,46 @@ export default function Hero({
       
       {/* ========================================================
           1. TOP HERO SECTION (Deep Midnight Violet / Navy)
-          Matching media_1791915432625_6bddae32.png
+          Matching exact user design: media_1792606594416_25b7a892.png
+          PERSISTENT in both Dark and Light modes as requested.
          ======================================================== */}
-      <section className={`relative w-full pt-12 pb-16 md:pt-16 md:pb-20 px-6 sm:px-10 lg:px-16 xl:px-20 border-b transition-colors duration-300 ${
-        isDark 
-          ? 'bg-[#0c0827] text-white border-slate-800/80' 
-          : 'bg-[#f3f6fb] text-slate-900 border-slate-200'
-      }`}>
+      <section 
+        className="relative w-full pt-14 pb-20 md:pt-20 md:pb-28 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white overflow-hidden"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 32px), 50% 100%, 0 calc(100% - 32px))'
+        }}
+      >
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center">
           
           {/* Badge: Enter The Digital World */}
-          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide mb-6 border shadow-sm transition-all duration-300 hover:scale-105 ${
-            isDark 
-              ? 'text-cyan-300 bg-cyan-950/40 border-cyan-800/50 backdrop-blur-md animate-pulse-glow' 
-              : 'text-blue-700 bg-blue-50 border-blue-200 shadow-sm'
-          }`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full text-[11px] font-medium tracking-wide text-slate-300 bg-white/10 border border-white/15 backdrop-blur-md mb-6 shadow-sm transition-all duration-300 hover:bg-white/15">
             Enter The Digital World
           </div>
 
           {/* Main Title: Custom Software Development in Sri Lanka & Worldwide */}
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] max-w-3xl ${
-            isDark ? 'text-white' : 'text-slate-950'
-          }`}>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-extrabold tracking-tight leading-[1.25] max-w-3xl text-white">
             Custom Software Development in Sri Lanka &amp; Worldwide
           </h1>
 
           {/* Brand Accent: Raxwo */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-black bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-400 bg-clip-text text-transparent tracking-tight mt-1 mb-4 hover:scale-[1.02] transition-transform">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-black text-[#0094ff] tracking-tight mt-1 mb-4 hover:scale-[1.02] transition-transform">
             Raxwo
           </h2>
 
           {/* Subtitle / Paragraph */}
-          <p className={`text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed font-normal mb-8 ${
-            isDark ? 'text-slate-300' : 'text-slate-600'
-          }`}>
-            raxwo is a software development company in sri lanka building custom software, websites, web applications, mobile apps and AI-powered digital solutions for businesses locally and worldwide. We turn business ideas into scalable, secure and high-performing digital products designed to help your business grow.
+          <p className="text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed font-normal text-slate-200/90 mb-8">
+            Raxwo is a software development company in Sri Lanka building custom software, websites, web applications, mobile apps and AI-powered digital solutions for businesses locally and worldwide. We turn business ideas into scalable, secure and high-performing digital products designed to help your business grow.
           </p>
 
           {/* CTA Button: What We Do ! */}
           <button
             onClick={handleCtaClick}
-            className={`px-7 py-3 rounded-full font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer ${
-              isDark 
-                ? 'bg-white hover:bg-slate-100 text-slate-900' 
-                : 'bg-slate-900 hover:bg-slate-800 text-white'
-            }`}
+            className="px-8 py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-slate-100 bg-[#2b274c] hover:bg-[#383363] border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
           >
             What We Do !
           </button>
 
         </div>
-
-
-
       </section>
 
       {/* Visual Section Divider */}
