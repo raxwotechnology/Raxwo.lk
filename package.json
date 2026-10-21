@@ -1,0 +1,29 @@
+{
+  "name": "raxwo.lk",
+  "version": "1.0.0",
+  "description": "Raxwo.lk - Ready-Made ERP Solutions Marketplace (Full-Stack)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "backend": "node backend/server.js",
+    "frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,cyan\" \"npm run backend\" \"npm run frontend\"",
+    "build": "npm run build --prefix frontend",
+    "build:all": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "seed": "npm run seed --prefix backend"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.11.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
