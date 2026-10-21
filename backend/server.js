@@ -827,6 +827,8 @@ process.on('unhandledRejection', (reason) => {
   console.error('[Unhandled Rejection]:', reason);
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`[Raxwo Backend] Server running on port ${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+
+const server = app.listen(PORT, HOST, () => {
+  console.log(`[Raxwo Backend] Server running on http://${HOST}:${PORT}`);
 });
