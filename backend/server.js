@@ -17,7 +17,7 @@ const ordersRouter = require('./routes/orders');
 const { verifyToken, requireRole } = require('./middleware/auth');
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/raxwo';
 
@@ -793,6 +793,25 @@ if (distPath) {
   });
 }
 
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`[Raxwo Backend] Server running on http://${HOST}:${PORT}`);
 });
+
+// Dual-listener fallback: ensure both port 3000 (Hostinger default) and 5050 are supported
+if (Number(PORT) !== 3000) {
+  try {
+    const s3000 = require('http').createServer(app);
+    s3000.listen(3000, HOST, () => {
+      console.log(`[Raxwo Backend] Dual listener active on port 3000`);
+    }).on('error', () => {});
+  } catch (err) {}
+}
+
+if (Number(PORT) !== 5050) {
+  try {
+    const s5050 = require('http').createServer(app);
+    s5050.listen(5050, HOST, () => {
+      console.log(`[Raxwo Backend] Dual listener active on port 5050`);
+    }).on('error', () => {});
+  } catch (err) {}
+}
