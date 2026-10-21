@@ -106,21 +106,87 @@ html.light .hero-glow-cyan {
   animation: floatSlow 6s ease-in-out infinite;
 }
 
-/* Card Interactive Hover Lift - Clean, No Neon Glow */
+/* Card Interactive Hover Lift - Deep, Premium Shadow (like Gridpro) */
 .interactive-card {
-  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.25s ease;
-  will-change: transform;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  will-change: transform, box-shadow;
 }
 
 .interactive-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
-/* Scroll-Down Reveal Animation (Fluid Glide Up) */
+/* ========================================================
+   SUPER SCROLL-DOWN ANIMATIONS (GRIDPRO / APPLE STYLE)
+   ======================================================== */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-revealed,
+.scroll-reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.94) translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-scale.is-revealed,
+.scroll-reveal-scale.is-visible {
+  opacity: 1 !important;
+  transform: scale(1) translateY(0) !important;
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-left.is-revealed,
+.scroll-reveal-left.is-visible {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-right.is-revealed,
+.scroll-reveal-right.is-visible {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+/* Stagger Delays for Cascade Entrance */
+.delay-75  { transition-delay: 75ms; }
+.delay-100 { transition-delay: 100ms; }
+.delay-150 { transition-delay: 150ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-250 { transition-delay: 250ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+.delay-600 { transition-delay: 600ms; }
+
+/* Backward Compatibility */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s cubic-bezier(0.25, 1, 0.5, 1), transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateY(24px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 

@@ -115,7 +115,7 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
       
 
 
-      <div className="text-center max-w-3xl mx-auto mb-16">
+      <div className="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
         <span className={`text-xs font-bold tracking-wider uppercase px-3.5 py-1.5 rounded-full mb-3 inline-block ${
           isDark 
             ? 'text-cyan-400 bg-cyan-950/40 border border-cyan-800/40' 
@@ -156,10 +156,11 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
         </p>
       </div>
 
-      {/* 6 Capabilities Cards Grid */}
+      {/* 6 Capabilities Cards Grid with Staggered Entrance */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {capabilities.map((item, index) => {
           const Icon = item.icon;
+          const staggerDelays = ['delay-100', 'delay-200', 'delay-300', 'delay-400', 'delay-500', 'delay-600'];
           const iconColorThemes = [
             {
               // 1. Tri-Lingual Interface (Blue)
@@ -205,11 +206,12 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
             }
           ];
           const themeColor = iconColorThemes[index % iconColorThemes.length];
+          const delayClass = staggerDelays[index % staggerDelays.length];
 
           return (
             <div
               key={index}
-              className={`p-6 rounded-3xl transition-all duration-300 group flex flex-col justify-between border interactive-card ${
+              className={`p-6 rounded-3xl transition-all duration-300 group flex flex-col justify-between border interactive-card scroll-reveal ${delayClass} ${
                 isDark 
                   ? `bg-[#0c1024]/75 border-slate-800 hover:bg-slate-800/40 ${themeColor.hoverBorder}` 
                   : `bg-white border-slate-200 shadow-md hover:shadow-2xl ${themeColor.hoverBorder}`
@@ -239,8 +241,8 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
         })}
       </div>
 
-      {/* Interactive Customization Banner */}
-      <div className={`mt-14 p-8 sm:p-10 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl ${
+      {/* Interactive Customization Banner with Smooth Scale Reveal */}
+      <div className={`mt-14 p-8 sm:p-10 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl scroll-reveal-scale delay-200 ${
         isDark 
           ? 'bg-gradient-to-r from-slate-900 via-cyan-950/40 to-slate-900 border-cyan-900/40' 
           : 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-slate-800 text-white'

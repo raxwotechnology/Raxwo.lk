@@ -38,7 +38,7 @@ export default function ContactSection({
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14 scroll-reveal">
           <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight ${
             isDark ? 'text-white' : 'text-slate-950'
           }`}>
@@ -55,8 +55,8 @@ export default function ContactSection({
         {/* 2-Column Responsive Layout (100% Mobile & Desktop Safe, Zero Horizontal Overflow) */}
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           
-          {/* Left Column: Direct Channels (5 Cols) */}
-          <div className="lg:col-span-5 w-full min-w-0 flex flex-col justify-between gap-4">
+          {/* Left Column: Direct Channels (5 Cols) with Glide Left */}
+          <div className="lg:col-span-5 w-full min-w-0 flex flex-col justify-between gap-4 scroll-reveal-left delay-100">
             
             {/* Card 1: WhatsApp & Phone */}
             <div className={`p-5 sm:p-6 rounded-3xl border transition-all duration-300 ${
@@ -178,8 +178,8 @@ export default function ContactSection({
 
           </div>
 
-          {/* Right Column: Interactive Consultation & Request Form (7 Cols) */}
-          <div className="lg:col-span-7 w-full min-w-0">
+          {/* Right Column: Interactive Consultation & Request Form (7 Cols) with Glide Right */}
+          <div className="lg:col-span-7 w-full min-w-0 scroll-reveal-right delay-200">
             <div className={`p-6 sm:p-9 rounded-3xl border shadow-2xl relative ${
               isDark ? 'bg-[#0a0f24]/95 border-slate-800' : 'bg-white border-slate-200'
             }`}>

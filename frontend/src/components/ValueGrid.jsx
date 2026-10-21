@@ -35,7 +35,7 @@ export default function ValueGrid({ theme = 'dark', lang = 'en' }) {
     }`}>
       
       {/* Section Header Accent */}
-      <div className="flex items-center justify-center mb-6">
+      <div className="flex items-center justify-center mb-6 scroll-reveal">
         <span className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase border ${
           isDark 
             ? 'text-cyan-400 bg-cyan-950/60 border-cyan-800/50' 
@@ -45,28 +45,29 @@ export default function ValueGrid({ theme = 'dark', lang = 'en' }) {
         </span>
       </div>
 
-      <div className={`rounded-3xl shadow-xl overflow-hidden transition-all duration-300 border ${
+      <div className={`rounded-3xl shadow-xl overflow-hidden transition-all duration-300 border scroll-reveal-scale delay-100 ${
         isDark 
           ? 'bg-[#090d1f] border-slate-800/80' 
-          : 'bg-white border-slate-200/90 shadow-sm'
+          : 'bg-white border-slate-200/60 shadow-lg'
       }`}>
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x ${
-          isDark ? 'divide-slate-800/80' : 'divide-slate-200'
+          isDark ? 'divide-slate-800/80' : 'divide-slate-100'
         }`}>
           {values.map((item, index) => {
             const Icon = item.icon;
+            const delays = ['delay-100', 'delay-200', 'delay-300', 'delay-400'];
             return (
               <div 
                 key={index}
-                className={`p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-4 group transition-colors duration-200 ${
-                  isDark ? 'hover:bg-slate-800/30' : 'hover:bg-slate-50'
+                className={`p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-4 group transition-all duration-300 hover:-translate-y-1.5 cursor-pointer ${
+                  isDark ? 'hover:bg-slate-800/40' : 'hover:bg-blue-50/40'
                 }`}
               >
                 {/* Rounded Cyan Icon Box - Clean & Matte */}
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 ${
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${
                   isDark 
                     ? 'bg-slate-800/90 border border-slate-700/80 text-cyan-400' 
-                    : 'bg-slate-100 border border-slate-200 text-cyan-700'
+                    : 'bg-blue-50 border border-blue-100 text-blue-600'
                 }`}>
                   <Icon className="w-5 h-5" />
                 </div>

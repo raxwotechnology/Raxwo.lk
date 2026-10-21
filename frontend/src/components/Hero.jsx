@@ -79,22 +79,22 @@ export default function Hero({
       >
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
           
-          {/* Left Column: Team Office Photo */}
-          <div className="md:col-span-5 flex justify-center">
+          {/* Left Column: Team Office Photo with Glide Entrance */}
+          <div className="md:col-span-5 flex justify-center scroll-reveal-left">
             <div className={`relative w-full max-w-md overflow-hidden rounded-2xl shadow-xl border group ${
               isDark ? 'border-slate-800 shadow-black/60' : 'border-slate-100'
             }`}>
               <img 
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" 
                 alt="Raxwo Software Development Team" 
-                className="w-full h-[260px] sm:h-[310px] object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-[260px] sm:h-[310px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>
             </div>
           </div>
 
-          {/* Right Column: About Raxwo Content */}
-          <div className="md:col-span-7 flex flex-col items-start text-left">
+          {/* Right Column: About Raxwo Content with Glide Entrance */}
+          <div className="md:col-span-7 flex flex-col items-start text-left scroll-reveal-right delay-150">
             
             {/* Badge: Our Company */}
             <span className={`inline-block px-3 py-1 rounded-md text-[11px] font-bold tracking-wider uppercase mb-3 shadow-sm ${
@@ -127,7 +127,7 @@ export default function Hero({
             {/* Explore Solutions Button */}
             <button
               onClick={handleCtaClick}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer hover:gap-3"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer hover:gap-3 hover:scale-105 active:scale-95"
             >
               <span>Explore ERP Solutions</span>
               <ArrowRight className="w-4 h-4" />

@@ -170,13 +170,13 @@ export default function App() {
     if (typeof window === 'undefined') return;
 
     const revealElements = () => {
-      const elements = document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)');
+      const elements = document.querySelectorAll('.scroll-reveal:not(.is-revealed), .reveal-on-scroll:not(.is-revealed)');
       const windowHeight = window.innerHeight;
 
       elements.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        // Trigger reveal when element top enters within 85% of viewport height
-        if (rect.top <= windowHeight * 0.88) {
+        // Trigger reveal when element top enters within 90% of viewport height
+        if (rect.top <= windowHeight * 0.90) {
           el.classList.add('is-revealed');
         }
       });
@@ -184,7 +184,7 @@ export default function App() {
 
     // Run immediately and after a short render delay
     revealElements();
-    const timer = setTimeout(revealElements, 100);
+    const timer = setTimeout(revealElements, 80);
 
     // Also observe via IntersectionObserver for maximum performance
     let observer = null;
@@ -198,10 +198,10 @@ export default function App() {
             }
           });
         },
-        { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
+        { threshold: 0.05, rootMargin: '0px 0px -30px 0px' }
       );
 
-      document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+      document.querySelectorAll('.scroll-reveal, .reveal-on-scroll').forEach((el) => observer.observe(el));
     }
 
     // Passive scroll listener ensures animations fire consistently as user scrolls down
@@ -213,6 +213,21 @@ export default function App() {
       if (observer) observer.disconnect();
     };
   }, [currentRoute]);
+
+  // Top Reading Progress Bar (like Gridpro)
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = (window.scrollY / totalHeight) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, progress)));
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleRouteChange = (newRoute) => {
     // If attempting to enter admin without permission, redirect to login
@@ -529,20 +544,24 @@ export default function App() {
         isDark ? 'bg-[#070913] text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
+      {/* Top Scroll Reading Progress Bar (like Gridpro) */}
+      <div 
+        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 z-[99999] pointer-events-none transition-all duration-75 ease-out shadow-[0_0_10px_rgba(6,182,212,0.6)]" 
+        style={{ width: `${scrollProgress}%` }}
+      />
       
-      {/* Background Cybernetic Grid & Glow Overlay */}
+      {/* Background Cybernetic Glow Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div 
           className="absolute inset-0"
           style={{
             backgroundImage: isDark
-              ? 'radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px)'
-              : 'radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px)',
+              ? 'radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px)'
+              : 'none',
             backgroundSize: '36px 36px',
-            backgroundPosition: '0 0, 18px 18px'
+            backgroundPosition: '0 0'
           }}
         />
-
       </div>
 
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -571,26 +590,22 @@ export default function App() {
         {/* Dynamic Route Content */}
         <main className="flex-1 w-full">
           
-          {/* 1. HOME ROUTE */}
+          {/* 1. HOME ROUTE — Pure seamless sections without outer transform clipping */}
           {currentRoute === 'home' && (
             <>
-              <div className="reveal-on-scroll">
-                <Hero 
-                  onExploreClick={() => handleRouteChange('products')}
-                  onOpenSaleModal={() => setIsNewSaleModalOpen(true)}
-                  stats={stats}
-                  products={products}
-                  onSelectProduct={handleSelectProduct}
-                  theme={theme}
-                  lang={lang}
-                />
-              </div>
+              <Hero 
+                onExploreClick={() => handleRouteChange('products')}
+                onOpenSaleModal={() => setIsNewSaleModalOpen(true)}
+                stats={stats}
+                products={products}
+                onSelectProduct={handleSelectProduct}
+                theme={theme}
+                lang={lang}
+              />
 
-              <div className="reveal-on-scroll">
-                <ValueGrid theme={theme} lang={lang} />
-              </div>
+              <ValueGrid theme={theme} lang={lang} />
 
-              <div id="solutions" className="reveal-on-scroll">
+              <div id="solutions">
                 <SolutionsSection 
                   onExploreClick={() => handleRouteChange('products')} 
                   theme={theme}
@@ -598,16 +613,14 @@ export default function App() {
                 />
               </div>
 
-              <div className="reveal-on-scroll">
-                <ContactSection 
-                  onSubmitInquiry={handleSubmitInquiry}
-                  isSubmitting={isSubmitting}
-                  contactSuccess={contactSuccess}
-                  inquiryResult={inquiryResult}
-                  theme={theme}
-                  lang={lang}
-                />
-              </div>
+              <ContactSection 
+                onSubmitInquiry={handleSubmitInquiry}
+                isSubmitting={isSubmitting}
+                contactSuccess={contactSuccess}
+                inquiryResult={inquiryResult}
+                theme={theme}
+                lang={lang}
+              />
             </>
           )}
 
