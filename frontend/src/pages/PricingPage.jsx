@@ -6,45 +6,73 @@ export default function PricingPage({
   onCurrencyChange, 
   currencyRates, 
   onSelectPlan,
-  theme = 'dark'
+  theme = 'dark',
+  lang = 'en'
 }) {
   const isDark = theme === 'dark';
 
-  const currenciesList = ['LKR', 'USD', 'EUR', 'GBP', 'INR'];
-
   const formatPrice = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   const plans = [
     {
       id: "starter",
       name: "STARTER",
-      tagline: "A simple start for one location.",
+      tagline: lang === 'si' 
+        ? "තනි වෙළඳසැලක් සඳහා වඩාත් සුදුසු ආරම්භය." 
+        : lang === 'ta'
+        ? "ஒரு இடத்திற்கான எளிய தொடக்கம்."
+        : "A simple start for one location.",
       priceLKR: 75000,
       popular: false,
-      features: [
+      features: lang === 'si' ? [
+        "මූලික ව්‍යාපාර මොඩියුල",
+        "සම්පූර්ණ මූල කේතය (Source Code)",
+        "පරිශීලක අත්පොත් හා මාර්ගෝපදේශ",
+        "ජීවිත කාලයටම බලපත්‍රය",
+        "තාප මුද්‍රණ (Thermal POS) සහාය"
+      ] : lang === 'ta' ? [
+        "அடிப்படை வணிக தொகுதிகள்",
+        "முழு மூலக் குறியீடு",
+        "பயனர் ஆவணங்கள்",
+        "வாழ்நாள் உரிமம்",
+        "தெர்மல் POS ரசீது அச்சிடுதல்"
+      ] : [
         "Core business modules",
         "Full source code",
         "User documentation",
         "Lifetime perpetual license",
         "Standard thermal POS printing"
       ],
-      cta: "Choose Starter"
+      cta: lang === 'si' ? "Starter තෝරන්න" : lang === 'ta' ? "Starter-ஐத் தேர்ந்தெடுக்கவும்" : "Choose Starter"
     },
     {
       id: "professional",
       name: "PROFESSIONAL",
-      badge: "MOST POPULAR",
-      tagline: "The best fit for growing businesses.",
+      badge: lang === 'si' ? "වඩාත් ජනප්‍රියයි" : lang === 'ta' ? "மிகவும் பிரபலமானது" : "MOST POPULAR",
+      tagline: lang === 'si'
+        ? "වර්ධනය වන ව්‍යාපාර සඳහා වඩාත් සුදුසු විසඳුම."
+        : lang === 'ta'
+        ? "வளரும் வணிகங்களுக்கு சிறந்த தேர்வு."
+        : "The best fit for growing businesses.",
       priceLKR: 120000,
       popular: true,
-      features: [
+      features: lang === 'si' ? [
+        "සියලු මූලික මොඩියුල සහ අතිරේක අංග",
+        "සම්පූර්ණ මූල කේතය (React / Node)",
+        "සම්පූර්ණ තාක්ෂණික ලියකියවිලි",
+        "දින 90ක විශේෂිත සහාය",
+        "බහු ශාඛා සහ ගබඩා සමමුහුර්තකරණය",
+        "නොමිලේ සර්වර් සැකසුම් (Deployment)"
+      ] : lang === 'ta' ? [
+        "அனைத்து தொகுதிகள் மற்றும் துணை அம்சங்கள்",
+        "முழு மூலக் குறியீடு (React / Node)",
+        "தொழில்நுட்ப ஆவணங்கள்",
+        "90 நாட்கள் பிரத்யேக ஆதரவு",
+        "பல கிளை மற்றும் கிடங்கு ஒத்திசைவு",
+        "இலவச கிளவுட் சர்வர் அமைப்பு"
+      ] : [
         "All core modules & add-ons",
         "Full source code (React / Node)",
         "Complete technical documentation",
@@ -52,65 +80,67 @@ export default function PricingPage({
         "Multi-branch & warehouse sync",
         "Free cloud server deployment setup"
       ],
-      cta: "Choose Professional"
+      cta: lang === 'si' ? "Professional තෝරන්න" : lang === 'ta' ? "Professional-ஐத் தேர்ந்தெடுக்கவும்" : "Choose Professional"
     },
     {
       id: "premium",
       name: "PREMIUM",
-      badge: "ENTERPRISE",
-      tagline: "More support, custom modules & flexibility.",
+      badge: lang === 'si' ? "ආයතනික" : lang === 'ta' ? "நிறுவனம்" : "ENTERPRISE",
+      tagline: lang === 'si'
+        ? "විශේෂිත සහාය, අමතර මොඩියුල සහ පූර්ණ නම්‍යශීලී බව."
+        : lang === 'ta'
+        ? "கூடுதல் ஆதரவு மற்றும் தனிப்பயன் தொகுதிகள்."
+        : "More support, custom modules & flexibility.",
       priceLKR: 150000,
       popular: false,
-      features: [
+      features: lang === 'si' ? [
+        "Professional පැකේජයේ සියල්ල ඇතුළත් වේ",
+        "උසස් ගිණුම්කරණය සහ විශ්ලේෂණ",
+        "දින 180ක ප්‍රමුඛතා සහාය",
+        "විශේෂිත අවශ්‍යතා අනුව සැකසීම",
+        "කාර්ය මණ්ඩල පුහුණු වැඩමුළු"
+      ] : lang === 'ta' ? [
+        "Professional-இல் உள்ள அனைத்தும்",
+        "மேம்பட்ட கணக்கியல் மற்றும் பகுப்பாய்வு",
+        "180 நாட்கள் முன்னுரிமை ஆதரவு",
+        "தனிப்பயன் தொகுதி உள்ளமைவு",
+        "ஊழியர் பயிற்சி பட்டறைகள்"
+      ] : [
         "Everything in Professional",
         "Advanced accounting & analytics",
         "180 days priority support",
         "Custom module configuration",
         "Staff training workshops (Online/In-person)"
       ],
-      cta: "Choose Premium"
+      cta: lang === 'si' ? "Premium තෝරන්න" : lang === 'ta' ? "Premium-ஐத் தேர்ந்தெடுக்கவும்" : "Choose Premium"
     }
   ];
 
   return (
-    <div className="w-full pb-28">
+    <div className="w-full pt-10 pb-28 px-6 sm:px-10 lg:px-16 xl:px-20">
 
-      {/* Top Header Banner — Identical #0c0827 match to Home Page Header */}
-      <section 
-        className="w-full pt-10 pb-14 md:pt-14 md:pb-16 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
-      >
-        <div className="max-w-4xl mx-auto">
-          <span className="text-[11px] font-bold tracking-[0.25em] uppercase mb-3 inline-block text-cyan-400">
-            CLEAR COSTS, LASTING VALUE
-          </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 text-white">
-            Simple &amp; Transparent Pricing
-          </h1>
-          <p className="text-base sm:text-lg max-w-xl mx-auto text-slate-200/90">
-            One-time purchase. 100% full source code ownership. No recurring monthly fees.
-          </p>
-
-          {/* Currency Switcher — Pill Bar */}
-          <div className="inline-flex items-center p-1.5 rounded-2xl border shadow-md mt-7 bg-slate-900/90 border-slate-800">
-            {currenciesList.map((cur) => (
-              <button
-                key={cur}
-                onClick={() => onCurrencyChange(cur)}
-                className={`px-5 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all duration-200 ${
-                  currency === cur
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
-                }`}
-              >
-                {cur}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Main Pricing Cards Container */}
-      <div className="px-6 sm:px-10 lg:px-16 xl:px-20 pt-10">
+      {/* Header */}
+      <div className="text-center max-w-4xl mx-auto mb-10">
+        <span className={`text-[11px] font-bold tracking-[0.25em] uppercase mb-4 inline-block ${
+          isDark ? 'text-cyan-400' : 'text-blue-700'
+        }`}>
+          {lang === 'si' ? 'පැහැදිලි මිල ගණන්, උපරිම වටිනාකම' : lang === 'ta' ? 'தெளிவான விலை, நீடித்த மதிப்பு' : 'CLEAR COSTS, LASTING VALUE'}
+        </span>
+        <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 ${
+          isDark ? 'text-white' : 'text-slate-900'
+        }`}>
+          {lang === 'si' ? 'සරල සහ විනිවිද පෙනෙන මිල ගණන්' : lang === 'ta' ? 'எளிய மற்றும் வெளிப்படையான விலை' : 'Simple & Transparent Pricing'}
+        </h1>
+        <p className={`text-base sm:text-lg max-w-xl mx-auto ${
+          isDark ? 'text-slate-400' : 'text-slate-600'
+        }`}>
+          {lang === 'si' 
+            ? 'එක්වරක් පමණක් මිලදී ගැනීම. 100% මූල කේතයේ (Source Code) හිමිකාරිත්වය. මාසික ගාස්තු නැත.' 
+            : lang === 'ta' 
+            ? 'ஒரு முறை வாங்குதல். 100% மூலக் குறியீடு உரிமை. மாதாந்திர கட்டணங்கள் இல்லை.' 
+            : 'One-time purchase. 100% full source code ownership. No recurring monthly fees.'}
+        </p>
+      </div>
 
       {/* Pricing Cards Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch max-w-6xl mx-auto mt-12">
@@ -185,7 +215,7 @@ export default function PricingPage({
                     ? isDark ? 'text-slate-400' : 'text-blue-600 font-semibold'
                     : isDark ? 'text-slate-400' : 'text-slate-500'
                 }`}>
-                  One-time payment &bull; No monthly fees
+                  {lang === 'si' ? 'එක්වරක් පමණක් ගෙවීම • මාසික ගාස්තු නැත' : lang === 'ta' ? 'ஒரு முறை செலுத்துதல் • மாதாந்திர கட்டணம் இல்லை' : 'One-time payment • No monthly fees'}
                 </span>
               </div>
 
@@ -226,7 +256,6 @@ export default function PricingPage({
             </div>
           );
         })}
-      </div>
       </div>
 
     </div>

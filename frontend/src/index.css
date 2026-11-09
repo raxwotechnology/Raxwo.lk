@@ -92,13 +92,13 @@ html.light .hero-glow-cyan {
   background: radial-gradient(circle at 10% 80%, rgba(6, 182, 212, 0.12) 0%, rgba(14, 165, 233, 0.05) 35%, transparent 70%);
 }
 
-/* Animations & Clean Micro-Interactions */
+/* Animations */
 @keyframes floatSlow {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
   }
 }
 
@@ -106,65 +106,16 @@ html.light .hero-glow-cyan {
   animation: floatSlow 6s ease-in-out infinite;
 }
 
-/* Card Interactive Hover Lift - Deep, Premium Shadow (like Gridpro) */
-.interactive-card {
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
-  will-change: transform, box-shadow;
-}
-
-.interactive-card:hover {
-  transform: translateY(-6px);
-}
-
-/* ========================================================
-   SUPER SCROLL-DOWN ANIMATIONS (GRIDPRO / APPLE STYLE)
-   Fail-safe: 100% Visible Baseline (Never Blank!)
-   ======================================================== */
-.scroll-reveal,
-.scroll-reveal-left,
-.scroll-reveal-right,
-.scroll-reveal-scale,
+/* Scroll-Down Reveal Animation */
 .reveal-on-scroll {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-/* Only below-the-fold elements marked by JS get smoothly revealed on scroll */
-html.js-ready .anim-scroll-pending:not(.is-revealed) {
-  opacity: 0;
-  transform: translateY(28px);
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
-
-html.js-ready .anim-scroll-pending.scroll-reveal-left:not(.is-revealed) {
-  opacity: 0;
-  transform: translateX(-28px);
-}
-
-html.js-ready .anim-scroll-pending.scroll-reveal-right:not(.is-revealed) {
-  opacity: 0;
-  transform: translateX(28px);
-}
-
-html.js-ready .anim-scroll-pending.scroll-reveal-scale:not(.is-revealed) {
-  opacity: 0;
-  transform: scale(0.95) translateY(20px);
-}
-
-html.js-ready .anim-scroll-pending.is-revealed {
-  opacity: 1 !important;
-  transform: translate(0, 0) scale(1) !important;
-}
-
-/* Stagger Delays for Cascade Entrance */
-.delay-75  { transition-delay: 75ms; }
-.delay-100 { transition-delay: 100ms; }
-.delay-150 { transition-delay: 150ms; }
-.delay-200 { transition-delay: 200ms; }
-.delay-250 { transition-delay: 250ms; }
-.delay-300 { transition-delay: 300ms; }
-.delay-400 { transition-delay: 400ms; }
-.delay-500 { transition-delay: 500ms; }
-.delay-600 { transition-delay: 600ms; }
 

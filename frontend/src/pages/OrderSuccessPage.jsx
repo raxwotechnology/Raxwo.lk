@@ -24,12 +24,7 @@ export default function OrderSuccessPage({
   const orderDate = orderData?.date || '14 August 2025';
 
   const formatPrice = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   return (

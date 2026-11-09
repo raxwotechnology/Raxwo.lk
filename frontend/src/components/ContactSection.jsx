@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
 export default function ContactSection({ 
@@ -28,8 +28,8 @@ export default function ContactSection({
   };
 
   return (
-    <section id="contact" className={`relative w-full py-16 sm:py-20 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-hidden transition-colors duration-300 ${
-      isDark ? 'bg-[#0c1026]' : 'bg-[#f8fafc]'
+    <section id="contact" className={`relative w-full py-16 sm:py-20 px-4 sm:px-8 lg:px-12 xl:px-16 border-t overflow-hidden ${
+      isDark ? 'border-slate-800/80 bg-[#080b18]' : 'border-slate-200 bg-slate-50/70'
     }`}>
       
 
@@ -38,25 +38,41 @@ export default function ContactSection({
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14 scroll-reveal">
-          <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight ${
-            isDark ? 'text-white' : 'text-slate-950'
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
+          <h2 className={`text-3xl sm:text-4xl lg:text-[44px] font-black tracking-tight ${
+            isDark ? 'text-white' : 'text-[#0a0827]'
           }`}>
-            {t('letsTalkTitle')}
+            Raxwo
           </h2>
 
-          <p className={`text-sm sm:text-base mt-3 leading-relaxed max-w-2xl mx-auto ${
-            isDark ? 'text-slate-300' : 'text-slate-700'
+          <h3 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-[#0094ff] tracking-tight mt-1 mb-4">
+            {lang === 'si' ? 'ඔබගේ ව්‍යාපාරික අවශ්‍යතා සාකච්ඡා කරන්න' : lang === 'ta' ? 'உங்கள் வணிகத் தேவைகளைப் பற்றி விவாதிக்கவும்' : 'Discuss Your Business Requirements'}
+          </h3>
+
+          <p className={`text-sm sm:text-base leading-relaxed max-w-2xl mx-auto ${
+            isDark ? 'text-slate-300' : 'text-slate-600'
           }`}>
-            {t('letsTalkSubtitle')}
+            {lang === 'si' ? (
+              <>
+                ඔබගේ <strong className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ව්‍යාපෘතිය, ව්‍යාපාරික අවශ්‍යතා, ඉලක්ක සහ අභියෝග</strong> අපට කියන්න. අපගේ කණ්ඩායම ඔබගේ අවශ්‍යතා හඳුනාගෙන ඔබගේ ව්‍යාපාරයට වඩාත් සුදුසු තාක්ෂණය සහ ඩිජිටල් විසඳුම නිර්දේශ කරනු ඇත.
+              </>
+            ) : lang === 'ta' ? (
+              <>
+                உங்கள் <strong className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>திட்டம், வணிகத் தேவைகள், இலக்குகள் மற்றும் சவால்கள்</strong> பற்றி எங்களிடம் கூறுங்கள். எங்கள் குழு உங்கள் தேவைகளைப் புரிந்து கொண்டு உங்கள் வணிகத்திற்கான சரியான தொழில்நுட்ப தீர்வை பரிந்துரைக்கும்.
+              </>
+            ) : (
+              <>
+                Tell us about <strong className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>your project, business requirements, goals, and challenges</strong>. Our team will understand your needs and recommend the right technology and digital solution for your business.
+              </>
+            )}
           </p>
         </div>
 
         {/* 2-Column Responsive Layout (100% Mobile & Desktop Safe, Zero Horizontal Overflow) */}
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           
-          {/* Left Column: Direct Channels (5 Cols) with Glide Left */}
-          <div className="lg:col-span-5 w-full min-w-0 flex flex-col justify-between gap-4 scroll-reveal-left delay-100">
+          {/* Left Column: Direct Channels (5 Cols) */}
+          <div className="lg:col-span-5 w-full min-w-0 flex flex-col justify-between gap-4">
             
             {/* Card 1: WhatsApp & Phone */}
             <div className={`p-5 sm:p-6 rounded-3xl border transition-all duration-300 ${
@@ -71,10 +87,10 @@ export default function ContactSection({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
                     <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      WhatsApp &amp; Direct Phone
+                      {lang === 'si' ? 'WhatsApp සහ සෘජු ඇමතුම්' : lang === 'ta' ? 'WhatsApp & நேரடி தொலைபேசி' : 'WhatsApp & Direct Phone'}
                     </span>
                     <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-500">
-                      Active
+                      {lang === 'si' ? 'ක්‍රියාකාරීයි' : lang === 'ta' ? 'செயலில் உள்ளது' : 'Active'}
                     </span>
                   </div>
                   <span className={`text-base sm:text-lg font-black tracking-tight block mt-1 break-words ${isDark ? 'text-white' : 'text-slate-950'}`}>
@@ -88,7 +104,7 @@ export default function ContactSection({
                       className="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
                     >
                       <MessageSquare className="w-3.5 h-3.5" />
-                      <span>WhatsApp Chat</span>
+                      <span>{lang === 'si' ? 'WhatsApp සංවාදය' : lang === 'ta' ? 'WhatsApp அரட்டை' : 'WhatsApp Chat'}</span>
                     </a>
                     <a
                       href="tel:+94112345678"
@@ -99,7 +115,7 @@ export default function ContactSection({
                       }`}
                     >
                       <Phone className="w-3.5 h-3.5" />
-                      <span>Call Office</span>
+                      <span>{lang === 'si' ? 'කාර්යාලය අමතන්න' : lang === 'ta' ? 'அழைக்கவும்' : 'Call Office'}</span>
                     </a>
                   </div>
                 </div>
@@ -118,7 +134,7 @@ export default function ContactSection({
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className={`text-xs font-bold uppercase tracking-wider block ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Email Inquiries &amp; RFP
+                    {lang === 'si' ? 'විද්‍යුත් තැපැල් විමසීම් සහ යෝජනා' : lang === 'ta' ? 'மின்னஞ்சல் விசாரணைகள்' : 'Email Inquiries & RFP'}
                   </span>
                   <span className={`text-sm sm:text-base font-black block mt-1 break-words ${isDark ? 'text-white' : 'text-slate-950'}`}>
                     sales@raxwo.lk / support@raxwo.lk
@@ -132,7 +148,7 @@ export default function ContactSection({
                           : 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100'
                       }`}
                     >
-                      <span>Send Official Email</span>
+                      <span>{lang === 'si' ? 'ඊමේල් පණිවිඩයක් එවන්න' : lang === 'ta' ? 'மின்னஞ்சல் அனுப்பவும்' : 'Send Official Email'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   </div>
@@ -152,10 +168,10 @@ export default function ContactSection({
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className={`text-xs font-bold uppercase tracking-wider block ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Colombo Hardware Test Lab &amp; HQ
+                    {lang === 'si' ? 'කොළඹ ප්‍රධාන කාර්යාලය සහ විද්‍යාගාරය' : lang === 'ta' ? 'கொழும்பு தலைமையகம் & ஆய்வகம்' : 'Colombo Hardware Test Lab & HQ'}
                   </span>
                   <span className={`text-xs sm:text-sm font-semibold leading-relaxed block mt-1 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                    Level 05, Raxwo Tech Tower, Galle Road, Colombo 03, Sri Lanka
+                    {lang === 'si' ? 'ලෙවල් 05, Raxwo ටෙක් ටවර්, ගාලු පාර, කොළඹ 03, ශ්‍රී ලංකාව' : lang === 'ta' ? 'நிலை 05, Raxwo டெக் டவர், காலி வீதி, கொழும்பு 03, இலங்கை' : 'Level 05, Raxwo Tech Tower, Galle Road, Colombo 03, Sri Lanka'}
                   </span>
                   <div className="mt-3">
                     <a
@@ -168,7 +184,7 @@ export default function ContactSection({
                           : 'bg-cyan-50 text-cyan-700 border-cyan-200 hover:bg-cyan-100'
                       }`}
                     >
-                      <span>Open Location in Maps</span>
+                      <span>{lang === 'si' ? 'සිතියමෙන් බලන්න' : lang === 'ta' ? 'வரைபடத்தில் காண்க' : 'Open Location in Maps'}</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
@@ -178,16 +194,20 @@ export default function ContactSection({
 
           </div>
 
-          {/* Right Column: Interactive Consultation & Request Form (7 Cols) with Glide Right */}
-          <div className="lg:col-span-7 w-full min-w-0 scroll-reveal-right delay-200">
+          {/* Right Column: Interactive Consultation & Request Form (7 Cols) */}
+          <div className="lg:col-span-7 w-full min-w-0">
             <div className={`p-6 sm:p-9 rounded-3xl border shadow-2xl relative ${
               isDark ? 'bg-[#0a0f24]/95 border-slate-800' : 'bg-white border-slate-200'
             }`}>
               <h3 className={`text-xl sm:text-2xl font-black mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
-                Request Live ERP Demo &amp; Quotation
+                {lang === 'si' ? 'සජීවී ආදර්ශනයක් සහ මිල ඇස්තමේන්තුවක් ලබාගන්න' : lang === 'ta' ? 'நேரடி மாதிரி மற்றும் மேற்கோளைக் கோரவும்' : 'Request Live ERP Demo & Quotation'}
               </h3>
               <p className={`text-xs sm:text-sm mb-6 leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                Fill in your details. We will set up a customized live demo with your shop's item categories and hardware within 15 minutes.
+                {lang === 'si' 
+                  ? 'ඔබගේ විස්තර ඇතුළත් කරන්න. විනාඩි 15ක් ඇතුළත ඔබගේ ව්‍යාපාරයට ගැළපෙන පරිදි සජීවී ආදර්ශනයක් සූදානම් කර දෙනු ලැබේ.' 
+                  : lang === 'ta' 
+                  ? 'உங்கள் விவரங்களை நிரப்பவும். 15 நிமிடங்களுக்குள் உங்கள் வணிகத்திற்கு ஏற்ற நேரடி மாதிரியை நாங்கள் அமைப்போம்.' 
+                  : "Fill in your details. We will set up a customized live demo with your shop's item categories and hardware within 15 minutes."}
               </p>
 
               {contactSuccess ? (
@@ -213,7 +233,7 @@ export default function ContactSection({
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Nimal Perera / Perera Stores"
+                        placeholder={lang === 'si' ? 'උදා: නිමල් පෙරේරා / පෙරේරා ස්ටෝර්ස්' : lang === 'ta' ? 'எ.கா: நிமல் பெரேரா / ஸ்டோர்ஸ்' : 'e.g. Nimal Perera / Perera Stores'}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className={`w-full px-4 py-3 rounded-xl text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
@@ -275,17 +295,39 @@ export default function ContactSection({
                             : 'bg-white border-slate-300 text-slate-900'
                         }`}
                       >
-                        <option value="Retail & POS" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Retail Store &amp; POS (LankaPOS)</option>
-                        <option value="Mobile Shop & Repair" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Mobile Shop &amp; Repair (Mobixa)</option>
-                        <option value="Wholesale & Van Sale" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Wholesale &amp; Van Distribution (Exxplan)</option>
-                        <option value="Restaurant & Cafe" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Restaurant &amp; Cafe POS (DineFlow)</option>
-                        <option value="Pharmacy & Healthcare" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Pharmacy &amp; Clinic (PharmaCare)</option>
-                        <option value="Garment & Apparel" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Garment &amp; Apparel (StitchERP)</option>
-                        <option value="Automotive & Spare Parts" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Auto Spares &amp; Garage (GearMaster)</option>
-                        <option value="Hotel & Resort" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Hotel &amp; Resort PMS (VillaStay)</option>
-                        <option value="Hardware & Paint" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Hardware &amp; Construction (BuildTrack)</option>
-                        <option value="Fitness & Gym" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Fitness &amp; Biometrics (Gymora)</option>
-                        <option value="Other Custom ERP" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>Custom Tailored ERP Architecture</option>
+                        <option value="Retail & POS" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'සිල්ලර වෙළඳාම සහ POS' : lang === 'ta' ? 'சில்லறை & POS' : 'Retail Store & POS (LankaPOS)'}
+                        </option>
+                        <option value="Mobile Shop & Repair" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'ජංගම දුරකථන සහ අලුත්වැඩියා' : lang === 'ta' ? 'மொபைல் விற்பனை மற்றும் பழுது' : 'Mobile Shop & Repair (Mobixa)'}
+                        </option>
+                        <option value="Wholesale & Van Sale" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'තොග සහ වෑන් රථ අලෙවිය' : lang === 'ta' ? 'மொத்த விற்பனை மற்றும் விநியோகம்' : 'Wholesale & Van Distribution (Exxplan)'}
+                        </option>
+                        <option value="Restaurant & Cafe" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'ආපනශාලා සහ කැෆේ' : lang === 'ta' ? 'உணவகம் மற்றும் கஃபே' : 'Restaurant & Cafe POS (DineFlow)'}
+                        </option>
+                        <option value="Pharmacy & Healthcare" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'ඖෂධසල් සහ සායන' : lang === 'ta' ? 'மருந்தகம் மற்றும் சுகாதாரப் பராமரிப்பு' : 'Pharmacy & Clinic (PharmaCare)'}
+                        </option>
+                        <option value="Garment & Apparel" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'ඇඟලුම් සහ රෙදිපිළි' : lang === 'ta' ? 'ஆடை மற்றும் ஆடை வடிவமைப்பு' : 'Garment & Apparel (StitchERP)'}
+                        </option>
+                        <option value="Automotive & Spare Parts" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'මෝටර් රථ සහ අමතර කොටස්' : lang === 'ta' ? 'வாகன மற்றும் உதிரி பாகங்கள்' : 'Auto Spares & Garage (GearMaster)'}
+                        </option>
+                        <option value="Hotel & Resort" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'හෝටල් සහ නිවාඩු නිකේතන' : lang === 'ta' ? 'ஹோட்டல் & ரிசார்ட்' : 'Hotel & Resort PMS (VillaStay)'}
+                        </option>
+                        <option value="Hardware & Paint" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'දෘඩාංග සහ තීන්ත' : lang === 'ta' ? 'வன்பொருள் மற்றும் வர்ணம்' : 'Hardware & Construction (BuildTrack)'}
+                        </option>
+                        <option value="Fitness & Gym" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'ශාරීරික සුවතා සහ ජිම්' : lang === 'ta' ? 'உடற்தகுதி மற்றும் உடற்பயிற்சிக்கூடம்' : 'Fitness & Biometrics (Gymora)'}
+                        </option>
+                        <option value="Other Custom ERP" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                          {lang === 'si' ? 'වෙනත් විශේෂිත ERP පද්ධති' : lang === 'ta' ? 'பிற தனிப்பயன் ERP' : 'Custom Tailored ERP Architecture'}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -297,7 +339,7 @@ export default function ContactSection({
                     </label>
                     <textarea
                       rows={3}
-                      placeholder={lang === 'si' ? 'ඔබගේ අවශ්‍යතාවය, පරිගණක ප්‍රමාණය හෝ ශාඛා ගණන මෙහි සඳහන් කරන්න...' : 'Tell us about how many branches, thermal printers, barcode scanners, or special features you need...'}
+                      placeholder={lang === 'si' ? 'ඔබගේ අවශ්‍යතාවය, පරිගණක ප්‍රමාණය හෝ ශාඛා ගණන මෙහි සඳහන් කරන්න...' : lang === 'ta' ? 'கிளைகள், பிரிண்டர்கள் அல்லது உங்களுக்கு தேவையான சிறப்பு அம்சங்களை விவரிக்கவும்...' : 'Tell us about how many branches, thermal printers, barcode scanners, or special features you need...'}
                       value={formData.requirements}
                       onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
                       className={`w-full px-4 py-3 rounded-xl text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none ${
@@ -319,16 +361,15 @@ export default function ContactSection({
                     ) : (
                       <Send className="w-4 h-4" />
                     )}
-                    <span>{isSubmitting ? (lang === 'si' ? 'යොමු වෙමින් පවතී...' : 'Submitting to Engineers...') : t('sendInquiry')}</span>
+                    <span>{isSubmitting ? (lang === 'si' ? 'යොමු වෙමින් පවතී...' : lang === 'ta' ? 'சமர்ப்பிக்கப்படுகிறது...' : 'Submitting to Engineers...') : t('sendInquiry')}</span>
                   </button>
 
                   <div className="flex flex-wrap items-center justify-between text-[11px] pt-1 gap-2">
-                    <span className={`inline-flex items-center gap-1.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      <ShieldCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                      Direct engineer response. No pushy sales calls.
+                    <span className={isDark ? 'text-slate-400' : 'text-slate-600'}>
+                      {lang === 'si' ? '🔒 ඉංජිනේරුවන්ගෙන් සෘජු ප්‍රතිචාර. අනවශ්‍ය කරදරකාරී ඇමතුම් නැත.' : lang === 'ta' ? '🔒 பொறியாளர்களிடமிருந்து நேரடி பதில். தேவையற்ற அழைப்புகள் இல்லை.' : '🔒 Direct engineer response. No pushy sales calls.'}
                     </span>
                     <span className="text-emerald-500 font-bold">
-                      Avg Response: 12 Mins
+                      {lang === 'si' ? 'සාමාන්‍ය ප්‍රතිචාර කාලය: මිනිත්තු 12යි' : lang === 'ta' ? 'சராசரி பதில் நேரம்: 12 நிமிடங்கள்' : 'Avg Response: 12 Mins'}
                     </span>
                   </div>
                 </form>

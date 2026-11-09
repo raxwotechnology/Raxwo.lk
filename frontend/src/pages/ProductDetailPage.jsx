@@ -21,7 +21,8 @@ export default function ProductDetailPage({
   onRequestCustomize,
   currency = 'LKR', 
   currencyRates,
-  theme = 'dark'
+  theme = 'dark',
+  lang = 'en'
 }) {
   const [activeTab, setActiveTab] = useState('Overview');
   const [salesWave, setSalesWave] = useState(248000);
@@ -48,7 +49,13 @@ export default function ProductDetailPage({
     ]
   };
 
-  const tabs = ['Overview', 'Features', 'Screenshots', 'Demo Video', 'Reviews'];
+  const tabs = [
+    { id: 'Overview', label: lang === 'si' ? 'සාරාංශය' : lang === 'ta' ? 'கண்ணோட்டம்' : 'Overview' },
+    { id: 'Features', label: lang === 'si' ? 'විශේෂාංග' : lang === 'ta' ? 'அம்சங்கள்' : 'Features' },
+    { id: 'Screenshots', label: lang === 'si' ? 'තිරපිටපත්' : lang === 'ta' ? 'ஸ்கிரீன்ஷாட்கள்' : 'Screenshots' },
+    { id: 'Demo Video', label: lang === 'si' ? 'ආදර්ශන වීඩියෝව' : lang === 'ta' ? 'டெமோ வீடியோ' : 'Demo Video' },
+    { id: 'Reviews', label: lang === 'si' ? 'පාරිභෝගික අදහස්' : lang === 'ta' ? 'மதிப்புரைகள்' : 'Reviews' }
+  ];
 
   return (
     <div className="w-full pt-6 pb-24 px-6 sm:px-10 lg:px-16 xl:px-20">
@@ -59,14 +66,14 @@ export default function ProductDetailPage({
           onClick={onBackToProducts}
           className="hover:text-cyan-400 cursor-pointer transition-colors"
         >
-          Home
+          {lang === 'si' ? 'මුල් පිටුව' : lang === 'ta' ? 'முகப்பு' : 'Home'}
         </button>
         <span>/</span>
         <button 
           onClick={onBackToProducts}
           className="hover:text-cyan-400 cursor-pointer transition-colors"
         >
-          Products
+          {lang === 'si' ? 'නිෂ්පාදන' : lang === 'ta' ? 'தயாரிப்புகள்' : 'Products'}
         </button>
         <span>/</span>
         <span className={isDark ? 'text-white font-medium' : 'text-slate-900 font-medium'}>
@@ -123,7 +130,7 @@ export default function ProductDetailPage({
               {p.rating || 4.9}
             </span>
             <span className="text-slate-400">
-              from {p.reviewsCount || 126} customers
+              {lang === 'si' ? `පාරිභෝගිකයින් ${p.reviewsCount || 126} දෙනෙකුගෙන්` : lang === 'ta' ? `${p.reviewsCount || 126} வாடிக்கையாளர்களிடமிருந்து` : `from ${p.reviewsCount || 126} customers`}
             </span>
           </div>
 
@@ -134,7 +141,7 @@ export default function ProductDetailPage({
               className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-semibold text-sm text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-[0_0_25px_rgba(99,102,241,0.5)] cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
             >
               <ArrowRight className="w-4 h-4" />
-              <span>Choose Package</span>
+              <span>{lang === 'si' ? 'පැකේජය තෝරන්න' : lang === 'ta' ? 'தொகுப்பைத் தேர்ந்தெடுக்கவும்' : 'Choose Package'}</span>
             </button>
 
             <button
@@ -146,7 +153,7 @@ export default function ProductDetailPage({
               }`}
             >
               <Wrench className="w-4 h-4 text-slate-400" />
-              <span>Request Customization</span>
+              <span>{lang === 'si' ? 'වෙනස්කම් ඉල්ලුම් කරන්න' : lang === 'ta' ? 'தனிப்பயனாக்கலைக் கோரவும்' : 'Request Customization'}</span>
             </button>
           </div>
 
@@ -156,15 +163,15 @@ export default function ProductDetailPage({
           }`}>
             <div className="flex items-center gap-1.5">
               <Check className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>One-time purchase</span>
+              <span>{lang === 'si' ? 'එක්වරක් මිලදී ගැනීම' : lang === 'ta' ? 'ஒரு முறை வாங்குதல்' : 'One-time purchase'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Check className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>Free setup help</span>
+              <span>{lang === 'si' ? 'නොමිලේ සකස් කිරීමේ සහාය' : lang === 'ta' ? 'இலவச அமைப்பு உதவி' : 'Free setup help'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Check className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>Source code included</span>
+              <span>{lang === 'si' ? 'මූල කේතය (Source Code) සහිතයි' : lang === 'ta' ? 'மூலக் குறியீடு சேர்க்கப்பட்டுள்ளது' : 'Source code included'}</span>
             </div>
           </div>
 
@@ -184,18 +191,20 @@ export default function ProductDetailPage({
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
                 <span className="text-[11px] text-slate-400 ml-2 font-mono">
-                  {p.name} Business Dashboard
+                  {p.name} {lang === 'si' ? 'ව්‍යාපාරික පුවරුව' : lang === 'ta' ? 'வணிக டாஷ்போர்டு' : 'Business Dashboard'}
                 </span>
               </div>
               <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
-                Connected
+                {lang === 'si' ? 'සම්බන්ධයි' : lang === 'ta' ? 'இணைக்கப்பட்டது' : 'Connected'}
               </span>
             </div>
 
             {/* Dashboard Header: Business Overview & + Quick Sale */}
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h4 className="text-base font-bold text-white">Business Overview</h4>
+                <h4 className="text-base font-bold text-white">
+                  {lang === 'si' ? 'ව්‍යාපාරික සාරාංශය' : lang === 'ta' ? 'வணிகக் கண்ணோட்டம்' : 'Business Overview'}
+                </h4>
                 <span className="text-[11px] text-slate-400">Wednesday, 14 August</span>
               </div>
               <button 
@@ -204,28 +213,34 @@ export default function ProductDetailPage({
                 title="Click to simulate quick sale"
               >
                 <Plus className="w-3 h-3" />
-                <span>+ Quick Sale</span>
+                <span>{lang === 'si' ? '+ ක්ෂණික අලෙවිය' : lang === 'ta' ? '+ விரைவு விற்பனை' : '+ Quick Sale'}</span>
               </button>
             </div>
 
             {/* 3 Metric Cards Grid */}
             <div className="grid grid-cols-3 gap-3 mb-5">
               <div className="p-3.5 rounded-2xl bg-[#11172e] border border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">TOTAL SALES</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                  {lang === 'si' ? 'මුළු අලෙවිය' : lang === 'ta' ? 'மொத்த விற்பனை' : 'TOTAL SALES'}
+                </span>
                 <span className="text-base sm:text-lg font-bold text-white block mt-1">
                   LKR {(salesWave / 1000).toFixed(0)}K
                 </span>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-[#11172e] border border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">NET PROFIT</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                  {lang === 'si' ? 'ශුද්ධ ලාභය' : lang === 'ta' ? 'நிகர லாபம்' : 'NET PROFIT'}
+                </span>
                 <span className="text-base sm:text-lg font-bold text-cyan-400 block mt-1">
                   LKR 82K
                 </span>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-[#11172e] border border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">REPAIRS</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                  {lang === 'si' ? 'අලුත්වැඩියා' : lang === 'ta' ? 'பழுதுபார்ப்புகள்' : 'REPAIRS'}
+                </span>
                 <span className="text-base sm:text-lg font-bold text-amber-400 block mt-1">
                   18
                 </span>
@@ -235,7 +250,7 @@ export default function ProductDetailPage({
             {/* Sales Performance Wave Chart */}
             <div className="p-4 rounded-2xl bg-[#11172e]/80 border border-slate-800 mb-5">
               <span className="text-[11px] font-semibold text-slate-400 block mb-2">
-                Sales performance
+                {lang === 'si' ? 'අලෙවි කාර්යසාධනය' : lang === 'ta' ? 'விற்பனை செயல்திறன்' : 'Sales performance'}
               </span>
               <div className="relative h-20 w-full overflow-hidden">
                 <svg className="w-full h-full" viewBox="0 0 300 80" preserveAspectRatio="none">
@@ -264,20 +279,26 @@ export default function ProductDetailPage({
             {/* Recent Orders Mini Table */}
             <div className="p-3.5 rounded-2xl bg-[#11172e]/60 border border-slate-800">
               <span className="text-[11px] font-semibold text-slate-400 block mb-2.5">
-                Recent orders
+                {lang === 'si' ? 'මෑත ඇණවුම්' : lang === 'ta' ? 'சமீபத்திய ஆர்டர்கள்' : 'Recent orders'}
               </span>
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between text-slate-300">
                   <span>1. iPhone 14 Case</span>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded">Paid</span>
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded">
+                    {lang === 'si' ? 'ගෙවා ඇත' : lang === 'ta' ? 'செலுத்தப்பட்டது' : 'Paid'}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between text-slate-300">
                   <span>2. Galaxy A53</span>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded">Paid</span>
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded">
+                    {lang === 'si' ? 'ගෙවා ඇත' : lang === 'ta' ? 'செலுத்தப்பட்டது' : 'Paid'}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between text-slate-300">
                   <span>3. Screen Repair</span>
-                  <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded">In Progress</span>
+                  <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded">
+                    {lang === 'si' ? 'සිදුකෙරෙමින් පවතී' : lang === 'ta' ? 'செயல்பாட்டில் உள்ளது' : 'In Progress'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -293,16 +314,16 @@ export default function ProductDetailPage({
       }`}>
         {tabs.map((tab) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
             className={`pb-3 relative cursor-pointer whitespace-nowrap transition-colors ${
-              activeTab === tab
+              activeTab === tab.id
                 ? 'text-cyan-400'
                 : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <span>{tab}</span>
-            {activeTab === tab && (
+            <span>{tab.label}</span>
+            {activeTab === tab.id && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-400 rounded-full"></div>
             )}
           </button>
@@ -337,17 +358,25 @@ export default function ProductDetailPage({
           <span className={`text-[11px] font-bold tracking-[0.2em] uppercase mb-2 ${
             isDark ? 'text-cyan-400' : 'text-cyan-700'
           }`}>
-            EVERYTHING IN ONE PLACE
+            {lang === 'si' ? 'සියල්ල එකම තැනක' : lang === 'ta' ? 'எல்லாம் ஒரே இடத்தில்' : 'EVERYTHING IN ONE PLACE'}
           </span>
           <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-4 ${
             isDark ? 'text-white' : 'text-slate-900'
           }`}>
-            Run your {p.subtitle?.toLowerCase().replace('erp', '') || 'business'} with confidence
+            {lang === 'si' 
+              ? `ඔබගේ ව්‍යාපාරය විශ්වාසයෙන් යුතුව මෙහෙයවන්න` 
+              : lang === 'ta'
+              ? `உங்கள் வணிகத்தை நம்பிக்கையுடன் நடத்துங்கள்`
+              : `Run your ${p.subtitle?.toLowerCase().replace('erp', '') || 'business'} with confidence`}
           </h3>
           <p className={`text-sm sm:text-base leading-relaxed mb-6 ${
             isDark ? 'text-slate-400' : 'text-slate-600'
           }`}>
-            Engineered specifically to solve inventory shrinkages, job card disorganization, and manual accounting delays. Built with offline data sync for non-stop billing even when broadband drops.
+            {lang === 'si'
+              ? 'තොග අඩුවීම්, සේවා කාඩ්පත් අවුල් වීම සහ ගිණුම්කරණ ප්‍රමාදයන් විසඳීම සඳහාම විශේෂයෙන් සකසා ඇත. අන්තර්ජාලය විසන්ධි වුවද බාධාවකින් තොරව ක්‍රියාත්මක විය හැකි නොබැඳි දත්ත සමමුහුර්තකරණය (Offline Data Sync) සහිතයි.'
+              : lang === 'ta'
+              ? 'சரக்கு பற்றாக்குறை மற்றும் கணக்கியல் தாமதங்களைத் தீர்க்க பிரத்யேகமாக வடிவமைக்கப்பட்டுள்ளது. பிராட்பேண்ட் துண்டிக்கப்பட்டாலும் இடைவிடாத பில்லிங்கிற்காக ஆஃப்லைன் தரவு ஒத்திசைவுடன் கட்டப்பட்டது.'
+              : 'Engineered specifically to solve inventory shrinkages, job card disorganization, and manual accounting delays. Built with offline data sync for non-stop billing even when broadband drops.'}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
@@ -375,7 +404,7 @@ export default function ProductDetailPage({
             isDark ? 'bg-[#0c1024]/90 border-slate-800' : 'bg-white border-slate-200 shadow-lg'
           }`}>
             <h4 className={`text-base font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Who is this for?
+              {lang === 'si' ? 'මෙය වඩාත් සුදුසු කාටද?' : lang === 'ta' ? 'இது யாருக்கானது?' : 'Who is this for?'}
             </h4>
             <div className="space-y-3 text-xs sm:text-sm">
               {(p.audience || [
@@ -395,7 +424,7 @@ export default function ProductDetailPage({
                 onClick={() => onRequestCustomize(p)}
                 className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-md transition-all cursor-pointer hover:scale-[1.02]"
               >
-                Customize for My Store
+                {lang === 'si' ? 'මගේ වෙළඳසැලට සකසා ගන්න' : lang === 'ta' ? 'என் கடைக்கு ஏற்ப தனிப்பயனாக்குக' : 'Customize for My Store'}
               </button>
             </div>
           </div>

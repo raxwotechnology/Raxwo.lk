@@ -22,7 +22,8 @@ export default function OrderCheckoutPage({
   currency = 'LKR', 
   onCurrencyChange, 
   currencyRates,
-  theme = 'dark'
+  theme = 'dark',
+  lang = 'en'
 }) {
   const [quantity, setQuantity] = useState(1);
   const [isRemoved, setIsRemoved] = useState(false);
@@ -49,12 +50,7 @@ export default function OrderCheckoutPage({
 
   // Format Price
   const formatPrice = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   const handleCheckoutSubmit = (e) => {
@@ -71,11 +67,11 @@ export default function OrderCheckoutPage({
           onClick={onBackToHome}
           className="hover:text-cyan-400 cursor-pointer transition-colors"
         >
-          Home
+          {lang === 'si' ? 'මුල් පිටුව' : lang === 'ta' ? 'முகப்பு' : 'Home'}
         </button>
         <span>/</span>
         <span className={isDark ? 'text-white font-medium' : 'text-slate-900 font-medium'}>
-          Your Order
+          {lang === 'si' ? 'ඔබගේ ඇණවුම' : lang === 'ta' ? 'உங்கள் ஆர்டர்' : 'Your Order'}
         </span>
       </nav>
 
@@ -84,12 +80,12 @@ export default function OrderCheckoutPage({
         <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 ${
           isDark ? 'text-white' : 'text-slate-900'
         }`}>
-          Your Order
+          {lang === 'si' ? 'ඔබගේ ඇණවුම' : lang === 'ta' ? 'உங்கள் ஆர்டர்' : 'Your Order'}
         </h1>
         <p className={`text-sm sm:text-base ${
           isDark ? 'text-slate-400' : 'text-slate-600'
         }`}>
-          Review your choices before checkout.
+          {lang === 'si' ? 'ගෙවීම් කිරීමට පෙර ඔබගේ තේරීම් පරීක්ෂා කරන්න.' : lang === 'ta' ? 'செக்அவுட் செய்வதற்கு முன் உங்கள் தேர்வுகளை மதிப்பாய்வு செய்யவும்.' : 'Review your choices before checkout.'}
         </p>
       </div>
 
@@ -98,13 +94,17 @@ export default function OrderCheckoutPage({
           isDark ? 'bg-[#0b1022] border-slate-800' : 'bg-white border-slate-200'
         }`}>
           <ShoppingBag className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-          <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Your cart is empty</h3>
-          <p className="text-xs text-slate-400 mt-1 mb-6">You have removed your package from the order list.</p>
+          <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            {lang === 'si' ? 'ඔබගේ කරත්තය හිස්ව ඇත' : lang === 'ta' ? 'உங்கள் கூடை காலியாக உள்ளது' : 'Your cart is empty'}
+          </h3>
+          <p className="text-xs text-slate-400 mt-1 mb-6">
+            {lang === 'si' ? 'ඔබ ඇණවුම් ලැයිස්තුවෙන් භාණ්ඩය ඉවත් කර ඇත.' : lang === 'ta' ? 'நீங்கள் ஆர்டர் பட்டியலில் இருந்து தொகுப்பை நீக்கிவிட்டீர்கள்.' : 'You have removed your package from the order list.'}
+          </p>
           <button
             onClick={onBackToProducts}
             className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs cursor-pointer shadow-md"
           >
-            Explore Products
+            {lang === 'si' ? 'නිෂ්පාදන බලන්න' : lang === 'ta' ? 'தயாரிப்புகளை ஆராய்க' : 'Explore Products'}
           </button>
         </div>
       ) : (
@@ -141,7 +141,7 @@ export default function OrderCheckoutPage({
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-medium mt-2">
                       <Check className="w-3.5 h-3.5" />
-                      <span>Customized for your business</span>
+                      <span>{lang === 'si' ? 'ඔබගේ ව්‍යාපාරයට ගැළපෙන පරිදි සකසා ඇත' : lang === 'ta' ? 'உங்கள் வணிகத்திற்கு ஏற்றவாறு தனிப்பயனாக்கப்பட்டது' : 'Customized for your business'}</span>
                     </span>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ export default function OrderCheckoutPage({
                 
                 {/* Quantity Stepper */}
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-slate-400 font-medium">Quantity</span>
+                  <span className="text-xs text-slate-400 font-medium">{lang === 'si' ? 'ප්‍රමාණය' : lang === 'ta' ? 'அளவு' : 'Quantity'}</span>
                   <div className={`flex items-center rounded-xl border p-1 ${
                     isDark ? 'bg-[#11172e] border-slate-800' : 'bg-slate-50 border-slate-300'
                   }`}>
@@ -192,7 +192,7 @@ export default function OrderCheckoutPage({
                     }`}
                   >
                     <Edit3 className="w-3.5 h-3.5" />
-                    <span>Edit Customization</span>
+                    <span>{lang === 'si' ? 'වෙනස්කම් සකසන්න' : lang === 'ta' ? 'தனிப்பயனாக்கத்தைத் திருத்து' : 'Edit Customization'}</span>
                   </button>
 
                   <button
@@ -200,7 +200,7 @@ export default function OrderCheckoutPage({
                     className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-rose-400 bg-rose-950/20 hover:bg-rose-950/40 border border-rose-900/40 cursor-pointer transition-colors"
                   >
                     <X className="w-3.5 h-3.5" />
-                    <span>Remove</span>
+                    <span>{lang === 'si' ? 'ඉවත් කරන්න' : lang === 'ta' ? 'நீக்கு' : 'Remove'}</span>
                   </button>
                 </div>
 
@@ -246,19 +246,11 @@ export default function OrderCheckoutPage({
 
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-slate-400">Currency</span>
-                  <select
-                    value={currency}
-                    onChange={(e) => onCurrencyChange(e.target.value)}
-                    className={`text-xs rounded-xl px-2.5 py-1.5 border ${
-                      isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100 text-slate-900 border-slate-300'
-                    }`}
-                  >
-                    <option value="LKR">LKR (Rs)</option>
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="INR">INR (₹)</option>
-                  </select>
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg border ${
+                    isDark ? 'bg-slate-900/60 text-slate-300 border-slate-800' : 'bg-slate-100 text-slate-700 border-slate-300'
+                  }`}>
+                    LKR (Rs)
+                  </span>
                 </div>
               </div>
 

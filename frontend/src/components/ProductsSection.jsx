@@ -50,12 +50,7 @@ export default function ProductsSection({
 
   // Helper to format currency
   const formatPrice = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   const filteredProducts = products.filter(p => {

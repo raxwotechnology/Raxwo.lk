@@ -17,13 +17,7 @@ export default function CompareModal({
 
   const formatPrice = (prod) => {
     if (!prod) return '';
-    if (currentCurrency === 'USD') return `$${prod.priceUSD}`;
-    const rateObj = currencyRates[currentCurrency];
-    if (rateObj && rateObj.rate) {
-      const converted = Math.round(prod.priceLKR * rateObj.rate);
-      return `${rateObj.symbol} ${converted.toLocaleString()}`;
-    }
-    return `LKR ${prod.priceLKR.toLocaleString()}`;
+    return `LKR ${Number(prod.priceLKR).toLocaleString()}`;
   };
 
   return (

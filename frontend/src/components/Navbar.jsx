@@ -20,7 +20,6 @@ export default function Navbar({
   onLogout
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currencyDropdown, setCurrencyDropdown] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
 
@@ -38,13 +37,6 @@ export default function Navbar({
     { label: t('contact'), route: 'contact' }
   ];
 
-  const currencies = [
-    { code: 'LKR', label: 'LKR (Rs)', symbol: 'LKR' },
-    { code: 'USD', label: 'USD ($)', symbol: '$' },
-    { code: 'EUR', label: 'EUR (€)', symbol: '€' },
-    { code: 'GBP', label: 'GBP (£)', symbol: '£' },
-    { code: 'INR', label: 'INR (₹)', symbol: '₹' }
-  ];
 
   const languages = [
     { code: 'en', label: 'English' },
@@ -146,7 +138,6 @@ export default function Navbar({
             <button
               onClick={() => {
                 setLangDropdown(!langDropdown);
-                setCurrencyDropdown(false);
                 setUserDropdown(false);
               }}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-colors ${
@@ -182,47 +173,6 @@ export default function Navbar({
             )}
           </div>
 
-          {/* Currency Selector */}
-          <div className="relative">
-            <button
-              onClick={() => {
-                setCurrencyDropdown(!currencyDropdown);
-                setLangDropdown(false);
-                setUserDropdown(false);
-              }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-colors ${
-                isDark 
-                  ? 'text-slate-300 hover:text-white hover:bg-slate-800/60' 
-                  : 'text-white hover:text-white hover:bg-white/10 border border-slate-200'
-              }`}
-            >
-              <span>{currentCurrency}</span>
-              <ChevronDown className={`w-3 h-3 ${isDark ? 'text-slate-400' : 'text-slate-200'}`} />
-            </button>
-            {currencyDropdown && (
-              <div className={`absolute right-0 mt-2 w-36 rounded-xl shadow-2xl py-1 z-50 ${
-                isDark ? 'bg-slate-900 border border-slate-700' : 'bg-white border border-slate-200'
-              }`}>
-                {currencies.map(c => (
-                  <button
-                    key={c.code}
-                    onClick={() => {
-                      onCurrencyChange(c.code);
-                      setCurrencyDropdown(false);
-                    }}
-                    className={`w-full text-left px-3 py-2 text-xs transition-colors flex items-center justify-between cursor-pointer ${
-                      currentCurrency === c.code 
-                        ? 'bg-indigo-600/20 text-cyan-500 font-semibold' 
-                        : isDark ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <span>{c.code}</span>
-                    <span className="text-slate-400 text-[10px]">{c.symbol}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
 
           {/* User Profile / Auth Button */}
           {currentUser ? (

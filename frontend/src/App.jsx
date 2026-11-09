@@ -121,11 +121,7 @@ export default function App() {
 
   const [currency, setCurrency] = useState('LKR');
   const [currencyRates, setCurrencyRates] = useState({
-    LKR: { symbol: "LKR", rate: 1, name: "Sri Lankan Rupee" },
-    USD: { symbol: "$", rate: 0.0033, name: "US Dollar" },
-    EUR: { symbol: "€", rate: 0.0030, name: "Euro" },
-    GBP: { symbol: "£", rate: 0.0026, name: "British Pound" },
-    INR: { symbol: "₹", rate: 0.28, name: "Indian Rupee" }
+    LKR: { symbol: "LKR", rate: 1, name: "Sri Lankan Rupee" }
   });
   const [lang, setLang] = useState(() => {
     return localStorage.getItem('raxwo_lang') || 'en';
@@ -165,77 +161,33 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Scroll reveal animation observer with progressive enhancement (Fail-safe: NEVER blank!)
+  // Scroll reveal animation observer
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    document.documentElement.classList.add('js-ready');
-    const selector = '[class*="scroll-reveal"], .reveal-on-scroll';
-    const allAnimElements = document.querySelectorAll(selector);
-    const windowHeight = window.innerHeight;
-
-    // Elements already in view stay visible immediately without delay
-    allAnimElements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < windowHeight * 0.95) {
-        el.classList.add('is-revealed');
-      } else {
-        el.classList.add('anim-scroll-pending');
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
       }
-    });
+    );
 
-    const revealElements = () => {
-      const pending = document.querySelectorAll('.anim-scroll-pending:not(.is-revealed)');
-      const currentH = window.innerHeight;
-      pending.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= currentH * 0.92) {
-          el.classList.add('is-revealed');
-        }
-      });
-    };
-
-    let observer = null;
-    if ('IntersectionObserver' in window) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-revealed');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
-      );
-
-      document.querySelectorAll('.anim-scroll-pending').forEach((el) => observer.observe(el));
-    }
-
-    window.addEventListener('scroll', revealElements, { passive: true });
-    const timer = setTimeout(revealElements, 100);
+    // Initial check and observation
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    elements.forEach((el) => observer.observe(el));
 
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener('scroll', revealElements);
-      if (observer) observer.disconnect();
+      elements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
     };
   }, [currentRoute]);
-
-  // Top Reading Progress Bar (like Gridpro)
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(Math.min(100, Math.max(0, progress)));
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleRouteChange = (newRoute) => {
     // If attempting to enter admin without permission, redirect to login
@@ -356,7 +308,7 @@ export default function App() {
       const data = await res.json();
       if (data.success) {
         setStats(data.stats);
-        triggerToast('Sale recorded! Dashboard stats updated in real-time.');
+        triggerToast(`🎉 Sale recorded! Dashboard stats updated in real-time.`);
         setIsNewSaleModalOpen(false);
       }
     } catch (err) {
@@ -381,7 +333,7 @@ export default function App() {
       if (data.success) {
         setContactSuccess(true);
         setInquiryResult(data);
-        triggerToast('Inquiry recorded in database! Our tech specialist will reach out.');
+        triggerToast('✅ Inquiry recorded in database! Our tech specialist will reach out.');
       } else {
         throw new Error(data.message);
       }
@@ -391,7 +343,7 @@ export default function App() {
         inquiryId: `INQ-${Date.now()}`,
         message: 'Thank you! Our technical team will reach out within 15 minutes.'
       });
-      triggerToast('Inquiry recorded in database!');
+      triggerToast('✅ Inquiry recorded in database!');
     } finally {
       setIsSubmitting(false);
     }
@@ -513,7 +465,7 @@ export default function App() {
         setLatestOrder(data.order);
         setUserOrders(prev => [data.order, ...prev]);
         handleRouteChange('order-success');
-        triggerToast(`Order confirmed! Order ID: ${data.order.orderId}`);
+        triggerToast(`🎉 Order confirmed! Order ID: ${data.order.orderId}`);
         return;
       }
     } catch (e) {
@@ -541,7 +493,7 @@ export default function App() {
     setLatestOrder(fallbackOrder);
     setUserOrders(prev => [fallbackOrder, ...prev]);
     handleRouteChange('order-success');
-    triggerToast(`Order received! Order ID: ${orderNumber}`);
+    triggerToast(`🎉 Order received! Order ID: ${orderNumber}`);
   };
 
   const isDark = theme === 'dark';
@@ -552,24 +504,20 @@ export default function App() {
         isDark ? 'bg-[#070913] text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      {/* Top Scroll Reading Progress Bar (like Gridpro) */}
-      <div 
-        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 z-[99999] pointer-events-none transition-all duration-75 ease-out shadow-[0_0_10px_rgba(6,182,212,0.6)]" 
-        style={{ width: `${scrollProgress}%` }}
-      />
       
-      {/* Background Cybernetic Glow Overlay */}
+      {/* Background Cybernetic Grid & Glow Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div 
           className="absolute inset-0"
           style={{
             backgroundImage: isDark
-              ? 'radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px)'
-              : 'none',
+              ? 'radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px)'
+              : 'radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px)',
             backgroundSize: '36px 36px',
-            backgroundPosition: '0 0'
+            backgroundPosition: '0 0, 18px 18px'
           }}
         />
+
       </div>
 
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -598,37 +546,40 @@ export default function App() {
         {/* Dynamic Route Content */}
         <main className="flex-1 w-full">
           
-          {/* 1. HOME ROUTE — Pure seamless sections without outer transform clipping */}
+          {/* 1. HOME ROUTE */}
           {currentRoute === 'home' && (
             <>
-              <Hero 
-                onExploreClick={() => handleRouteChange('products')}
-                onOpenSaleModal={() => setIsNewSaleModalOpen(true)}
-                stats={stats}
-                products={products}
-                onSelectProduct={handleSelectProduct}
-                theme={theme}
-                lang={lang}
-              />
-
-              <ValueGrid theme={theme} lang={lang} />
-
-              <div id="solutions">
+              <div className="reveal-on-scroll">
+                <Hero 
+                  onExploreClick={() => handleRouteChange('products')}
+                  onOpenSaleModal={() => setIsNewSaleModalOpen(true)}
+                  stats={stats}
+                  products={products}
+                  onSelectProduct={handleSelectProduct}
+                  theme={theme}
+                  lang={lang}
+                />
+              </div>
+              <div className="reveal-on-scroll">
+                <ValueGrid theme={theme} lang={lang} />
+              </div>
+              <div id="solutions" className="reveal-on-scroll">
                 <SolutionsSection 
                   onExploreClick={() => handleRouteChange('products')} 
                   theme={theme}
                   lang={lang}
                 />
               </div>
-
-              <ContactSection 
-                onSubmitInquiry={handleSubmitInquiry}
-                isSubmitting={isSubmitting}
-                contactSuccess={contactSuccess}
-                inquiryResult={inquiryResult}
-                theme={theme}
-                lang={lang}
-              />
+              <div className="reveal-on-scroll">
+                <ContactSection 
+                  onSubmitInquiry={handleSubmitInquiry}
+                  isSubmitting={isSubmitting}
+                  contactSuccess={contactSuccess}
+                  inquiryResult={inquiryResult}
+                  theme={theme}
+                  lang={lang}
+                />
+              </div>
             </>
           )}
 
@@ -656,6 +607,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -667,6 +619,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -678,6 +631,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -690,6 +644,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -705,6 +660,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -718,6 +674,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -730,6 +687,7 @@ export default function App() {
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
+              lang={lang}
             />
           )}
 
@@ -741,6 +699,7 @@ export default function App() {
               currencyRates={currencyRates}
               theme={theme}
               onOpenInvoice={handleOpenInvoice}
+              lang={lang}
             />
           )}
 
@@ -750,6 +709,7 @@ export default function App() {
               theme={theme}
               currentUser={currentUser}
               onLogout={handleLogout}
+              lang={lang}
             />
           )}
 
@@ -758,6 +718,7 @@ export default function App() {
             <SupportCenterPage
               theme={theme}
               onContactClick={() => handleRouteChange('contact')}
+              lang={lang}
             />
           )}
 
@@ -785,6 +746,7 @@ export default function App() {
           {currentRoute === 'signin' && (
             <SignInPage
               theme={theme}
+              lang={lang}
               onLoginSuccess={(user) => {
                 handleLoginSuccess(user);
                 handleRouteChange(user.role === 'super_admin' || user.role === 'sales_admin' ? 'admin' : 'home');

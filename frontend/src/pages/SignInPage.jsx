@@ -3,25 +3,19 @@ import {
   Lock, 
   Mail, 
   User, 
-  Building, 
-  Phone, 
   ArrowRight, 
   ArrowLeft,
-  ShieldCheck, 
   CheckCircle2, 
   AlertCircle,
-  Eye,
-  EyeOff,
-  Sparkles,
-  Zap,
-  Check,
-  Star
+  Eye, 
+  EyeOff
 } from 'lucide-react';
 
 export default function SignInPage({ 
   onLoginSuccess, 
   onBackToHome, 
-  theme = 'dark' 
+  theme = 'dark',
+  lang = 'en'
 }) {
   const [mode, setMode] = useState('login'); // 'login' | 'register'
   const [showPassword, setShowPassword] = useState(false);
@@ -29,10 +23,8 @@ export default function SignInPage({
     name: '',
     email: '',
     password: '',
-    phone: '',
-    company: ''
+    referralCode: ''
   });
-  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -42,12 +34,6 @@ export default function SignInPage({
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     setError('');
-  };
-
-  const handleQuickDemoLogin = (email, password) => {
-    setFormData(prev => ({ ...prev, email, password }));
-    setMode('login');
-    performLogin(email, password);
   };
 
   const performLogin = async (email, password) => {
@@ -66,10 +52,10 @@ export default function SignInPage({
       };
       localStorage.setItem('raxwo_token', 'demo_admin_jwt_token_2026');
       localStorage.setItem('raxwo_user', JSON.stringify(adminUser));
-      setSuccess('Authenticated as Super Administrator. Redirecting to workspace...');
+      setSuccess('Authenticated as Super Administrator. Redirecting...');
       setTimeout(() => {
         if (onLoginSuccess) onLoginSuccess(adminUser);
-      }, 600);
+      }, 500);
       setLoading(false);
       return;
     }
@@ -84,10 +70,10 @@ export default function SignInPage({
       };
       localStorage.setItem('raxwo_token', 'demo_sales_jwt_token_2026');
       localStorage.setItem('raxwo_user', JSON.stringify(salesUser));
-      setSuccess('Authenticated as Sales Manager. Redirecting to workspace...');
+      setSuccess('Authenticated as Sales Manager. Redirecting...');
       setTimeout(() => {
         if (onLoginSuccess) onLoginSuccess(salesUser);
-      }, 600);
+      }, 500);
       setLoading(false);
       return;
     }
@@ -105,7 +91,7 @@ export default function SignInPage({
       setSuccess('Welcome back, Sample Buyer! Redirecting...');
       setTimeout(() => {
         if (onLoginSuccess) onLoginSuccess(buyerUser);
-      }, 600);
+      }, 500);
       setLoading(false);
       return;
     }
@@ -126,7 +112,7 @@ export default function SignInPage({
       setSuccess(`Welcome back, ${data.user.name}!`);
       setTimeout(() => {
         if (onLoginSuccess) onLoginSuccess(data.user);
-      }, 600);
+      }, 500);
     } catch (err) {
       setError(err.message || 'Login failed. Please verify email and password.');
     } finally {
@@ -156,7 +142,7 @@ export default function SignInPage({
         setSuccess(`Account created! Welcome, ${data.user.name}!`);
         setTimeout(() => {
           if (onLoginSuccess) onLoginSuccess(data.user);
-        }, 600);
+        }, 500);
       } catch (err) {
         setError(err.message || 'Registration failed');
       } finally {
@@ -166,429 +152,232 @@ export default function SignInPage({
   };
 
   return (
-    <div className={`w-full min-h-[90vh] py-8 sm:py-12 px-6 sm:px-10 lg:px-16 xl:px-20 flex flex-col justify-center transition-colors ${
+    <div className={`w-full min-h-[90vh] py-8 sm:py-12 px-4 sm:px-6 flex flex-col justify-center items-center transition-colors ${
       isDark ? 'text-white' : 'text-slate-900'
     }`}>
       
       {/* Top Bar: Back to Home Button */}
-      <div className="max-w-6xl mx-auto w-full mb-8">
-        <button
-          onClick={onBackToHome}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors cursor-pointer border ${
-            isDark 
-              ? 'bg-slate-900/80 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800' 
-              : 'bg-white border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 shadow-sm'
-          }`}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Marketplace</span>
-        </button>
-      </div>
+      {onBackToHome && (
+        <div className="max-w-[460px] w-full mb-6">
+          <button
+            onClick={onBackToHome}
+            className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors cursor-pointer border ${
+              isDark 
+                ? 'bg-slate-900/80 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800' 
+                : 'bg-white border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 shadow-sm'
+            }`}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>{lang === 'si' ? 'නැවත මුල් පිටුවට' : lang === 'ta' ? 'மீண்டும் முகப்பிற்கு' : 'Back to Marketplace'}</span>
+          </button>
+        </div>
+      )}
 
-      {/* Main Split Layout Container */}
-      <div className={`max-w-6xl mx-auto w-full rounded-3xl border shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 ${
-        isDark 
-          ? 'bg-[#0a0f22]/95 border-slate-800/90' 
-          : 'bg-white border-slate-200'
-      }`}>
+      {/* Main Card Container (Matches Reference Photos) */}
+      <div className="w-full max-w-[460px] bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-2xl text-slate-900 border border-slate-100">
         
-        {/* LEFT COLUMN: Visual Brand & Benefits Showcase (5 Cols) */}
-        <div className={`lg:col-span-5 p-8 sm:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r relative overflow-hidden ${
-          isDark 
-            ? 'bg-gradient-to-br from-[#0c1432] via-[#090e24] to-[#060a17] border-slate-800/80 text-white' 
-            : 'bg-gradient-to-br from-blue-900 via-slate-900 to-indigo-950 border-slate-200 text-white'
-        }`}>
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div>
-            {/* Brand Logo */}
-            <div className="flex items-center gap-2 mb-6">
-              <img 
-                src="/raxwo-logo.png" 
-                alt="RAXWO NEXT LEVEL TECH" 
-                className="h-9 w-auto object-contain" 
-              />
-            </div>
-
-            <span className="text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-blue-500/20 text-cyan-300 border border-blue-400/30 inline-block mb-4">
-              ENTERPRISE AUTHENTICATION
-            </span>
-
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">
-              One Secure Account. Complete Software Freedom.
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-8">
-              Sign in to manage your purchased ERP packages, download unminified source code, launch interactive sandbox terminals, and generate official VAT invoices.
-            </p>
-
-            {/* Feature Checklist */}
-            <div className="space-y-3.5 mb-8">
-              {[
-                { title: 'Full Source Code Access', desc: 'Direct Git repositories and zip bundles.' },
-                { title: 'No Recurring Seat Taxes', desc: 'Pay once, own forever with zero penalties.' },
-                { title: 'Live Sandbox & Staging', desc: 'Test POS updates safely in simulated counters.' },
-                { title: 'Commercial VAT Invoicing', desc: 'RAMIS compliant official receipts & audit logs.' }
-              ].map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 stroke-[3]" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-white">{feat.title}</h4>
-                    <p className="text-[11px] text-slate-400">{feat.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Testimonial Quote */}
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/60 backdrop-blur-md">
-            <div className="flex items-center gap-1 text-amber-400 mb-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
-              ))}
-            </div>
-            <p className="text-xs text-slate-200 italic">
-              "Raxwo Mobixa transformed our 3 mobile branches. Having full source code ownership gave our business complete peace of mind."
-            </p>
-            <span className="text-[11px] font-bold text-cyan-300 block mt-2">
-              — Perera Mobile Hub, Colombo 03
-            </span>
-          </div>
-
+        {/* Top Tab Switcher */}
+        <div className="bg-[#f0f4f9] p-1.5 rounded-2xl flex items-center mb-6">
+          <button
+            type="button"
+            onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
+            className={`flex-1 py-2.5 sm:py-3 rounded-xl text-center font-bold text-sm sm:text-base transition-all cursor-pointer ${
+              mode === 'login'
+                ? 'bg-white border-2 border-[#0062ff] text-slate-900 shadow-sm'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            {lang === 'si' ? 'ඇතුල් වන්න' : lang === 'ta' ? 'உள்நுழைக' : 'Sign In'}
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode('register'); setError(''); setSuccess(''); }}
+            className={`flex-1 py-2.5 sm:py-3 rounded-xl text-center font-bold text-sm sm:text-base transition-all cursor-pointer ${
+              mode === 'register'
+                ? 'bg-white border-2 border-[#0062ff] text-slate-900 shadow-sm'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            {lang === 'si' ? 'ලියාපදිංචි වන්න' : lang === 'ta' ? 'பதிவு செய்க' : 'Sign Up'}
+          </button>
         </div>
 
-        {/* RIGHT COLUMN: Interactive Form & 1-Click Demo Profiles (7 Cols) */}
-        <div className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between">
+        {/* Title & Subtitle */}
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-[28px] font-extrabold text-[#0a0827] tracking-tight">
+            {mode === 'login' 
+              ? (lang === 'si' ? 'නැවත සාදරයෙන් පිළිගනිමු' : lang === 'ta' ? 'மீண்டும் வருக' : 'Welcome back') 
+              : (lang === 'si' ? 'ගිණුමක් සාදන්න' : lang === 'ta' ? 'கணக்கை உருவாக்கவும்' : 'Create Account')}
+          </h2>
+          <p className="text-sm font-medium text-slate-500 mt-1">
+            {mode === 'login' 
+              ? (lang === 'si' ? 'ඔබගේ පද්ධතියට ඇතුල් වන්න' : lang === 'ta' ? 'உங்கள் போர்ட்டலில் உள்நுழையவும்' : 'Sign in to your portal') 
+              : (lang === 'si' ? 'සේවාදායකයෙකු ලෙස ලියාපදිංචි වන්න' : lang === 'ta' ? 'தொடங்குவதற்கு பதிவு செய்யவும்' : 'Register as a client to get started')}
+          </p>
+        </div>
+
+        {/* Feedback Alerts */}
+        {error && (
+          <div className="mb-4 flex items-center gap-2 p-3 rounded-xl text-xs bg-red-50 text-red-600 border border-red-200">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        {success && (
+          <div className="mb-4 flex items-center gap-2 p-3 rounded-xl text-xs bg-emerald-50 text-emerald-600 border border-emerald-200">
+            <CheckCircle2 className="w-4 h-4 shrink-0" />
+            <span>{success}</span>
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
           
+          {/* Sign Up: Full Name */}
+          {mode === 'register' && (
+            <div>
+              <label className="block text-xs sm:text-sm font-bold text-[#1e293b] mb-1.5">
+                {lang === 'si' ? 'සම්පූර්ණ නම' : lang === 'ta' ? 'முழுப் பெயர்' : 'Full Name'}
+              </label>
+              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl px-3.5 py-3">
+                <User className="w-5 h-5 text-slate-400 shrink-0 mr-3" />
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  placeholder={lang === 'si' ? 'ඔබගේ සම්පූර්ණ නම' : lang === 'ta' ? 'உங்கள் முழுப் பெயர்' : 'Your full name'}
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full bg-transparent text-slate-900 placeholder-slate-400 font-medium text-sm sm:text-base focus:outline-none"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Email Address */}
           <div>
-            {/* Switch Tabs (Sign In vs Register) */}
-            <div className={`flex items-center p-1 rounded-2xl mb-8 border ${
-              isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
+            <label className="block text-xs sm:text-sm font-bold text-[#1e293b] mb-1.5">
+              {lang === 'si' ? 'විද්‍යුත් තැපෑල (Email)' : lang === 'ta' ? 'மின்னஞ்சல் முகவரி' : 'Email Address'}
+            </label>
+            <div className="relative flex items-center bg-[#eaf2fc] rounded-xl px-3.5 py-3">
+              <Mail className="w-5 h-5 text-slate-400 shrink-0 mr-3" />
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="you@example.com"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full bg-transparent text-slate-900 placeholder-slate-400 font-medium text-sm sm:text-base focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-xs sm:text-sm font-bold text-[#1e293b] mb-1.5">
+              {lang === 'si' ? 'මුරපදය (Password)' : lang === 'ta' ? 'கடவுச்சொல்' : 'Password'}
+            </label>
+            <div className="relative flex items-center bg-[#eaf2fc] rounded-xl px-3.5 py-3">
+              <Lock className="w-5 h-5 text-slate-400 shrink-0 mr-3" />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                required
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full bg-transparent text-slate-900 placeholder-slate-400 font-medium text-sm sm:text-base focus:outline-none"
+              />
               <button
                 type="button"
-                onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
-                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                  mode === 'login'
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-slate-400 hover:text-slate-600 shrink-0 ml-2 cursor-pointer"
               >
-                Sign In to Account
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
+            </div>
+          </div>
+
+          {/* Sign In: Forgot Password link */}
+          {mode === 'login' && (
+            <div className="text-right !mt-1.5 !mb-5">
+              <button
+                type="button"
+                onClick={() => setError(lang === 'si' ? 'මුරපදය නැවත සැකසීමේ උපදෙස් ඔබගේ ඊමේල් ලිපිනයට එවනු ලැබේ.' : lang === 'ta' ? 'கடவுச்சொல் மீட்டமைப்பு வழிமுறைகள் உங்கள் மின்னஞ்சலுக்கு அனுப்பப்படும்.' : 'Password reset instructions will be sent to your email.')}
+                className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 font-medium cursor-pointer"
+              >
+                {lang === 'si' ? 'මුරපදය අමතකද?' : lang === 'ta' ? 'கடவுச்சொல் மறந்துவிட்டதா?' : 'Forgot password?'}
+              </button>
+            </div>
+          )}
+
+          {/* Sign Up: Referral Code (optional) */}
+          {mode === 'register' && (
+            <div>
+              <label className="block text-xs sm:text-sm font-bold text-[#1e293b] mb-1.5">
+                {lang === 'si' ? 'යොමු කේතය (Referral Code)' : lang === 'ta' ? 'பரிந்துரை குறியீடு' : 'Referral Code'} <span className="text-slate-400 font-normal">({lang === 'si' ? 'විකල්ප' : lang === 'ta' ? 'விருப்பத்தேர்வு' : 'optional'})</span>
+              </label>
+              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl px-3.5 py-3">
+                <input
+                  type="text"
+                  name="referralCode"
+                  placeholder={lang === 'si' ? 'යොමු කේතය ඇතුළත් කරන්න' : lang === 'ta' ? 'பரிந்துரை குறியீட்டை உள்ளிடவும்' : 'Enter referral code'}
+                  value={formData.referralCode}
+                  onChange={handleChange}
+                  className="w-full bg-transparent text-slate-900 placeholder-slate-400 font-medium text-sm sm:text-base focus:outline-none"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Action Button: Dark Navy */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full !mt-6 py-3.5 sm:py-4 px-6 rounded-xl font-bold text-sm sm:text-base text-white bg-[#0a0827] hover:bg-[#151241] active:scale-[0.99] transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          >
+            {loading ? (
+              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <>
+                <span>
+                  {mode === 'login' 
+                    ? (lang === 'si' ? 'ඇතුල් වන්න' : lang === 'ta' ? 'உள்நுழைக' : 'Sign In') 
+                    : (lang === 'si' ? 'ගිණුම සාදන්න' : lang === 'ta' ? 'கணக்கை உருவாக்கவும்' : 'Create Account')}
+                </span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </>
+            )}
+          </button>
+        </form>
+
+        {/* Bottom Switch Link */}
+        <div className="mt-6 text-center text-xs sm:text-sm text-slate-500">
+          {mode === 'login' ? (
+            <span>
+              {lang === 'si' ? 'ගිණුමක් නැද්ද? ' : lang === 'ta' ? 'கணக்கு இல்லையா? ' : "Don't have an account? "}
               <button
                 type="button"
                 onClick={() => { setMode('register'); setError(''); setSuccess(''); }}
-                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                  mode === 'register'
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
+                className="text-[#0094ff] hover:underline font-semibold cursor-pointer"
               >
-                Create New Account
+                {lang === 'si' ? 'ලියාපදිංචි වන්න' : lang === 'ta' ? 'பதிவு செய்க' : 'Sign up'}
               </button>
-            </div>
-
-            {/* Header info */}
-            <div className="mb-6">
-              <h3 className={`text-2xl font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-950'}`}>
-                {mode === 'login' ? 'Welcome Back' : 'Create Your Buyer Account'}
-              </h3>
-              <p className={`text-xs sm:text-sm mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                {mode === 'login' 
-                  ? 'Enter your credentials or choose a 1-click demo profile below.' 
-                  : 'Get immediate access to product source codes and order tracking.'}
-              </p>
-            </div>
-
-            {/* 1-Click Instant Demo Login Profiles (for testing and showcase) */}
-            {mode === 'login' && (
-              <div className={`mb-6 p-4 rounded-2xl border ${
-                isDark ? 'bg-[#0f152d]/80 border-slate-800' : 'bg-slate-50 border-slate-200'
-              }`}>
-                <div className="flex items-center justify-between mb-2.5">
-                  <span className={`text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${
-                    isDark ? 'text-cyan-400' : 'text-blue-600'
-                  }`}>
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>Instant 1-Click Demo Profiles</span>
-                  </span>
-                  <span className="text-[10px] text-slate-400">Click to Auto-Login</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                  
-                  {/* Profile 1: Super Admin */}
-                  <button
-                    type="button"
-                    onClick={() => handleQuickDemoLogin('admin@raxwo.lk', 'Admin@12345')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer group hover:scale-[1.02] ${
-                      isDark 
-                        ? 'bg-slate-900/90 border-slate-700/80 hover:border-blue-500' 
-                        : 'bg-white border-slate-200 hover:border-blue-500 shadow-sm'
-                    }`}
-                  >
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase bg-blue-500/20 text-blue-400 border border-blue-500/30 block w-max mb-1">
-                      Full Access
-                    </span>
-                    <span className={`text-xs font-bold block group-hover:text-blue-500 transition-colors ${
-                      isDark ? 'text-white' : 'text-slate-900'
-                    }`}>
-                      Super Admin
-                    </span>
-                    <span className="text-[10px] text-slate-400 block mt-0.5">
-                      Backoffice &amp; Catalog
-                    </span>
-                  </button>
-
-                  {/* Profile 2: Sales Manager */}
-                  <button
-                    type="button"
-                    onClick={() => handleQuickDemoLogin('sales@raxwo.lk', 'Sales@12345')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer group hover:scale-[1.02] ${
-                      isDark 
-                        ? 'bg-slate-900/90 border-slate-700/80 hover:border-indigo-500' 
-                        : 'bg-white border-slate-200 hover:border-indigo-500 shadow-sm'
-                    }`}
-                  >
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 block w-max mb-1">
-                      CRM &amp; Quotes
-                    </span>
-                    <span className={`text-xs font-bold block group-hover:text-indigo-400 transition-colors ${
-                      isDark ? 'text-white' : 'text-slate-900'
-                    }`}>
-                      Sales Manager
-                    </span>
-                    <span className="text-[10px] text-slate-400 block mt-0.5">
-                      Leads &amp; Invoices
-                    </span>
-                  </button>
-
-                  {/* Profile 3: Sample Buyer */}
-                  <button
-                    type="button"
-                    onClick={() => handleQuickDemoLogin('buyer@raxwo.lk', 'Buyer@12345')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer group hover:scale-[1.02] ${
-                      isDark 
-                        ? 'bg-slate-900/90 border-slate-700/80 hover:border-emerald-500' 
-                        : 'bg-white border-slate-200 hover:border-emerald-500 shadow-sm'
-                    }`}
-                  >
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 block w-max mb-1">
-                      Customer
-                    </span>
-                    <span className={`text-xs font-bold block group-hover:text-emerald-500 transition-colors ${
-                      isDark ? 'text-white' : 'text-slate-900'
-                    }`}>
-                      Sample Buyer
-                    </span>
-                    <span className="text-[10px] text-slate-400 block mt-0.5">
-                      Orders &amp; Licenses
-                    </span>
-                  </button>
-
-                </div>
-              </div>
-            )}
-
-            {/* Error & Success Feedback Alerts */}
-            {error && (
-              <div className="mb-5 flex items-center gap-2.5 p-3.5 rounded-2xl text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/30">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{error}</span>
-              </div>
-            )}
-
-            {success && (
-              <div className="mb-5 flex items-center gap-2.5 p-3.5 rounded-2xl text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>{success}</span>
-              </div>
-            )}
-
-            {/* Main Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              
-              {mode === 'register' && (
-                <div>
-                  <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Your Full Name *
-                  </label>
-                  <div className="relative">
-                    <User className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      placeholder="e.g. Nimal Perera"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={`w-full pl-10 pr-4 py-3 text-sm rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                        isDark 
-                          ? 'bg-slate-900/90 border-slate-700 text-white placeholder-slate-500' 
-                          : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                      }`}
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Work or Personal Email *
-                </label>
-                <div className="relative">
-                  <Mail className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="name@company.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={`w-full pl-10 pr-4 py-3 text-sm rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                      isDark 
-                        ? 'bg-slate-900/90 border-slate-700 text-white placeholder-slate-500' 
-                        : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className={`block text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Password *
-                  </label>
-                  {mode === 'login' && (
-                    <button
-                      type="button"
-                      onClick={() => alert('Password reset link will be sent to your email.')}
-                      className="text-xs font-medium text-blue-500 hover:underline cursor-pointer"
-                    >
-                      Forgot password?
-                    </button>
-                  )}
-                </div>
-                <div className="relative">
-                  <Lock className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    required
-                    placeholder="Enter at least 6 characters"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className={`w-full pl-10 pr-11 py-3 text-sm rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                      isDark 
-                        ? 'bg-slate-900/90 border-slate-700 text-white placeholder-slate-500' 
-                        : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                    }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-3.5 text-slate-400 hover:text-white cursor-pointer"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              {mode === 'register' && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Phone (WhatsApp)
-                    </label>
-                    <div className="relative">
-                      <Phone className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                      <input
-                        type="tel"
-                        name="phone"
-                        placeholder="077 123 4567"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={`w-full pl-10 pr-4 py-3 text-sm rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                          isDark 
-                            ? 'bg-slate-900/90 border-slate-700 text-white placeholder-slate-500' 
-                            : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                        }`}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Company / Store Name
-                    </label>
-                    <div className="relative">
-                      <Building className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                      <input
-                        type="text"
-                        name="company"
-                        placeholder="Perera Stores"
-                        value={formData.company}
-                        onChange={handleChange}
-                        className={`w-full pl-10 pr-4 py-3 text-sm rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                          isDark 
-                            ? 'bg-slate-900/90 border-slate-700 text-white placeholder-slate-500' 
-                            : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                        }`}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Remember Me Checkbox */}
-              {mode === 'login' && (
-                <div className="flex items-center gap-2 pt-1">
-                  <input
-                    type="checkbox"
-                    id="rememberMe"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
-                  />
-                  <label htmlFor="rememberMe" className={`text-xs cursor-pointer ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Keep me signed in on this device
-                  </label>
-                </div>
-              )}
-
-              {/* Primary Action Button */}
+            </span>
+          ) : (
+            <span>
+              {lang === 'si' ? 'දැනටමත් ගිණුමක් තිබේද? ' : lang === 'ta' ? 'ஏற்கனவே கணக்கு உள்ளதா? ' : 'Already have an account? '}
               <button
-                type="submit"
-                disabled={loading}
-                className="w-full mt-2 py-3.5 px-6 rounded-2xl font-bold text-sm text-white bg-blue-600 hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 hover:scale-[1.01] active:scale-[0.99]"
+                type="button"
+                onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
+                className="text-[#0094ff] hover:underline font-semibold cursor-pointer"
               >
-                {loading ? (
-                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <span>{mode === 'login' ? 'Sign In to Your Workspace' : 'Create Free Account'}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
+                {lang === 'si' ? 'ඇතුල් වන්න' : lang === 'ta' ? 'உள்நுழைக' : 'Sign in'}
               </button>
-
-            </form>
-
-            {/* Bottom Security Note */}
-            <div className="mt-8 pt-6 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>256-Bit TLS Secure Encryption</span>
-              </span>
-              <span>Sri Lanka Business Compliant</span>
-            </div>
-
-          </div>
-
+            </span>
+          )}
         </div>
 
       </div>

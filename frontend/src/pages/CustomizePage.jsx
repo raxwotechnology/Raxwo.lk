@@ -16,7 +16,8 @@ export default function CustomizePage({
   onProceedToOrder,
   currency = 'LKR', 
   currencyRates,
-  theme = 'dark'
+  theme = 'dark',
+  lang = 'en'
 }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -38,10 +39,10 @@ export default function CustomizePage({
   };
 
   const steps = [
-    { num: 1, label: 'Basic Info' },
-    { num: 2, label: 'Choose Features' },
-    { num: 3, label: 'Your Requests' },
-    { num: 4, label: 'Review' }
+    { num: 1, label: lang === 'si' ? 'මූලික තොරතුරු' : lang === 'ta' ? 'அடிப்படை தகவல்' : 'Basic Info' },
+    { num: 2, label: lang === 'si' ? 'විශේෂාංග තෝරන්න' : lang === 'ta' ? 'அம்சங்களைத் தேர்வுசெய்க' : 'Choose Features' },
+    { num: 3, label: lang === 'si' ? 'විශේෂ අවශ්‍යතා' : lang === 'ta' ? 'உங்கள் தேவைகள்' : 'Your Requests' },
+    { num: 4, label: lang === 'si' ? 'සමාලෝචනය' : lang === 'ta' ? 'மதிப்பாய்வு' : 'Review' }
   ];
 
   const availableFeatures = [
@@ -91,7 +92,7 @@ export default function CustomizePage({
           onClick={onBackToProduct}
           className="hover:text-cyan-400 cursor-pointer transition-colors"
         >
-          Products
+          {lang === 'si' ? 'නිෂ්පාදන' : lang === 'ta' ? 'தயாரிப்புகள்' : 'Products'}
         </button>
         <span>/</span>
         <button 
@@ -102,7 +103,7 @@ export default function CustomizePage({
         </button>
         <span>/</span>
         <span className={isDark ? 'text-white font-medium' : 'text-slate-900 font-medium'}>
-          Customize
+          {lang === 'si' ? 'අභිරුචිකරණය' : lang === 'ta' ? 'தனிப்பயனாக்குக' : 'Customize'}
         </span>
       </nav>
 
@@ -111,17 +112,21 @@ export default function CustomizePage({
         <span className={`text-[11px] font-bold tracking-[0.25em] uppercase mb-3 inline-block ${
           isDark ? 'text-cyan-400' : 'text-cyan-700'
         }`}>
-          MAKE IT FIT YOUR BUSINESS
+          {lang === 'si' ? 'ඔබගේ ව්‍යාපාරයට ගැළපෙන පරිදි සකසන්න' : lang === 'ta' ? 'உங்கள் வணிகத்திற்கு ஏற்ப அமைக்கவும்' : 'MAKE IT FIT YOUR BUSINESS'}
         </span>
         <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight mb-3 ${
           isDark ? 'text-white' : 'text-slate-900'
         }`}>
-          Customize Your {p.name}
+          {lang === 'si' ? `${p.name} ඔබගේ අවශ්‍යතාවයට සකසන්න` : lang === 'ta' ? `உங்கள் ${p.name}-ஐ தனிப்பயனாக்குங்கள்` : `Customize Your ${p.name}`}
         </h1>
         <p className={`text-sm sm:text-base ${
           isDark ? 'text-slate-400' : 'text-slate-600'
         }`}>
-          Answer a few simple questions. You can change these details later.
+          {lang === 'si' 
+            ? 'සරල ප්‍රශ්න කිහිපයකට පිළිතුරු දෙන්න. ඔබට පසුවද මේවා වෙනස් කළ හැක.' 
+            : lang === 'ta' 
+            ? 'சில எளிய கேள்விகளுக்கு பதிலளிக்கவும். இந்த விவரங்களை நீங்கள் பின்னர் மாற்றலாம்.' 
+            : 'Answer a few simple questions. You can change these details later.'}
         </p>
       </div>
 
@@ -178,10 +183,10 @@ export default function CustomizePage({
                   </div>
                   <div>
                     <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      Tell us about your business
+                      {lang === 'si' ? 'ඔබගේ ව්‍යාපාරය පිළිබඳ අපට කියන්න' : lang === 'ta' ? 'உங்கள் வணிகத்தைப் பற்றி எங்களிடம் கூறுங்கள்' : 'Tell us about your business'}
                     </h3>
                     <p className="text-xs text-slate-400">
-                      This helps us prepare the right setup.
+                      {lang === 'si' ? 'මෙය ඔබට ගැළපෙන පද්ධතිය සකස් කිරීමට උපකාරී වේ.' : lang === 'ta' ? 'சரியான அமைப்பைத் தயாரிக்க இது எங்களுக்கு உதவுகிறது.' : 'This helps us prepare the right setup.'}
                     </p>
                   </div>
                 </div>
@@ -189,7 +194,7 @@ export default function CustomizePage({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
                   <div>
                     <label className={`text-xs font-semibold block mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Business Name
+                      {lang === 'si' ? 'ව්‍යාපාරයේ නම' : lang === 'ta' ? 'வணிகப் பெயர்' : 'Business Name'}
                     </label>
                     <input
                       type="text"
@@ -206,7 +211,7 @@ export default function CustomizePage({
 
                   <div>
                     <label className={`text-xs font-semibold block mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Business Type
+                      {lang === 'si' ? 'ව්‍යාපාර වර්ගය' : lang === 'ta' ? 'வணிக வகை' : 'Business Type'}
                     </label>
                     <input
                       type="text"
@@ -223,7 +228,7 @@ export default function CustomizePage({
 
                   <div>
                     <label className={`text-xs font-semibold block mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Number of Users
+                      {lang === 'si' ? 'පරිශීලකයින් ගණන' : lang === 'ta' ? 'பயனர்களின் எண்ணிக்கை' : 'Number of Users'}
                     </label>
                     <input
                       type="number"
@@ -240,7 +245,7 @@ export default function CustomizePage({
 
                   <div>
                     <label className={`text-xs font-semibold block mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Number of Branches
+                      {lang === 'si' ? 'ශාඛා ගණන' : lang === 'ta' ? 'கிளைகளின் எண்ணிக்கை' : 'Number of Branches'}
                     </label>
                     <input
                       type="number"
@@ -267,10 +272,10 @@ export default function CustomizePage({
                   </div>
                   <div>
                     <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      Select Modules for Your Package
+                      {lang === 'si' ? 'ඔබගේ මෘදුකාංගයට අවශ්‍ය මොඩියුල තෝරන්න' : lang === 'ta' ? 'உங்கள் தொகுப்பிற்கான தொகுதிகளைத் தேர்ந்தெடுக்கவும்' : 'Select Modules for Your Package'}
                     </h3>
                     <p className="text-xs text-slate-400">
-                      Choose which modules should be activated and customized in your software.
+                      {lang === 'si' ? 'ඔබගේ මෘදුකාංගයේ සක්‍රීය කළ යුතු මොඩියුල තෝරන්න.' : lang === 'ta' ? 'எந்த தொகுதிகள் செயல்படுத்தப்பட வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்.' : 'Choose which modules should be activated and customized in your software.'}
                     </p>
                   </div>
                 </div>
@@ -310,10 +315,10 @@ export default function CustomizePage({
                   </div>
                   <div>
                     <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      Special Requests & Hardware
+                      {lang === 'si' ? 'විශේෂ ඉල්ලීම් සහ දෘඩාංග' : lang === 'ta' ? 'சிறப்பு கோரிக்கைகள் மற்றும் வன்பொருள்' : 'Special Requests & Hardware'}
                     </h3>
                     <p className="text-xs text-slate-400">
-                      Specify thermal printer model, barcode scanner type, or custom reports.
+                      {lang === 'si' ? 'තාප මුද්‍රණ යන්ත්‍ර මාදිලිය, බාර්කෝඩ් ස්කෑනර් වර්ගය හෝ විශේෂ වාර්තා සඳහන් කරන්න.' : lang === 'ta' ? 'தெர்மல் பிரிண்டர் மாடல் அல்லது ஸ்கேனர் வகையைக் குறிப்பிடவும்.' : 'Specify thermal printer model, barcode scanner type, or custom reports.'}
                     </p>
                   </div>
                 </div>
@@ -323,7 +328,7 @@ export default function CustomizePage({
                     rows={4}
                     value={formData.specialRequests}
                     onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
-                    placeholder="Enter any hardware models, invoice formats, or specific workflows..."
+                    placeholder={lang === 'si' ? 'දෘඩාංග ආකෘති, බිල්පත් ආකෘති හෝ විශේෂිත අවශ්‍යතා මෙහි සටහන් කරන්න...' : lang === 'ta' ? 'வன்பொருள் மாதிரிகள் அல்லது குறிப்பிட்ட பணிப்பாய்வுகளை உள்ளிடவும்...' : 'Enter any hardware models, invoice formats, or specific workflows...'}
                     className={`w-full p-4 rounded-xl text-sm focus:outline-none transition-colors ${
                       isDark 
                         ? 'bg-[#11172e] border border-slate-800 text-white placeholder-slate-500 focus:border-cyan-400' 
@@ -343,10 +348,10 @@ export default function CustomizePage({
                   </div>
                   <div>
                     <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      Review Customization Specs
+                      {lang === 'si' ? 'තොරතුරු සමාලෝචනය කරන්න' : lang === 'ta' ? 'விவரக்குறிப்புகளை மதிப்பாய்வு செய்யவும்' : 'Review Customization Specs'}
                     </h3>
                     <p className="text-xs text-slate-400">
-                      Check your specifications before confirming your order.
+                      {lang === 'si' ? 'ඇණවුම තහවුරු කිරීමට පෙර ඔබගේ පිරිවිතර පරීක්ෂා කරන්න.' : lang === 'ta' ? 'ஆர்டரை உறுதிப்படுத்துவதற்கு முன் விவரங்களைச் சரிபார்க்கவும்.' : 'Check your specifications before confirming your order.'}
                     </p>
                   </div>
                 </div>
@@ -355,19 +360,19 @@ export default function CustomizePage({
                   isDark ? 'bg-[#11172e] border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
                 }`}>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Business:</span>
+                    <span className="text-slate-400">{lang === 'si' ? 'ව්‍යාපාරය:' : lang === 'ta' ? 'வணிகம்:' : 'Business:'}</span>
                     <span className="font-bold">{formData.businessName} ({formData.businessType})</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Scale:</span>
-                    <span>{formData.usersCount} Users, {formData.branchesCount} Branch(es)</span>
+                    <span className="text-slate-400">{lang === 'si' ? 'පරිමාණය:' : lang === 'ta' ? 'அளவு:' : 'Scale:'}</span>
+                    <span>{formData.usersCount} {lang === 'si' ? 'පරිශීලකයින්' : lang === 'ta' ? 'பயனர்கள்' : 'Users'}, {formData.branchesCount} {lang === 'si' ? 'ශාඛා' : lang === 'ta' ? 'கிளைகள்' : 'Branch(es)'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Selected Features:</span>
-                    <span>{formData.selectedFeatures.length} Modules</span>
+                    <span className="text-slate-400">{lang === 'si' ? 'තෝරාගත් මොඩියුල:' : lang === 'ta' ? 'தேர்ந்தெடுக்கப்பட்டவை:' : 'Selected Features:'}</span>
+                    <span>{formData.selectedFeatures.length} {lang === 'si' ? 'මොඩියුල' : lang === 'ta' ? 'தொகுதிகள்' : 'Modules'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Hardware & Notes:</span>
+                    <span className="text-slate-400">{lang === 'si' ? 'දෘඩාංග සහ සටහන්:' : lang === 'ta' ? 'வன்பொருள் மற்றும் குறிப்புகள்:' : 'Hardware & Notes:'}</span>
                     <span>{formData.specialRequests}</span>
                   </div>
                 </div>
@@ -385,7 +390,7 @@ export default function CustomizePage({
                     isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Back
+                  {lang === 'si' ? 'ආපසු' : lang === 'ta' ? 'பின்னால்' : 'Back'}
                 </button>
               ) : <div></div>}
 
@@ -393,7 +398,11 @@ export default function CustomizePage({
                 onClick={handleNextStep}
                 className="flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-[0_0_20px_rgba(99,102,241,0.4)] cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <span>{currentStep === 4 ? "Proceed to Checkout" : "Next Step"}</span>
+                <span>
+                  {currentStep === 4 
+                    ? (lang === 'si' ? 'ගෙවීම සඳහා ඉදිරියට' : lang === 'ta' ? 'செக்அவுட்டிற்கு தொடரவும்' : 'Proceed to Checkout') 
+                    : (lang === 'si' ? 'මීළඟ පියවර' : lang === 'ta' ? 'அடுத்த படி' : 'Next Step')}
+                </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -424,7 +433,11 @@ export default function CustomizePage({
               {p.name} Professional
             </h4>
             <p className="text-xs text-slate-400 mt-1 mb-6 leading-relaxed">
-              Your package includes the complete source code and setup support.
+              {lang === 'si' 
+                ? 'ඔබගේ පැකේජයට සම්පූර්ණ මූල කේතය සහ සැකසුම් සහාය ඇතුළත් වේ.' 
+                : lang === 'ta' 
+                ? 'உங்கள் தொகுப்பில் முழு மூலக் குறியீடு மற்றும் அமைப்பு உதவி அடங்கும்.' 
+                : 'Your package includes the complete source code and setup support.'}
             </p>
 
             {/* Rows: Selected features & Estimated Total */}
@@ -432,13 +445,13 @@ export default function CustomizePage({
               isDark ? 'border-slate-800/80' : 'border-slate-200'
             }`}>
               <div className="flex items-center justify-between text-slate-400">
-                <span>Selected features</span>
+                <span>{lang === 'si' ? 'තෝරාගත් විශේෂාංග' : lang === 'ta' ? 'தேர்ந்தெடுக்கப்பட்ட அம்சங்கள்' : 'Selected features'}</span>
                 <span className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   {formData.selectedFeatures.length} of 8
                 </span>
               </div>
               <div className="flex items-center justify-between text-slate-400">
-                <span>Estimated total</span>
+                <span>{lang === 'si' ? 'ඇස්තමේන්තුගත මුදල' : lang === 'ta' ? 'மதிப்பிடப்பட்ட மொத்தம்' : 'Estimated total'}</span>
                 <span className={`text-sm font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   LKR 120,000
                 </span>
@@ -450,10 +463,10 @@ export default function CustomizePage({
               isDark ? 'bg-[#11172e]/80 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
               <h5 className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                Need Help?
+                {lang === 'si' ? 'උදව් අවශ්‍යද?' : lang === 'ta' ? 'உதவி தேவையா?' : 'Need Help?'}
               </h5>
               <p className="text-[11px] text-slate-400 mt-1 mb-3">
-                Talk to a friendly person before continuing.
+                {lang === 'si' ? 'ඉදිරියට යාමට පෙර අපගේ කණ්ඩායම හා කතා කරන්න.' : lang === 'ta' ? 'தொடர்வதற்கு முன் ஒருவருடன் பேசுங்கள்.' : 'Talk to a friendly person before continuing.'}
               </p>
               <a
                 href="https://wa.me/94771234567"
@@ -466,7 +479,7 @@ export default function CustomizePage({
                 }`}
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Chat on WhatsApp</span>
+                <span>{lang === 'si' ? 'WhatsApp සංවාදය' : lang === 'ta' ? 'WhatsApp அரட்டை' : 'Chat on WhatsApp'}</span>
               </a>
             </div>
 

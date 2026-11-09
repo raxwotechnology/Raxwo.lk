@@ -14,12 +14,7 @@ export default function HeroDashboardMockup({
   const t = (k) => getTranslation(lang, k);
   // Format price based on current currency
   const formatAmount = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   const chartBars = stats?.revenueChart || [
@@ -87,6 +82,7 @@ export default function HeroDashboardMockup({
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
                   {t('greeting')}
+                  <span className="text-base">👋</span>
                 </h3>
                 <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
                   {t('overviewSub')}

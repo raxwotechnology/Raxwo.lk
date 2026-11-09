@@ -5,12 +5,7 @@ export default function PricingSection({ currency = 'LKR', currencyRates, onOpen
   const isDark = theme === 'dark';
 
   const formatPrice = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   const plans = [
@@ -69,7 +64,9 @@ export default function PricingSection({ currency = 'LKR', currencyRates, onOpen
   ];
 
   return (
-    <section id="pricing" className="relative w-full py-20 px-6 sm:px-10 lg:px-16 xl:px-20">
+    <section id="pricing" className={`relative w-full py-20 px-6 sm:px-10 lg:px-16 xl:px-20 border-t ${
+      isDark ? 'border-slate-800/60' : 'border-slate-200'
+    }`}>
       
       {/* Background glow */}
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -98,12 +95,12 @@ export default function PricingSection({ currency = 'LKR', currencyRates, onOpen
         {plans.map((plan, index) => (
           <div
             key={index}
-            className={`relative rounded-3xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 interactive-card ${
+            className={`relative rounded-3xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 ${
               plan.popular
-                ? 'bg-gradient-to-b from-[#111838] to-[#0c1024] text-white border-2 border-indigo-500 shadow-[0_0_35px_rgba(99,102,241,0.25)] scale-[1.02] lg:-translate-y-2 hover:border-indigo-400' 
+                ? 'bg-gradient-to-b from-[#111838] to-[#0c1024] text-white border-2 border-indigo-500 shadow-[0_0_35px_rgba(99,102,241,0.25)] scale-[1.02] lg:-translate-y-2'
                 : isDark 
-                  ? 'bg-[#0b1022]/80 border border-slate-800 hover:border-blue-500/50' 
-                  : 'bg-white border border-slate-200 shadow-xl hover:border-blue-400'
+                  ? 'bg-[#0b1022]/80 border border-slate-800 hover:border-slate-700' 
+                  : 'bg-white border border-slate-200 shadow-xl hover:border-slate-300'
             }`}
           >
             {plan.popular && (

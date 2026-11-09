@@ -103,12 +103,7 @@ export default function ProductsPage({
 
   // Format price
   const formatPrice = (lkrAmount) => {
-    if (!currencyRates || !currencyRates[currency]) {
-      return `LKR ${Number(lkrAmount).toLocaleString()}`;
-    }
-    const rateInfo = currencyRates[currency];
-    const converted = Math.round(lkrAmount * rateInfo.rate);
-    return `${rateInfo.symbol} ${converted.toLocaleString()}`;
+    return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
   // Toggle comparison item
@@ -181,59 +176,6 @@ export default function ProductsPage({
     return matchesCat && matchesTech && matchesPrice && matchesSearch;
   });
 
-  // App Icons generator
-  const renderProductIcon = (product) => {
-    if (product.id === 'mobixa') {
-      return (
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center p-2 shadow-md border ${
-          isDark 
-            ? 'bg-gradient-to-br from-blue-700 to-indigo-900 border-blue-500/40 text-cyan-400' 
-            : 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white border-blue-400/40'
-        }`}>
-          <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="5" y="2" width="14" height="20" rx="3" />
-            <path d="M12 18h.01" />
-            <path d="M9 6h6" />
-            <path d="M8 12l2 2 4-4" stroke="#38bdf8" strokeWidth="2.5" />
-          </svg>
-        </div>
-      );
-    }
-    if (product.id === 'gymora') {
-      return (
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center p-2 shadow-md border ${
-          isDark 
-            ? 'bg-gradient-to-br from-amber-600 to-orange-900 border-amber-500/40 text-amber-400' 
-            : 'bg-gradient-to-br from-amber-500 to-orange-600 text-white border-amber-400/40'
-        }`}>
-          <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 5v14M18 5v14M2 9v6M22 9v6M6 12h12" />
-          </svg>
-        </div>
-      );
-    }
-    if (product.id === 'exxplan') {
-      return (
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center p-2 shadow-md border ${
-          isDark 
-            ? 'bg-gradient-to-br from-blue-700 to-blue-950 border-blue-400/40 text-cyan-400' 
-            : 'bg-gradient-to-br from-indigo-600 to-cyan-600 text-white border-indigo-400/40'
-        }`}>
-          <span className="text-xl font-black tracking-tighter">E</span>
-        </div>
-      );
-    }
-    return (
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center p-2 shadow-md border ${
-        isDark 
-          ? `bg-gradient-to-br ${product.iconColor || 'from-indigo-600 to-slate-900'} border-indigo-500/40 text-white`
-          : `bg-gradient-to-br ${product.iconColor ? product.iconColor.replace('to-slate-900', 'to-indigo-700') : 'from-blue-600 to-indigo-600'} text-white border-blue-300/40`
-      }`}>
-        <span className="text-base font-black uppercase">{product.name.substring(0, 2)}</span>
-      </div>
-    );
-  };
-
   const categoryLabels = {
     'All': lang === 'si' ? 'සියල්ල' : lang === 'ta' ? 'அனைத்தும்' : 'All',
     'Retail': lang === 'si' ? 'සිල්ලර' : lang === 'ta' ? 'சில்ලறை' : 'Retail',
@@ -246,54 +188,63 @@ export default function ProductsPage({
   };
 
   return (
-    <div className={`w-full pb-32 relative transition-colors duration-300 ${
+    <div className={`w-full pt-10 pb-32 px-6 sm:px-10 lg:px-16 xl:px-20 relative transition-colors duration-300 ${
       isDark ? 'text-white' : 'text-slate-900'
     }`}>
       
-      {/* Top Header Banner — Identical #0c0827 match to Home Page Header */}
-      <section 
-        className="w-full pt-10 pb-14 md:pt-14 md:pb-16 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827] text-white text-center overflow-hidden mb-12"
-      >
-        <div className="max-w-4xl mx-auto">
-          <span className="text-[11px] font-bold tracking-[0.25em] uppercase mb-3 inline-block text-cyan-400">
-            {lang === 'si' ? 'RAXWO ව්‍යවසාය ERP නාමාවලිය' : lang === 'ta' ? 'RAXWO நிறுவன ERP பட்டியல்' : 'RAXWO ENTERPRISE ERP CATALOG'}
+      {/* Header Badge & Title */}
+      <div className="text-center max-w-4xl mx-auto mb-10">
+        <span className={`text-[11px] font-bold tracking-[0.25em] uppercase mb-4 inline-block ${
+          isDark ? 'text-cyan-400' : 'text-blue-700'
+        }`}>
+          {lang === 'si' ? 'RAXWO ව්‍යවසාය ERP නාමාවලිය' : lang === 'ta' ? 'RAXWO நிறுவன ERP பட்டியல்' : 'RAXWO ENTERPRISE ERP CATALOG'}
+        </span>
+        <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-4 ${
+          isDark ? 'text-white' : 'text-slate-900'
+        }`}>
+          {lang === 'si' ? 'අපගේ සූදානම් කළ ERP පද්ධති' : lang === 'ta' ? 'எங்கள் ஆயத்த ERP அமைப்புகள்' : 'Our Ready-Made ERP Systems'}
+        </h1>
+        <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed ${
+          isDark ? 'text-slate-300' : 'text-slate-600'
+        }`}>
+          {lang === 'si' ? '100% මූල කේතයේ පූර්ණ අයිතිය සහ මාසික ගාස්තු රහිත සම්පූර්ණ ව්‍යාපාරික මෘදුකාංග විසඳුම්.' : lang === 'ta' ? '100% முழு மூலக் குறியீடு உரிமை மற்றும் மாதாந்திர கட்டணங்கள் இல்லாத முழுமையான வணிக தீர்வுகள்.' : 'Complete business management solutions with 100% full source code ownership & zero subscription fees.'}
+        </p>
+
+        {/* Search Bar */}
+        <div className="relative max-w-xl mx-auto mt-8">
+          <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${
+            isDark ? 'text-slate-400' : 'text-slate-500'
+          }`} />
+          <input
+            type="text"
+            placeholder={lang === 'si' ? 'නිෂ්පාදන හෝ අංග අනුව සොයන්න...' : lang === 'ta' ? 'பெயர் அல்லது அம்சங்கள் மூலம் தேடுங்கள்...' : 'Search systems by name, features, or industry...'}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={`w-full pl-11 pr-28 py-3.5 rounded-2xl text-sm focus:outline-none transition-all ${
+              isDark 
+                ? 'bg-[#0e1428] border border-slate-700/80 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 shadow-inner' 
+                : 'bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 shadow-sm'
+            }`}
+          />
+          {searchQuery && (
+            <button 
+              onClick={() => setSearchQuery('')}
+              className={`absolute right-24 top-1/2 -translate-y-1/2 p-1 rounded-full cursor-pointer transition-colors ${
+                isDark ? 'text-slate-400 hover:text-white' : 'text-slate-400 hover:text-slate-700'
+              }`}
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+          <span className={`absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold px-2.5 py-1 rounded-xl ${
+            isDark ? 'bg-slate-800 text-cyan-300 border border-slate-700' : 'bg-blue-50 text-blue-700 border border-blue-100'
+          }`}>
+            {filteredProducts.length} {lang === 'si' ? 'ප්‍රතිඵල' : lang === 'ta' ? 'முடிவுகள்' : 'results'}
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold tracking-tight leading-[1.25] mb-3 text-white">
-            {lang === 'si' ? 'අපගේ සූදානම් කළ ERP පද්ධති' : lang === 'ta' ? 'எங்கள் ஆயத்த ERP அமைப்புகள்' : 'Our Ready-Made ERP Systems'}
-          </h1>
-          <p className="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed text-slate-200/90">
-            {lang === 'si' ? '100% මූල කේතයේ පූර්ණ අයිතිය සහ මාසික ගාස්තු රහිත සම්පූර්ණ ව්‍යාපාරික මෘදුකාංග විසඳුම්.' : lang === 'ta' ? '100% முழு மூலக் குறியீடு உரிமை மற்றும் மாதாந்திர கட்டணங்கள் இல்லாத முழுமையான வணிக தீர்வுகள்.' : 'Complete business management solutions with 100% full source code ownership & zero subscription fees.'}
-          </p>
-
-          {/* Search Bar */}
-          <div className="relative max-w-xl mx-auto mt-8">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              type="text"
-              placeholder={lang === 'si' ? 'නිෂ්පාදන හෝ අංග අනුව සොයන්න...' : lang === 'ta' ? 'பெயர் அல்லது அம்சங்கள் மூலம் தேடுங்கள்...' : 'Search systems by name, features, or industry...'}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-28 py-3.5 rounded-2xl text-sm focus:outline-none transition-all bg-[#0e1428] border border-slate-700/80 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 shadow-inner"
-            />
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="absolute right-24 top-1/2 -translate-y-1/2 p-1 rounded-full cursor-pointer transition-colors text-slate-400 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold px-2.5 py-1 rounded-xl bg-slate-800 text-cyan-300 border border-slate-700">
-              {filteredProducts.length} {lang === 'si' ? 'ප්‍රතිඵල' : lang === 'ta' ? 'முடிவுகள்' : 'results'}
-            </span>
-          </div>
         </div>
-      </section>
 
-      {/* Main Catalog Body */}
-      <div className="w-full pt-8 px-6 sm:px-10 lg:px-16 xl:px-20">
         {/* Multi-Faceted Filters (Category, Tech Stack, Price Tier) */}
-        <div className="space-y-4">
+        <div className="mt-8 space-y-4">
           
           {/* Category Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2">
@@ -409,11 +360,6 @@ export default function ProductsPage({
                   />
                   {/* Subtle Dark Gradient Overlay for readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-black/40"></div>
-
-                  {/* Top-Left: App Icon */}
-                  <div className="absolute top-3.5 left-3.5 z-10">
-                    {renderProductIcon(product)}
-                  </div>
 
                   {/* Top-Right: Category Badge & Compare button */}
                   <div className="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5">

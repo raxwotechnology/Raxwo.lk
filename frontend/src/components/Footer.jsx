@@ -1,5 +1,4 @@
 import React from 'react';
-import { Smartphone, Scissors, Utensils, Building2 } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
 export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
@@ -17,20 +16,20 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
   };
 
   return (
-    <footer className="relative w-full bg-[#060813] text-white pt-16 pb-10 px-6 sm:px-10 lg:px-16 xl:px-20 overflow-hidden font-sans">
+    <footer className="relative w-full bg-black text-white pt-14 pb-8 px-6 sm:px-10 lg:px-16 xl:px-20 overflow-hidden font-sans">
       
-      {/* Subtle World Map Silhouette Vector Overlay */}
+      {/* World Map Silhouette Background */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-20 bg-center bg-no-repeat bg-cover"
+        className="absolute inset-0 pointer-events-none opacity-60 bg-center bg-no-repeat bg-cover select-none"
         style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 70%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 500' fill='%231e293b' opacity='0.35'%3E%3Cpath d='M150,120 Q170,100 200,110 T250,140 T300,130 T280,180 T220,200 T180,220 T140,180 Z' /%3E%3Cpath d='M230,260 Q260,250 280,290 T270,360 T240,410 T210,380 T215,310 Z' /%3E%3Cpath d='M470,110 Q520,90 560,110 T600,140 T570,170 T500,160 Z' /%3E%3Cpath d='M480,190 Q530,180 570,220 T580,310 T540,380 T500,360 T460,280 T465,220 Z' /%3E%3Cpath d='M640,90 Q720,70 820,90 T900,140 T880,200 T800,210 T720,180 T650,150 Z' /%3E%3Cpath d='M780,290 Q850,280 880,330 T850,390 T770,370 T750,320 Z' /%3E%3C/svg%3E")`
+          backgroundImage: `url('/world-map.svg')`
         }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
         {/* 4 Columns Top Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 pb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 pb-12">
           
           {/* Column 1: Brand Logo & Contact */}
           <div className="flex flex-col space-y-5">
@@ -49,23 +48,23 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
             </div>
 
             {/* Head Office */}
-            <div className="space-y-1 text-sm pt-2">
-              <span className="text-[#38bdf8] font-bold block text-sm">
-                {t('headOffice')}
+            <div className="space-y-1 text-sm pt-1">
+              <span className="text-[#0094ff] font-bold block text-sm sm:text-[15px]">
+                Head Office:
               </span>
-              <span className="text-white font-medium block">
-                {t('headOfficeLocation')}
+              <span className="text-white font-bold block text-sm sm:text-[15px]">
+                Weliweriya, Sri lanka
               </span>
             </div>
 
             {/* Contact */}
-            <div className="space-y-1 text-sm">
-              <span className="text-[#38bdf8] font-bold block text-sm">
-                {t('contactLabel')}
+            <div className="space-y-1 text-sm pt-1">
+              <span className="text-[#0094ff] font-bold block text-sm sm:text-[15px]">
+                Contact:
               </span>
               <a 
                 href="tel:+94743573333" 
-                className="text-white hover:text-cyan-400 transition-colors font-medium block"
+                className="text-white hover:text-[#0094ff] transition-colors font-bold block text-sm sm:text-[15px]"
               >
                 +94 74 357 3333
               </a>
@@ -79,9 +78,9 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="Facebook"
-                className="w-8 h-8 rounded-full bg-[#0095ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0094ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
@@ -92,9 +91,9 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="Instagram"
-                className="w-8 h-8 rounded-full bg-[#0095ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0094ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
               >
-                <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -107,9 +106,9 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="YouTube"
-                className="w-8 h-8 rounded-full bg-[#0095ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0094ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
@@ -120,9 +119,9 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="w-8 h-8 rounded-full bg-[#0095ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0094ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.761 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
               </a>
@@ -133,9 +132,9 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="TikTok"
-                className="w-8 h-8 rounded-full bg-[#0095ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0094ff] hover:bg-[#0080e0] flex items-center justify-center text-white transition-transform hover:scale-110 shadow-md shadow-blue-500/20"
               >
-                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.11V9.4a6.33 6.33 0 0 0-.86-.06A6.34 6.34 0 0 0 3 15.68a6.34 6.34 0 0 0 10.82 4.48 6.3 6.3 0 0 0 1.86-4.49v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.86-.1z"/>
                 </svg>
               </a>
@@ -144,48 +143,48 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
 
           {/* Column 2: Quick links */}
           <div className="space-y-4">
-            <h4 className="text-[#38bdf8] font-bold text-lg tracking-wide">
-              {t('quickLinks')}
+            <h4 className="text-[#0094ff] font-bold text-sm sm:text-[15px]">
+              Quick links
             </h4>
-            <ul className="space-y-3 text-sm text-slate-200">
+            <ul className="space-y-3.5 text-sm sm:text-[15px] font-bold text-white">
               <li>
                 <button 
                   onClick={() => handleNav('home')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('home')}
+                  Home
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('about')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('whoWeAre')}
+                  Who We Are
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('contact')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('contact')}
+                  Let's Talk
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('support')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('faqs')}
+                  FAQ's
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('about')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('careers')}
+                  Careers
                 </button>
               </li>
             </ul>
@@ -193,48 +192,48 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
 
           {/* Column 3: Services */}
           <div className="space-y-4">
-            <h4 className="text-[#38bdf8] font-bold text-lg tracking-wide">
-              {t('services')}
+            <h4 className="text-[#0094ff] font-bold text-sm sm:text-[15px]">
+              Services
             </h4>
-            <ul className="space-y-3 text-sm text-slate-200">
+            <ul className="space-y-3.5 text-sm sm:text-[15px] font-bold text-white">
               <li>
                 <button 
                   onClick={() => handleNav('home', '#solutions')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('allServices')}
+                  All Services
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('devHub')}
+                  Development Hub
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('customize')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('designStudio')}
+                  Creative & Design Studio
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('home', '#solutions')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('marketingLab')}
+                  Marketing Lab
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {t('servicesProducts')}
+                  Services & Products
                 </button>
               </li>
             </ul>
@@ -242,52 +241,52 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
 
           {/* Column 4: Products */}
           <div className="space-y-4">
-            <h4 className="text-[#38bdf8] font-bold text-lg tracking-wide">
-              {t('products')}
+            <h4 className="text-[#0094ff] font-bold text-sm sm:text-[15px]">
+              Products
             </h4>
-            <ul className="space-y-3 text-sm text-slate-200">
+            <ul className="space-y-3.5 text-sm sm:text-[15px] font-bold text-white">
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left font-medium"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  {lang === 'si' ? 'මෘදුකාංග නිෂ්පාදන' : lang === 'ta' ? 'மென்பொருள் தயாரிப்புகள்' : 'Software Products'}
+                  Software Products
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
-                  <Smartphone className="w-3.5 h-3.5 text-blue-400 opacity-80" />
-                  <span>{lang === 'si' ? 'ජංගම දුරකථන වෙළඳසැල් ERP' : lang === 'ta' ? 'மொபைல் கடை ERP' : 'Mobile Shop ERP'}</span>
+                  <span>Mobile Shop ERP</span>
+                  <span>📱</span>
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
-                  <Scissors className="w-3.5 h-3.5 text-amber-400 opacity-80" />
-                  <span>{lang === 'si' ? 'රූපලාවණ්‍යාගාර කළමනාකරණ ERP' : lang === 'ta' ? 'சலூன் மேலாண்மை ERP' : 'Salon Management ERP'}</span>
+                  <span>Salon Management ERP</span>
+                  <span>💇</span>
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
-                  <Utensils className="w-3.5 h-3.5 text-rose-400 opacity-80" />
-                  <span>{lang === 'si' ? 'ආපනශාලා සහ හෝටල් ERP' : lang === 'ta' ? 'உணவகம் & ஹோட்டல் ERP' : 'Restaurant & Hotel ERP'}</span>
+                  <span>Restaurant & Hotel ERP</span>
+                  <span>🍽️</span>
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => handleNav('products')} 
-                  className="hover:text-[#38bdf8] transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
-                  <Building2 className="w-3.5 h-3.5 text-purple-400 opacity-80" />
-                  <span>{lang === 'si' ? 'දෘඩාංග සහ බෙදාහැරීම් ERP' : lang === 'ta' ? 'வன்பொருள் & விநியோக ERP' : 'Hardware & Distribution ERP'}</span>
+                  <span>Hardware & Distribution ERP</span>
+                  <span>🏗️</span>
                 </button>
               </li>
             </ul>
@@ -295,23 +294,26 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
 
         </div>
 
+        {/* Subtle Divider Line */}
+        <div className="w-full border-t border-[#1a1a1a] mb-6"></div>
+
         {/* Bottom Bar: Copyright & Privacy / Terms */}
-        <div className="pt-6 border-t border-slate-800/40 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-slate-400 gap-3">
-          <p>©2026 – Raxwo (Pvt) Ltd. | {t('allRightsReserved')}</p>
+        <div className="flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm font-bold text-white gap-3">
+          <p>©2026 – Raxwo (Pvt) ltd. | All Rights Reserved</p>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button 
               onClick={() => handleNav('about')} 
-              className="hover:text-white transition-colors cursor-pointer"
+              className="hover:text-[#0094ff] transition-colors cursor-pointer text-white font-bold"
             >
-              {t('privacyPolicy')}
+              Privacy Policy
             </button>
-            <span className="text-slate-600">|</span>
+            <span className="text-slate-600 font-normal">|</span>
             <button 
               onClick={() => handleNav('about')} 
-              className="hover:text-white transition-colors cursor-pointer"
+              className="hover:text-[#0094ff] transition-colors cursor-pointer text-white font-bold"
             >
-              {t('termsConditions')}
+              Terms & Conditions
             </button>
           </div>
         </div>
