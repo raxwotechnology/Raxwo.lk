@@ -141,15 +141,21 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
       }`}>
 
         {/* Top Bar with US2.2 Reset Button */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-800">
+        <div className={`flex flex-wrap items-center justify-between gap-4 pb-5 border-b ${
+          isDark ? 'border-slate-800' : 'border-slate-200'
+        }`}>
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-1.5">
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-1.5 border ${
+              isDark 
+                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+            }`}>
               <Zap className="w-3.5 h-3.5" />
               US2.1 Live Interactive ERP Sandbox
             </div>
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2">
               <span>Testing: {activeSystem.name}</span>
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             </h2>
           </div>
 
@@ -158,7 +164,11 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
             <button
               onClick={handleResetSandbox}
               title="US2.2: Reset demo database and inventory back to default"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 transition-all cursor-pointer shadow-sm"
+              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-sm ${
+                isDark
+                  ? 'bg-amber-500/10 text-amber-300 border-amber-500/30 hover:bg-amber-500/20'
+                  : 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100 hover:text-amber-900'
+              }`}
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>1-Click Sandbox Reset</span>
@@ -167,7 +177,7 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
             <button 
               onClick={onClose}
               className={`p-2 rounded-xl transition-colors ${
-                isDark ? 'hover:bg-slate-800 text-slate-400' : 'hover:bg-slate-100 text-slate-500'
+                isDark ? 'hover:bg-slate-800 text-slate-400 hover:text-white' : 'hover:bg-slate-100 text-slate-500 hover:text-slate-800'
               }`}
             >
               <X className="w-5 h-5" />
@@ -177,7 +187,9 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
 
         {/* Environment Switcher Tabs */}
         <div className="flex flex-wrap gap-2 mt-4">
-          <span className="text-xs font-semibold text-slate-400 self-center mr-1">Switch System:</span>
+          <span className={`text-xs font-semibold self-center mr-1 ${
+            isDark ? 'text-slate-400' : 'text-slate-600'
+          }`}>Switch System:</span>
           {Object.keys(demoSystems).map(key => {
             const sys = demoSystems[key];
             const Icon = sys.icon;
@@ -189,7 +201,9 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   isActive 
                     ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25' 
-                    : isDark ? 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800' : 'bg-slate-100 text-slate-600'
+                    : isDark 
+                      ? 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800' 
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 border border-slate-200'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -201,8 +215,12 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
 
         {/* Notification Toast */}
         {notification && (
-          <div className="mt-3 p-2.5 rounded-xl text-xs font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-2 animate-fadeIn">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
+          <div className={`mt-3 p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 animate-fadeIn ${
+            isDark 
+              ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20' 
+              : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+          }`}>
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
             <span>{notification}</span>
           </div>
         )}
@@ -214,11 +232,15 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
           <div className="lg:col-span-7 space-y-4">
             <div className={`p-4 rounded-2xl border ${isDark ? 'bg-[#0f1424]/80 border-slate-800/80' : 'bg-slate-50 border-slate-200'}`}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                  <Package className="w-3.5 h-3.5 text-blue-400" />
+                <span className={`text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 ${
+                  isDark ? 'text-slate-400' : 'text-slate-700'
+                }`}>
+                  <Package className="w-3.5 h-3.5 text-blue-500" />
                   Live Counter Catalog (Click to Add to Bill)
                 </span>
-                <span className="text-[11px] text-slate-400 font-medium">Real-Time Inventory</span>
+                <span className={`text-[11px] font-medium ${
+                  isDark ? 'text-slate-400' : 'text-slate-500'
+                }`}>Real-Time Inventory</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -229,28 +251,44 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
                     disabled={item.stock === 0}
                     className={`text-left p-3 rounded-xl border transition-all flex flex-col justify-between cursor-pointer ${
                       item.stock === 0
-                        ? 'opacity-40 border-slate-800 cursor-not-allowed'
+                        ? isDark 
+                          ? 'opacity-40 border-slate-800 bg-slate-900/30 cursor-not-allowed' 
+                          : 'opacity-50 border-slate-200 bg-slate-100 cursor-not-allowed'
                         : isDark 
                           ? 'bg-slate-900/60 border-slate-800 hover:border-blue-500/50 hover:bg-slate-900' 
-                          : 'bg-white border-slate-200 hover:border-blue-400'
+                          : 'bg-white border-slate-200 hover:border-blue-500 hover:shadow-sm'
                     }`}
                   >
                     <div>
-                      <span className="text-[10px] uppercase font-semibold text-blue-400 block mb-0.5">
+                      <span className={`text-[10px] uppercase font-semibold block mb-0.5 ${
+                        isDark ? 'text-blue-400' : 'text-blue-600'
+                      }`}>
                         {item.category}
                       </span>
-                      <h4 className="text-xs font-bold line-clamp-1">{item.name}</h4>
+                      <h4 className={`text-xs font-bold line-clamp-1 ${
+                        isDark ? 'text-white' : 'text-slate-900'
+                      }`}>{item.name}</h4>
                     </div>
-                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-800/50">
-                      <span className="text-xs font-extrabold text-cyan-400">
+                    <div className={`flex items-center justify-between mt-2 pt-2 border-t ${
+                      isDark ? 'border-slate-800/60' : 'border-slate-100'
+                    }`}>
+                      <span className={`text-xs font-extrabold ${
+                        isDark ? 'text-cyan-400' : 'text-blue-600'
+                      }`}>
                         LKR {item.price.toLocaleString()}
                       </span>
-                      <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${
                         item.stock > 10 
-                          ? 'bg-emerald-500/10 text-emerald-400' 
+                          ? isDark 
+                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                            : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                           : item.stock > 0 
-                            ? 'bg-amber-500/10 text-amber-400' 
-                            : 'bg-red-500/10 text-red-400'
+                            ? isDark 
+                              ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' 
+                              : 'bg-amber-50 text-amber-800 border-amber-200'
+                            : isDark 
+                              ? 'bg-red-500/10 text-red-400 border-red-500/20' 
+                              : 'bg-red-50 text-red-700 border-red-200'
                       }`}>
                         {item.stock} in stock
                       </span>
@@ -262,22 +300,26 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
 
             {/* Recent Transaction Log */}
             <div className={`p-4 rounded-2xl border ${isDark ? 'bg-[#0f1424]/80 border-slate-800/80' : 'bg-slate-50 border-slate-200'}`}>
-              <span className={`text-xs font-bold uppercase tracking-wider block mb-2.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+              <span className={`text-xs font-bold uppercase tracking-wider block mb-2.5 ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>
                 Audit Trail & Shift Register
               </span>
               <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
                 {salesLog.map(tx => (
-                  <div key={tx.id} className={`flex items-center justify-between text-xs py-1.5 px-2.5 rounded-lg border ${
+                  <div key={tx.id} className={`flex items-center justify-between text-xs py-2 px-2.5 rounded-lg border ${
                     isDark ? 'bg-slate-900/50 border-slate-800/50' : 'bg-white border-slate-200 shadow-sm'
                   }`}>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-blue-500 font-bold">{tx.id}</span>
+                      <span className={`font-mono font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{tx.id}</span>
                       <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>{tx.time}</span>
                       <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>({tx.itemsCount} items)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>LKR {tx.total.toLocaleString()}</span>
-                      <span className="text-[10px] text-emerald-500 font-medium bg-emerald-500/10 px-1.5 py-0.5 rounded">Settled</span>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${
+                        isDark 
+                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                          : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      }`}>Settled</span>
                     </div>
                   </div>
                 ))}
@@ -293,14 +335,14 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
               
               <div>
                 <div className={`flex items-center justify-between pb-3 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
-                  <div className={`flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                  <div className={`flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
                     <ShoppingCart className="w-4 h-4 text-blue-500" />
                     <span>Current Sale Bill #0042</span>
                   </div>
                   {cart.length > 0 && (
                     <button 
                       onClick={() => setCart([])}
-                      className="text-[11px] text-red-500 font-semibold hover:underline cursor-pointer"
+                      className="text-[11px] text-red-500 hover:text-red-600 font-semibold hover:underline cursor-pointer"
                     >
                       Clear
                     </button>
@@ -310,8 +352,10 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
                 {/* Cart list */}
                 <div className="mt-3 space-y-2 min-h-40 max-h-56 overflow-y-auto pr-1">
                   {cart.length === 0 ? (
-                    <div className="h-40 flex flex-col items-center justify-center text-slate-400 text-xs text-center px-4">
-                      <ShoppingCart className="w-8 h-8 mb-2 opacity-30" />
+                    <div className={`h-40 flex flex-col items-center justify-center text-xs text-center px-4 ${
+                      isDark ? 'text-slate-500' : 'text-slate-400'
+                    }`}>
+                      <ShoppingCart className="w-8 h-8 mb-2 opacity-40" />
                       <span>Select products from the catalog on the left to add to bill</span>
                     </div>
                   ) : (
@@ -326,12 +370,14 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-blue-500">
+                          <span className={`font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
                             LKR {(c.qty * c.price).toLocaleString()}
                           </span>
                           <button
                             onClick={() => removeFromCart(c.id)}
-                            className="text-slate-400 hover:text-red-500 p-1 cursor-pointer transition-colors"
+                            className={`p-1 cursor-pointer transition-colors ${
+                              isDark ? 'text-slate-500 hover:text-red-400' : 'text-slate-400 hover:text-red-600'
+                            }`}
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -344,26 +390,32 @@ export default function SandboxModal({ isOpen, onClose, initialProduct, theme = 
 
               {/* Bill Totals & Print button */}
               <div className={`pt-4 border-t mt-4 space-y-2 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
-                <div className={`flex items-center justify-between text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                <div className={`flex items-center justify-between text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                   <span>Subtotal:</span>
-                  <span>LKR {cartTotal.toLocaleString()}</span>
+                  <span className={`font-medium ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>LKR {cartTotal.toLocaleString()}</span>
                 </div>
-                <div className={`flex items-center justify-between text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                <div className={`flex items-center justify-between text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                   <span>RAMIS VAT Exemption (0%):</span>
-                  <span>LKR 0</span>
+                  <span className={`font-medium ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>LKR 0</span>
                 </div>
                 <div className={`flex items-center justify-between text-base font-extrabold pt-2 border-t ${
                   isDark ? 'text-white border-slate-800/60' : 'text-slate-900 border-slate-200'
                 }`}>
                   <span>Bill Total:</span>
-                  <span className="text-blue-500">LKR {cartTotal.toLocaleString()}</span>
+                  <span className={isDark ? 'text-blue-400' : 'text-blue-600'}>LKR {cartTotal.toLocaleString()}</span>
                 </div>
 
                 <button
                   type="button"
                   onClick={handleCheckout}
                   disabled={cart.length === 0}
-                  className="w-full mt-3 py-2.5 px-4 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-40"
+                  className={`w-full mt-3 py-2.5 px-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 ${
+                    cart.length === 0
+                      ? isDark 
+                        ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50' 
+                        : 'bg-slate-200 text-slate-400 cursor-not-allowed border border-slate-200'
+                      : 'bg-blue-600 hover:bg-blue-500 text-white cursor-pointer shadow-md shadow-blue-600/25 active:scale-[0.99]'
+                  }`}
                 >
                   <Printer className="w-4 h-4" />
                   <span>Process Payment & Print ESC/POS Bill</span>

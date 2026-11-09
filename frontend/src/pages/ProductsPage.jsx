@@ -7,7 +7,7 @@ import { getTranslation } from '../i18n/translations';
 
 // High-definition curated images for ERP solutions
 const defaultProductImages = {
-  mobixa: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80',
+  mobixa: 'https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80',
   gymora: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
   exxplan: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80',
   dineflow: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
@@ -357,6 +357,10 @@ export default function ProductsPage({
                     alt={product.name} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                     loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80";
+                    }}
                   />
                   {/* Subtle Dark Gradient Overlay for readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-black/40"></div>

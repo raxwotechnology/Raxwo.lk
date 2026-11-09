@@ -254,8 +254,8 @@ export default function SolutionsSection({ onOpenInquiry, theme = 'dark', lang =
           </p>
         </div>
         <button
-          onClick={() => onOpenInquiry()}
-          className="shrink-0 px-6 py-3.5 rounded-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all hover:scale-105"
+          onClick={() => (onOpenInquiry ? onOpenInquiry() : onExploreClick && onExploreClick())}
+          className="shrink-0 px-6 py-3.5 rounded-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-all hover:scale-105 cursor-pointer"
         >
           Request Custom Build
         </button>

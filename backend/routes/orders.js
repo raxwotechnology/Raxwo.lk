@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const { optionalAuth, verifyToken } = require('../middleware/auth');
 
@@ -11,6 +12,13 @@ const BANK_DETAILS = {
   accountNumber: "1000 8945 2311",
   swiftCode: "CCEYLKX"
 };
+
+// In-memory fallback orders store
+let inMemoryOrders = [];
+
+function isDBConnected() {
+  return mongoose.connection && mongoose.connection.readyState === 1;
+}
 
 // Create new order
 router.post('/create', optionalAuth, async (req, res) => {
@@ -42,7 +50,7 @@ router.post('/create', optionalAuth, async (req, res) => {
     const paymentStatus = isInstantCard ? 'completed' : 'pending';
     const status = isInstantCard ? 'Active' : 'Pending';
 
-    const order = new Order({
+    const orderData = {
       orderId,
       userId: req.user ? req.user.id : null,
       customer,
@@ -55,10 +63,23 @@ router.post('/create', optionalAuth, async (req, res) => {
       status,
       licenseKey,
       invoiceNumber,
-      paidAt: isInstantCard ? new Date() : null
-    });
+      paidAt: isInstantCard ? new Date() : null,
+      createdAt: new Date().toISOString()
+    };
 
-    await order.save();
+    if (isDBConnected()) {
+      try {
+        const order = new Order(orderData);
+        await order.save();
+        orderData.id = order._id;
+      } catch (dbErr) {
+        console.warn('[Orders DB Save Warning]:', dbErr.message);
+      }
+    }
+
+    // Always keep in memory store
+    orderData.id = orderData.id || `ord_${Date.now()}`;
+    inMemoryOrders.unshift(orderData);
 
     res.status(201).json({
       success: true,
@@ -66,20 +87,20 @@ router.post('/create', optionalAuth, async (req, res) => {
         ? 'Payment authorized successfully! License key issued.' 
         : 'Order created! Please complete payment via bank transfer.',
       order: {
-        id: order._id,
-        orderId: order.orderId,
-        invoiceNumber: order.invoiceNumber,
-        licenseKey: order.licenseKey,
-        totalLKR: order.totalLKR,
-        totalUSD: order.totalUSD,
-        currency: order.currency,
-        paymentMethod: order.paymentMethod,
-        paymentStatus: order.paymentStatus,
-        status: order.status,
-        customer: order.customer,
-        items: order.items,
+        id: orderData.id,
+        orderId: orderData.orderId,
+        invoiceNumber: orderData.invoiceNumber,
+        licenseKey: orderData.licenseKey,
+        totalLKR: orderData.totalLKR,
+        totalUSD: orderData.totalUSD,
+        currency: orderData.currency,
+        paymentMethod: orderData.paymentMethod,
+        paymentStatus: orderData.paymentStatus,
+        status: orderData.status,
+        customer: orderData.customer,
+        items: orderData.items,
         bankDetails: paymentMethod === 'bank_transfer' ? BANK_DETAILS : null,
-        createdAt: order.createdAt
+        createdAt: orderData.createdAt
       }
     });
   } catch (err) {
@@ -99,7 +120,6 @@ router.get('/my-orders', optionalAuth, async (req, res) => {
     } else if (email) {
       query = { 'customer.email': email.toLowerCase() };
     } else {
-      // Default sample response if unauthenticated
       return res.json({
         success: true,
         count: 0,
@@ -107,11 +127,32 @@ router.get('/my-orders', optionalAuth, async (req, res) => {
       });
     }
 
-    const orders = await Order.find(query).sort({ createdAt: -1 }).lean();
+    if (isDBConnected()) {
+      try {
+        const orders = await Order.find(query).sort({ createdAt: -1 }).lean();
+        if (orders && orders.length > 0) {
+          return res.json({
+            success: true,
+            count: orders.length,
+            orders
+          });
+        }
+      } catch (dbErr) {
+        console.warn('[Orders DB Query Warning]:', dbErr.message);
+      }
+    }
+
+    // In-memory fallback
+    const targetEmail = req.user ? req.user.email.toLowerCase() : (email ? email.toLowerCase() : '');
+    const filtered = inMemoryOrders.filter(o => 
+      (req.user && o.userId === req.user.id) || 
+      (o.customer && o.customer.email && o.customer.email.toLowerCase() === targetEmail)
+    );
+
     res.json({
       success: true,
-      count: orders.length,
-      orders
+      count: filtered.length,
+      orders: filtered
     });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to fetch orders.' });
@@ -126,28 +167,44 @@ router.post('/:orderId/upload-slip', async (req, res) => {
 
     const note = `Ref: ${referenceNumber || 'N/A'} | Bank: ${bankName || 'Direct'} | Uploaded: ${new Date().toLocaleDateString()}`;
 
-    const order = await Order.findOneAndUpdate(
-      { orderId },
-      { 
-        $set: { 
-          bankSlipUrl: slipUrl || 'uploaded_bank_receipt_proof.pdf',
-          bankSlipNote: note,
-          paymentStatus: 'verified', // Marked for admin review
-          status: 'Processing'
-        } 
-      },
-      { new: true }
-    );
-
-    if (!order) {
-      return res.status(404).json({ success: false, message: 'Order not found.' });
+    if (isDBConnected()) {
+      try {
+        const order = await Order.findOneAndUpdate(
+          { orderId },
+          { 
+            $set: { 
+              bankSlipUrl: slipUrl || 'uploaded_bank_receipt_proof.pdf',
+              bankSlipNote: note,
+              paymentStatus: 'verified',
+              status: 'Processing'
+            } 
+          },
+          { new: true }
+        );
+        if (order) {
+          return res.json({
+            success: true,
+            message: 'Bank transfer slip submitted! Our finance team will verify within 1 hour.',
+            order
+          });
+        }
+      } catch (e) {}
     }
 
-    res.json({
-      success: true,
-      message: 'Bank transfer slip submitted! Our finance team will verify within 1 hour.',
-      order
-    });
+    const memOrder = inMemoryOrders.find(o => o.orderId === orderId);
+    if (memOrder) {
+      memOrder.bankSlipUrl = slipUrl || 'uploaded_bank_receipt_proof.pdf';
+      memOrder.bankSlipNote = note;
+      memOrder.paymentStatus = 'verified';
+      memOrder.status = 'Processing';
+      return res.json({
+        success: true,
+        message: 'Bank transfer slip submitted! Our finance team will verify within 1 hour.',
+        order: memOrder
+      });
+    }
+
+    res.status(404).json({ success: false, message: 'Order not found.' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to upload slip.' });
   }
@@ -156,7 +213,17 @@ router.post('/:orderId/upload-slip', async (req, res) => {
 // Full Invoice Data
 router.get('/:orderId/invoice', async (req, res) => {
   try {
-    const order = await Order.findOne({ orderId: req.params.orderId }).lean();
+    let order = null;
+    if (isDBConnected()) {
+      try {
+        order = await Order.findOne({ orderId: req.params.orderId }).lean();
+      } catch (e) {}
+    }
+
+    if (!order) {
+      order = inMemoryOrders.find(o => o.orderId === req.params.orderId);
+    }
+
     if (!order) {
       return res.status(404).json({ success: false, message: 'Invoice not found.' });
     }
@@ -177,7 +244,7 @@ router.get('/:orderId/invoice', async (req, res) => {
       customer: order.customer,
       items: order.items,
       subtotalLKR: order.totalLKR,
-      vatLKR: 0, // Software export zero-rated / RAMIS exemption
+      vatLKR: 0,
       totalLKR: order.totalLKR,
       totalUSD: order.totalUSD,
       currency: order.currency,

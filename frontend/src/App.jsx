@@ -566,6 +566,7 @@ export default function App() {
               <div id="solutions" className="reveal-on-scroll">
                 <SolutionsSection 
                   onExploreClick={() => handleRouteChange('products')} 
+                  onOpenInquiry={() => setIsInquiryModalOpen(true)}
                   theme={theme}
                   lang={lang}
                 />

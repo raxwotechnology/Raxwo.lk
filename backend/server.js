@@ -67,6 +67,7 @@ const erpProducts = [
     name: "Mobixa",
     subtitle: "Mobile Shop ERP",
     category: "Retail",
+    image: "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80",
     tagline: "Manage sales, inventory, accessories and service jobs in one place.",
     fullDescription: "A complete, easy-to-use system for mobile sales, accessories, repairs, inventory and customer care.",
     priceLKR: 75000,
@@ -479,7 +480,7 @@ const currencyRates = {
 };
 
 const defaultProductImages = {
-  mobixa: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80',
+  mobixa: 'https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80',
   gymora: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
   exxplan: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80',
   dineflow: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',

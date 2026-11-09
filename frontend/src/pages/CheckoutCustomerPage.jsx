@@ -270,7 +270,7 @@ export default function CheckoutCustomerPage({
 
                 <button
                   type="submit"
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-[0_0_20px_rgba(99,102,241,0.4)] cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-500 cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <span>Continue to Payment</span>
                   <ArrowRight className="w-4 h-4" />

@@ -264,7 +264,7 @@ export default function OrderCheckoutPage({
                       setIsCheckoutModalOpen(true);
                     }
                   }}
-                  className="w-full py-3.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-[0_0_20px_rgba(99,102,241,0.4)] cursor-pointer transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-500 cursor-pointer transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
                 >
                   <ArrowRight className="w-4 h-4" />
                   <span>Proceed to Checkout</span>
@@ -383,7 +383,7 @@ export default function OrderCheckoutPage({
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-md cursor-pointer mt-2"
+                  className="w-full py-3 rounded-xl font-semibold text-xs text-white bg-blue-600 hover:bg-blue-500 shadow-md cursor-pointer mt-2"
                 >
                   Confirm Order & Receive Source Code
                 </button>

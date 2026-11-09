@@ -225,7 +225,7 @@ export default function AdminDashboardPage({ theme = 'dark', currentUser, onLogo
               onClick={() => setActiveTab(tab.id)}
               className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 isActive 
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25' 
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25' 
                   : isDark ? 'bg-slate-900/60 text-slate-400 hover:text-white border border-slate-800' : 'bg-white text-slate-600 border border-slate-200'
               }`}
             >
