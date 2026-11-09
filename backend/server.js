@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 
 const Product = require('./models/Product');
 const Inquiry = require('./models/Inquiry');
+
 const Sale = require('./models/Sale');
 
 const { router: authRouter, seedDefaultUsers } = require('./routes/auth');
