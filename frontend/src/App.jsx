@@ -29,8 +29,6 @@ import SupportCenterPage from './pages/SupportCenterPage';
 import ContactUsPage from './pages/ContactUsPage';
 import AboutUsPage from './pages/AboutUsPage';
 import SignInPage from './pages/SignInPage';
-import SuccessStoriesPage from './pages/SuccessStoriesPage';
-import OurTeamPage from './pages/OurTeamPage';
 
 import { CheckCircle2, X } from 'lucide-react';
 
@@ -56,8 +54,6 @@ export default function App() {
     'products', 
     'product-detail', 
     'pricing', 
-    'success-stories',
-    'our-team',
     'customize', 
     'order', 
     'checkout-customer', 
@@ -626,25 +622,6 @@ export default function App() {
               currencyRates={currencyRates}
               theme={theme}
               lang={lang}
-            />
-          )}
-
-          {/* 4A. SUCCESS STORIES (In-page view without leaving raxwo.lk) */}
-          {currentRoute === 'success-stories' && (
-            <SuccessStoriesPage
-              theme={theme}
-              lang={lang}
-              onExploreProducts={() => handleRouteChange('products')}
-            />
-          )}
-
-          {/* 4B. OUR TEAM (In-page view without leaving raxwo.lk) */}
-          {currentRoute === 'our-team' && (
-            <OurTeamPage
-              theme={theme}
-              lang={lang}
-              onContactClick={() => handleRouteChange('contact')}
-              onExploreProducts={() => handleRouteChange('products')}
             />
           )}
 

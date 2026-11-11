@@ -157,22 +157,6 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
               </li>
               <li>
                 <button 
-                  onClick={() => handleNav('success-stories')} 
-                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
-                >
-                  Success Stories
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => handleNav('our-team')} 
-                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
-                >
-                  Our Team
-                </button>
-              </li>
-              <li>
-                <button 
                   onClick={() => handleNav('about')} 
                   className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >

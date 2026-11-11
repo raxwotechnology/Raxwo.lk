@@ -31,8 +31,6 @@ export default function Navbar({
     { label: t('home'), route: 'home' },
     { label: t('products'), route: 'products' },
     { label: t('pricing'), route: 'pricing' },
-    { label: t('successStories'), route: 'success-stories' },
-    { label: t('ourTeam'), route: 'our-team' },
     ...(isAdmin ? [{ label: t('adminPortal'), route: 'admin', isSpecial: true }] : []),
     { label: t('support'), route: 'support' },
     { label: t('about'), route: 'about' },
@@ -65,7 +63,7 @@ export default function Navbar({
   };
 
   return (
-    <header className="relative z-50 w-full pt-3 px-4 sm:px-8 lg:px-12 xl:px-16 bg-[#0c0827]">
+    <header className="relative z-50 w-full pt-3 px-6 sm:px-10 lg:px-16 xl:px-20 bg-[#0c0827]">
       <nav className="w-full flex items-center justify-between py-2">
         
         {/* Brand Logo */}
@@ -81,46 +79,30 @@ export default function Navbar({
         </button>
 
         {/* Center Pill Nav Bar */}
-        <div className={`hidden lg:flex items-center backdrop-blur-md rounded-full px-2 py-1.5 transition-colors gap-0.5 ${
+        <div className={`hidden lg:flex items-center backdrop-blur-md rounded-full px-2.5 py-1.5 transition-colors ${
           isDark 
             ? 'bg-[#0d1226]/80 border border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]' 
             : 'bg-white/90 border border-slate-200/90 shadow-sm'
         }`}>
           {navLinks.map((link) => {
             const isActive = currentRoute === link.route && (!link.hash || link.label === 'Home');
-            const buttonClasses = `px-2.5 xl:px-3.5 py-1.5 text-xs xl:text-sm font-medium rounded-full cursor-pointer transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap ${
-              link.isSpecial 
-                ? isDark
-                  ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30 hover:bg-purple-600/30 font-semibold'
-                  : 'bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 font-semibold'
-                : isActive 
-                  ? isDark
-                    ? 'bg-slate-800/90 text-white shadow-sm'
-                    : 'bg-blue-600 text-white shadow-sm shadow-blue-500/25 font-semibold'
-                  : isDark
-                    ? 'text-slate-300 hover:text-white hover:bg-slate-800/40'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`;
-
-            if (link.external) {
-              return (
-                <a
-                  key={link.label}
-                  href={link.external}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={buttonClasses}
-                >
-                  <span>{link.label}</span>
-                </a>
-              );
-            }
-
             return (
               <button
                 key={link.label}
                 onClick={() => handleLinkClick(link)}
-                className={buttonClasses}
+                className={`px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full cursor-pointer transition-all duration-200 flex items-center gap-1.5 ${
+                  link.isSpecial 
+                    ? isDark
+                      ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30 hover:bg-purple-600/30 font-semibold'
+                      : 'bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 font-semibold'
+                    : isActive 
+                      ? isDark
+                        ? 'bg-slate-800/90 text-white shadow-sm'
+                        : 'bg-blue-600 text-white shadow-sm shadow-blue-500/25 font-semibold'
+                      : isDark
+                        ? 'text-slate-300 hover:text-white hover:bg-slate-800/40'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
               >
                 {link.isSpecial && <ShieldCheck className={`w-3.5 h-3.5 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />}
                 <span>{link.label}</span>
@@ -304,39 +286,20 @@ export default function Navbar({
           isDark ? 'bg-slate-900/95 border border-slate-800' : 'bg-white/95 border border-slate-200'
         }`}>
           <div className="flex flex-col gap-1 pb-3 border-b border-slate-800/20">
-            {navLinks.map((link) => {
-              if (link.external) {
-                return (
-                  <a
-                    key={link.label}
-                    href={link.external}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`text-left px-3 py-2 text-sm rounded-lg cursor-pointer flex items-center justify-between ${
-                      isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800/50' : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
-                    }`}
-                  >
-                    <span>{link.label}</span>
-                    <span className="text-xs text-blue-400 opacity-80">↗</span>
-                  </a>
-                );
-              }
-              return (
-                <button
-                  key={link.label}
-                  onClick={() => handleLinkClick(link)}
-                  className={`text-left px-3 py-2 text-sm rounded-lg cursor-pointer flex items-center justify-between ${
-                    currentRoute === link.route
-                      ? isDark ? 'bg-slate-800 text-white font-semibold' : 'bg-slate-100 text-slate-900 font-semibold'
-                      : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800/50' : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{link.label}</span>
-                  {link.isSpecial && <span className="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold">STAFF</span>}
-                </button>
-              );
-            })}
+            {navLinks.map((link) => (
+              <button
+                key={link.label}
+                onClick={() => handleLinkClick(link)}
+                className={`text-left px-3 py-2 text-sm rounded-lg cursor-pointer flex items-center justify-between ${
+                  currentRoute === link.route
+                    ? isDark ? 'bg-slate-800 text-white font-semibold' : 'bg-slate-100 text-slate-900 font-semibold'
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800/50' : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.isSpecial && <span className="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold">STAFF</span>}
+              </button>
+            ))}
           </div>
 
           <div className="flex items-center justify-between pt-2">
