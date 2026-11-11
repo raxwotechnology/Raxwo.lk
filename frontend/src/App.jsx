@@ -153,10 +153,19 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
+      if (hash === 'success-stories') {
+        window.location.href = 'https://raxwo.net/success-stories/';
+        return;
+      }
+      if (hash === 'our-team') {
+        window.location.href = 'https://manage.raxwo.net/our-team';
+        return;
+      }
       if (validRoutes.includes(hash)) {
         setCurrentRoute(hash);
       }
     };
+    handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
