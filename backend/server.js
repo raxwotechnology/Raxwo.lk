@@ -790,6 +790,10 @@ if (distPath) {
     if (req.path.startsWith('/api')) {
       return next();
     }
+    // Do not serve index.html for missing static assets or files with extensions
+    if (req.path.startsWith('/assets/') || path.extname(req.path)) {
+      return res.status(404).type('text/plain').send('404 Not Found');
+    }
     res.sendFile(path.join(distPath, 'index.html'), (err) => {
       if (err && !res.headersSent) {
         next(err);
