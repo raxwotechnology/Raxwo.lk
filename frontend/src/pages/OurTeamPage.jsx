@@ -141,11 +141,10 @@ export default function OurTeamPage({
           {/* Embedded Iframe (Opens directly within raxwo.lk) */}
           <iframe
             key={frameKey}
-            src="/api/embed/our-team"
+            src="https://manage.raxwo.net/our-team"
             title="Raxwo Our Team"
             onLoad={() => setIsLoading(false)}
             className="w-full h-[78vh] sm:h-[84vh] border-0 rounded-b-3xl bg-white"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
           />
 
         </div>
