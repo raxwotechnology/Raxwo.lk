@@ -33,6 +33,65 @@ app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/orders', ordersRouter);
 
+// Seamless In-Page Embed Proxies (strips X-Frame-Options & injects base URL)
+const https = require('https');
+function fetchAndInjectBase(targetUrl, baseHref, res) {
+  const fetchUrl = (currentUrl, redirectCount = 0) => {
+    if (redirectCount > 5) {
+      return res.status(500).send('Too many redirects');
+    }
+    const req = https.get(currentUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    }, (proxyRes) => {
+      if (proxyRes.statusCode >= 300 && proxyRes.statusCode < 400 && proxyRes.headers.location) {
+        let redirectTarget = proxyRes.headers.location;
+        if (!redirectTarget.startsWith('http')) {
+          const origin = new URL(currentUrl).origin;
+          redirectTarget = new URL(redirectTarget, origin).toString();
+        }
+        return fetchUrl(redirectTarget, redirectCount + 1);
+      }
+
+      res.removeHeader('X-Frame-Options');
+      res.removeHeader('Content-Security-Policy');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=180');
+
+      let html = '';
+      proxyRes.on('data', chunk => html += chunk);
+      proxyRes.on('end', () => {
+        let modified = html;
+        if (modified.includes('<head>')) {
+          modified = modified.replace('<head>', `<head><base href="${baseHref}" />`);
+        } else if (modified.includes('<head ')) {
+          modified = modified.replace(/(<head[^>]*>)/i, `$1<base href="${baseHref}" />`);
+        }
+        res.status(200).send(modified);
+      });
+    });
+
+    req.on('error', (err) => {
+      console.error('[Embed Proxy Error]:', err.message);
+      if (!res.headersSent) {
+        res.status(502).send('Error loading content.');
+      }
+    });
+  };
+
+  fetchUrl(targetUrl);
+}
+
+app.get('/api/embed/success-stories', (req, res) => {
+  fetchAndInjectBase('https://raxwo.net/success-stories/', 'https://raxwo.net/', res);
+});
+
+app.get('/api/embed/our-team', (req, res) => {
+  fetchAndInjectBase('https://manage.raxwo.net/our-team', 'https://manage.raxwo.net/', res);
+});
+
 // In-memory / mock database store
 let liveStats = {
   salesToday: 148500,

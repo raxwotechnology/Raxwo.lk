@@ -156,26 +156,20 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
                 </button>
               </li>
               <li>
-                <a 
-                  href="https://raxwo.net/success-stories/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-[#0094ff] transition-colors text-left flex items-center justify-between group"
+                <button 
+                  onClick={() => handleNav('success-stories')} 
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  <span>Success Stories</span>
-                  <span className="text-xs text-blue-400 opacity-80 group-hover:translate-x-0.5 transition-transform">↗</span>
-                </a>
+                  Success Stories
+                </button>
               </li>
               <li>
-                <a 
-                  href="https://manage.raxwo.net/our-team" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-[#0094ff] transition-colors text-left flex items-center justify-between group"
+                <button 
+                  onClick={() => handleNav('our-team')} 
+                  className="hover:text-[#0094ff] transition-colors cursor-pointer text-left"
                 >
-                  <span>Our Team</span>
-                  <span className="text-xs text-blue-400 opacity-80 group-hover:translate-x-0.5 transition-transform">↗</span>
-                </a>
+                  Our Team
+                </button>
               </li>
               <li>
                 <button 
