@@ -52,9 +52,14 @@ export default function Footer({ theme = 'dark', onRouteChange, lang = 'en' }) {
               <span className="text-[#0094ff] font-bold block text-sm sm:text-[15px]">
                 Head Office:
               </span>
-              <span className="text-white font-bold block text-sm sm:text-[15px]">
-                Weliweriya, Sri lanka
-              </span>
+              <a 
+                href="https://www.google.com/maps/place/?q=place_id:ChIJsYkM3zr_4joRR7-Gq67e8rc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-[#0094ff] transition-colors font-bold block text-sm sm:text-[15px]"
+              >
+                71/1/4 Wathurugama Rd, Gampaha
+              </a>
             </div>
 
             {/* Contact */}

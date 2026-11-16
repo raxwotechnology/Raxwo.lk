@@ -168,23 +168,23 @@ export default function ContactSection({
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className={`text-xs font-bold uppercase tracking-wider block ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    {lang === 'si' ? 'කොළඹ ප්‍රධාන කාර්යාලය සහ විද්‍යාගාරය' : lang === 'ta' ? 'கொழும்பு தலைமையகம் & ஆய்வகம்' : 'Colombo Hardware Test Lab & HQ'}
+                    {lang === 'si' ? 'ප්‍රධාන කාර්යාලය සහ විද්‍යාගාරය' : lang === 'ta' ? 'தலைமை அலுவலகம் & ஆய்வகம்' : 'Head Office & Tech Lab'}
                   </span>
                   <span className={`text-xs sm:text-sm font-semibold leading-relaxed block mt-1 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                    {lang === 'si' ? 'ලෙවල් 05, Raxwo ටෙක් ටවර්, ගාලු පාර, කොළඹ 03, ශ්‍රී ලංකාව' : lang === 'ta' ? 'நிலை 05, Raxwo டெக் டவர், காலி வீதி, கொழும்பு 03, இலங்கை' : 'Level 05, Raxwo Tech Tower, Galle Road, Colombo 03, Sri Lanka'}
+                    {lang === 'si' ? '71/1/4 වතුරගම පාර, ගම්පහ, ශ්‍රී ලංකාව' : lang === 'ta' ? '71/1/4 வதுருகம வீதி, கம்பஹா, இலங்கை' : '71/1/4 Wathurugama Rd, Gampaha, Sri Lanka'}
                   </span>
                   <div className="mt-3">
                     <a
-                      href="https://maps.google.com/?q=Galle+Road+Colombo+03+Sri+Lanka"
+                      href="https://www.google.com/maps/place/?q=place_id:ChIJsYkM3zr_4joRR7-Gq67e8rc"
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                         isDark 
                           ? 'bg-cyan-950/40 text-cyan-300 border-cyan-800/60 hover:bg-cyan-900/60' 
                           : 'bg-cyan-50 text-cyan-700 border-cyan-200 hover:bg-cyan-100'
                       }`}
                     >
-                      <span>{lang === 'si' ? 'සිතියමෙන් බලන්න' : lang === 'ta' ? 'வரைபடத்தில் காண்க' : 'Open Location in Maps'}</span>
+                      <span>{lang === 'si' ? 'Google සිතියමෙන් බලන්න' : lang === 'ta' ? 'வரைபடத்தில் காண்க' : 'Open in Google Maps'}</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>

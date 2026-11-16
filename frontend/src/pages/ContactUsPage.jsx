@@ -12,7 +12,9 @@ import {
   ExternalLink,
   ChevronDown,
   Copy,
-  CheckCheck
+  CheckCheck,
+  Star,
+  Navigation
 } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
@@ -310,22 +312,22 @@ export default function ContactUsPage({
               <p className={`text-xs mt-1.5 leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 {lang === 'si' ? 'දෘඩාංග පරීක්ෂා කිරීම සහ සජීවී ආදර්ශන සඳහා අප කාර්යාලයට පැමිණෙන්න.' : lang === 'ta' ? 'வன்பொருள் சோதனை மற்றும் நேரடி காட்சிகளுக்கு அலுவலகத்திற்கு வருகை தரவும்.' : 'Visit our tech desk for hardware testing and live counter simulations.'}
               </p>
-              <div className="mt-4 text-sm font-bold text-amber-400">
-                <span>{lang === 'si' ? 'වැලිවේරිය, ශ්‍රී ලංකාව' : lang === 'ta' ? 'வெலிவேரிய, இலங்கை' : 'Weliweriya, Sri Lanka'}</span>
+              <div className="mt-4 text-xs sm:text-sm font-bold text-amber-400 leading-snug">
+                <span>{lang === 'si' ? '71/1/4 වතුරගම පාර, ගම්පහ' : lang === 'ta' ? '71/1/4 வதுருகம வீதி, கம்பஹா' : '71/1/4 Wathurugama Rd, Gampaha'}</span>
               </div>
             </div>
 
             <a
-              href="https://maps.google.com/?q=Weliweriya+Sri+Lanka"
+              href="https://www.google.com/maps/place/?q=place_id:ChIJsYkM3zr_4joRR7-Gq67e8rc"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={`mt-6 w-full py-2.5 px-4 rounded-xl text-xs font-bold text-center border transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 isDark 
                   ? 'bg-slate-800 hover:bg-slate-700 text-white border-slate-700' 
                   : 'bg-slate-50 hover:bg-slate-100 text-slate-900 border-slate-300'
               }`}
             >
-              <span>{lang === 'si' ? 'සිතියම බලන්න' : lang === 'ta' ? 'வரைபடத்தில் காண்க' : 'View on Map'}</span>
+              <span>{lang === 'si' ? 'Google සිතියමෙන් බලන්න' : lang === 'ta' ? 'Google வரைபடத்தில் காண்க' : 'Open in Google Maps'}</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
@@ -524,26 +526,67 @@ export default function ContactUsPage({
           {/* RIGHT: Office Location, Hours & Map (5 Cols) */}
           <div className="lg:col-span-5 w-full space-y-6">
             
-            {/* Map & Office Card */}
+            {/* 1. Google Map & Office Card */}
             <div className={`rounded-3xl border overflow-hidden shadow-xl transition-all ${
               isDark ? 'bg-[#0a0f24]/95 border-slate-800' : 'bg-white border-slate-200'
             }`}>
               
-              <div className="relative w-full h-64 bg-slate-950 overflow-hidden">
+              <div className="relative w-full h-72 sm:h-80 bg-slate-950 overflow-hidden">
                 <iframe
-                  title="Raxwo Office Location Map"
-                  src="https://maps.google.com/maps?q=Weliweriya,%20Sri%20Lanka&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  title="Raxwo (PVT) LTD Office Location Map"
+                  src="https://maps.google.com/maps?q=Raxwo%20(PVT)%20LTD%2071%2F1%2F4%20Wathurugama%20Rd%20Gampaha&t=&z=14&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   loading="lazy"
                   allowFullScreen
-                  className="w-full h-full opacity-90 hover:opacity-100 transition-opacity"
+                  className="w-full h-full opacity-95 hover:opacity-100 transition-opacity"
                 ></iframe>
                 
-                <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-slate-700 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-md">
-                  <MapPin className="w-3.5 h-3.5 text-[#0094ff]" />
-                  <span>{lang === 'si' ? 'Raxwo ප්‍රධාන කාර්යාලය' : lang === 'ta' ? 'Raxwo தலைமை அலுவலகம்' : 'Raxwo Head Office'}</span>
+                {/* Floating Map Info Overlay Card (Matches Google Maps Widget in Photo) */}
+                <div className="absolute top-3 left-3 right-3 sm:right-auto sm:max-w-[280px] p-3 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-xl z-10 text-left transition-all">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                        Raxwo (PVT) LTD
+                      </h4>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                        71/1/4 Wathurugama Rd, Gampaha 11870...
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Rating line */}
+                  <div className="flex items-center gap-1.5 mt-1.5 text-xs font-bold text-slate-900 dark:text-white">
+                    <span>5.0</span>
+                    <div className="flex items-center text-[#fbbc04]">
+                      <Star className="w-3.5 h-3.5 fill-[#fbbc04] text-[#fbbc04]" />
+                    </div>
+                    <span className="text-slate-500 dark:text-slate-400 font-normal text-[11px]">(3)</span>
+                    <span className="text-slate-400 text-[10px] ml-0.5" title="Google rating details">ⓘ</span>
+                  </div>
+
+                  {/* Open in Maps & Directions */}
+                  <div className="flex items-center gap-2 mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <a
+                      href="https://www.google.com/maps/place/?q=place_id:ChIJsYkM3zr_4joRR7-Gq67e8rc"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-1.5 px-3 rounded-full text-[11px] font-bold bg-[#1a73e8] hover:bg-[#1557b0] text-white flex items-center justify-center gap-1.5 shadow-sm transition-all"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      <span>Open in Maps</span>
+                    </a>
+                    <a
+                      href="https://www.google.com/maps/dir//Raxwo+(PVT)+LTD,+71/1/4+Wathurugama+Rd,+Gampaha"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Get Directions"
+                      className="w-7 h-7 rounded-full bg-blue-50 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-slate-700 text-[#1a73e8] dark:text-blue-400 flex items-center justify-center shrink-0 transition-all border border-blue-200/50 dark:border-slate-700"
+                    >
+                      <Navigation className="w-3.5 h-3.5 fill-current" />
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -555,7 +598,7 @@ export default function ContactUsPage({
                       {lang === 'si' ? 'ප්‍රධාන කාර්යාලය:' : lang === 'ta' ? 'தலைமை அலுவலகம்:' : 'Head Office:'}
                     </strong>
                     <span className={isDark ? 'text-slate-300' : 'text-slate-600'}>
-                      {lang === 'si' ? 'වැලිවේරිය, ශ්‍රී ලංකාව' : lang === 'ta' ? 'வெலிவேரிய, இலங்கை' : 'Weliweriya, Sri Lanka'}
+                      {lang === 'si' ? '71/1/4 වතුරගම පාර, ගම්පහ, ශ්‍රී ලංකාව' : lang === 'ta' ? '71/1/4 வதுருகம வீதி, கம்பஹா, இலங்கை' : '71/1/4 Wathurugama Rd, Gampaha, Sri Lanka'}
                     </span>
                   </div>
                 </div>
@@ -575,21 +618,211 @@ export default function ContactUsPage({
                   </div>
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <a
-                    href="https://maps.google.com/?q=Weliweriya+Sri+Lanka"
+                    href="https://www.google.com/maps/place/?q=place_id:ChIJsYkM3zr_4joRR7-Gq67e8rc"
                     target="_blank"
-                    rel="noreferrer"
-                    className={`w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                    rel="noopener noreferrer"
+                    className={`py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border transition-all cursor-pointer ${
                       isDark 
                         ? 'bg-slate-900 hover:bg-slate-800 text-white border-slate-700' 
                         : 'bg-slate-50 hover:bg-slate-100 text-slate-900 border-slate-300'
                     }`}
                   >
                     <ExternalLink className="w-3.5 h-3.5 text-[#0094ff]" />
-                    <span>{lang === 'si' ? 'Google සිතියමෙන් විවෘත කරන්න' : lang === 'ta' ? 'Google வரைபடத்தில் திறக்கவும்' : 'Open in Google Maps'}</span>
+                    <span>{lang === 'si' ? 'Google සිතියම' : lang === 'ta' ? 'Google வரைபடம்' : 'Open in Maps'}</span>
+                  </a>
+                  <a
+                    href="https://www.google.com/maps/dir//Raxwo+(PVT)+LTD,+71/1/4+Wathurugama+Rd,+Gampaha"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                      isDark 
+                        ? 'bg-blue-950/40 hover:bg-blue-900/50 text-blue-300 border-blue-800/60' 
+                        : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200'
+                    }`}
+                  >
+                    <Navigation className="w-3.5 h-3.5" />
+                    <span>{lang === 'si' ? 'මඟ පෙන්වීම්' : lang === 'ta' ? 'திசைகள்' : 'Get Directions'}</span>
                   </a>
                 </div>
+              </div>
+
+            </div>
+
+            {/* 2. Google Reviews Card (Exact Match to Reference Widget) */}
+            <div className={`p-6 sm:p-7 rounded-3xl border shadow-xl transition-all ${
+              isDark ? 'bg-[#0a0f24]/95 border-slate-800' : 'bg-white border-slate-200'
+            }`}>
+              
+              {/* Header: Company + Stars + Write Review Button */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800/80">
+                <div className="flex items-center gap-3.5">
+                  <img 
+                    src="/reviews/raxwo-office.jpg"
+                    alt="Raxwo (PVT) LTD."
+                    className="w-12 h-12 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-sm"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                  <div>
+                    <h3 className={`text-base sm:text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                      Raxwo (PVT) LTD.
+                    </h3>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <div className="flex items-center gap-0.5 text-[#fbbc04]">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[#fbbc04] text-[#fbbc04]" />
+                        ))}
+                      </div>
+                      <span className={`text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        2 Google reviews
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <a
+                  href="https://search.google.com/local/writereview?placeid=ChIJsYkM3zr_4joRR7-Gq67e8rc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all text-center self-start sm:self-auto cursor-pointer shadow-sm ${
+                    isDark 
+                      ? 'bg-slate-900 hover:bg-slate-800 text-white border-slate-700 hover:border-slate-600' 
+                      : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-300 hover:border-slate-400'
+                  }`}
+                >
+                  {lang === 'si' ? 'සමාලෝචනයක් ලියන්න' : lang === 'ta' ? 'விமர்சனம் எழுதவும்' : 'Write a review'}
+                </a>
+              </div>
+
+              {/* Review Cards List */}
+              <div className="space-y-4 pt-5">
+                
+                {/* Review 1: Ashen Vishwajith */}
+                <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                  isDark ? 'bg-slate-900/60 border-slate-800/90' : 'bg-slate-50/80 border-slate-200/80'
+                }`}>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-[#795548] text-white font-bold flex items-center justify-center shrink-0 shadow-sm text-sm overflow-hidden relative">
+                        <img 
+                          src="/reviews/ashen-vishwajith.jpg" 
+                          alt="Ashen Vishwajith"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center -z-10">A</span>
+                      </div>
+                      <div>
+                        <div className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                          Ashen Vishwajith
+                        </div>
+                        <div className="text-[11px] text-slate-400">
+                          {lang === 'si' ? 'වසර 2කට පෙර' : lang === 'ta' ? '2 ஆண்டுகளுக்கு முன்' : '2 years ago'}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Google G Logo */}
+                    <div className="shrink-0" title="Posted on Google">
+                      <svg viewBox="0 0 24 24" className="w-5 h-5">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 mt-2.5 mb-2">
+                    <div className="flex items-center gap-0.5 text-[#fbbc04]">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#fbbc04] text-[#fbbc04]" />
+                      ))}
+                    </div>
+                    {/* Blue Verified Badge */}
+                    <svg className="w-3.5 h-3.5 text-[#1a73e8] fill-[#1a73e8]" viewBox="0 0 20 20" title="Verified Google Review">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-500 italic">
+                    {lang === 'si' ? 'මෙම පරිශීලකයා ඇගයීමක් පමණක් සටහන් කර ඇත.' : lang === 'ta' ? 'இந்த பயனர் மதிப்பீட்டை மட்டுமே வழங்கியுள்ளார்.' : 'This user only left a rating.'}
+                  </p>
+                </div>
+
+                {/* Review 2: Kaveesh Shaluka */}
+                <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                  isDark ? 'bg-slate-900/60 border-slate-800/90' : 'bg-slate-50/80 border-slate-200/80'
+                }`}>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-700 text-white font-bold flex items-center justify-center shrink-0 shadow-sm text-sm overflow-hidden relative">
+                        <img 
+                          src="/reviews/kaveesh-shaluka.jpg" 
+                          alt="Kaveesh Shaluka"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center -z-10">K</span>
+                      </div>
+                      <div>
+                        <div className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                          Kaveesh Shaluka
+                        </div>
+                        <div className="text-[11px] text-slate-400">
+                          {lang === 'si' ? 'වසර 2කට පෙර' : lang === 'ta' ? '2 ஆண்டுகளுக்கு முன்' : '2 years ago'}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Google G Logo */}
+                    <div className="shrink-0" title="Posted on Google">
+                      <svg viewBox="0 0 24 24" className="w-5 h-5">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 mt-2.5 mb-2">
+                    <div className="flex items-center gap-0.5 text-[#fbbc04]">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#fbbc04] text-[#fbbc04]" />
+                      ))}
+                    </div>
+                    {/* Blue Verified Badge */}
+                    <svg className="w-3.5 h-3.5 text-[#1a73e8] fill-[#1a73e8]" viewBox="0 0 20 20" title="Verified Google Review">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+
+                  <p className={`text-xs sm:text-sm font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                    Highly Recommended Services
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Bottom Link to Google Maps Reviews */}
+              <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+                <a
+                  href="https://www.google.com/maps/place/?q=place_id:ChIJsYkM3zr_4joRR7-Gq67e8rc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a73e8] hover:text-[#1557b0] dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                >
+                  <span>{lang === 'si' ? 'Google Maps හි සියලුම සමාලෝචන බලන්න' : lang === 'ta' ? 'Google வரைபடத்தில் அனைத்து மதிப்புரைகளையும் காண்க' : 'View all verified reviews on Google Maps'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
 
             </div>

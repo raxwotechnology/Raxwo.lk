@@ -81,7 +81,7 @@ export const translations = {
 
     // Footer
     headOffice: "Head Office:",
-    headOfficeLocation: "Weliweriya, Sri Lanka",
+    headOfficeLocation: "71/1/4 Wathurugama Rd, Gampaha, Sri Lanka",
     contactLabel: "Contact:",
     quickLinks: "Quick links",
     services: "Services",
@@ -180,7 +180,7 @@ export const translations = {
 
     // Footer
     headOffice: "ප්‍රධාන කාර්යාලය:",
-    headOfficeLocation: "වැලිවේරිය, ශ්‍රී ලංකාව",
+    headOfficeLocation: "71/1/4 වතුරගම පාර, ගම්පහ, ශ්‍රී ලංකාව",
     contactLabel: "දුරකථන:",
     quickLinks: "කෙටි සබැඳි",
     services: "සේවාවන්",
@@ -279,7 +279,7 @@ export const translations = {
 
     // Footer
     headOffice: "தலைமை அலுவலகம்:",
-    headOfficeLocation: "வெலிவேரிய, இலங்கை",
+    headOfficeLocation: "71/1/4 வதுருகம வீதி, கம்பஹா, இலங்கை",
     contactLabel: "தொடர்பு:",
     quickLinks: "விரைவு இணைப்புகள்",
     services: "சேவைகள்",
