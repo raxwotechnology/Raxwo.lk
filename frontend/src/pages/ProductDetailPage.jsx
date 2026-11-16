@@ -315,14 +315,14 @@ export default function ProductDetailPage({
       <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8 max-w-7xl mx-auto">
         <button 
           onClick={() => window.location.hash = 'home'}
-          className="hover:text-cyan-400 cursor-pointer transition-colors"
+          className={`cursor-pointer transition-colors ${isDark ? 'hover:text-cyan-400' : 'hover:text-blue-600'}`}
         >
           {lang === 'si' ? 'මුල් පිටුව' : lang === 'ta' ? 'முகப்பு' : 'Home'}
         </button>
         <span>/</span>
         <button 
           onClick={handleBack}
-          className="hover:text-cyan-400 cursor-pointer transition-colors"
+          className={`cursor-pointer transition-colors ${isDark ? 'hover:text-cyan-400' : 'hover:text-blue-600'}`}
         >
           {lang === 'si' ? 'ERP පද්ධති' : lang === 'ta' ? 'ERP அமைப்புகள்' : 'ERP Solutions'}
         </button>
@@ -347,20 +347,20 @@ export default function ProductDetailPage({
                 {p.badge || p.category}
               </span>
               <span className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
-                isDark ? 'bg-slate-900 text-cyan-400 border-slate-700' : 'bg-slate-100 text-blue-700 border-slate-200'
+                isDark ? 'bg-slate-900 text-cyan-400 border-slate-700' : 'bg-blue-50 text-blue-700 border-blue-200'
               }`}>
                 100% Full Source Code &amp; Lifetime License
               </span>
             </div>
 
             {/* Title & Tagline */}
-            <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight ${
-              isDark ? 'text-white' : 'text-slate-950'
+            <h1 className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${
+              isDark ? 'text-white' : 'text-slate-900'
             }`}>
-              {p.name} <span className="text-[#0094ff]">– {p.subtitle}</span>
+              {p.name}{p.subtitle ? ` – ${p.subtitle}` : ''}
             </h1>
 
-            <p className={`text-base sm:text-lg mt-4 leading-relaxed ${
+            <p className={`text-sm sm:text-base mt-3 leading-relaxed ${
               isDark ? 'text-slate-300' : 'text-slate-600'
             }`}>
               {p.fullDescription || p.tagline}
@@ -371,13 +371,17 @@ export default function ProductDetailPage({
               <div className="flex items-center text-amber-400 gap-1 font-bold">
                 <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
                 <span className={isDark ? 'text-white' : 'text-slate-900'}>{p.rating || 4.9}</span>
-                <span className="text-slate-400 font-normal">({p.reviewsCount || 84}+ verified deployments)</span>
+                <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>({p.reviewsCount || 84}+ verified deployments)</span>
               </div>
-              <div className="flex items-center gap-1.5 text-emerald-400 font-semibold">
+              <div className={`flex items-center gap-1.5 font-semibold ${
+                isDark ? 'text-emerald-400' : 'text-emerald-600'
+              }`}>
                 <Check className="w-4 h-4" />
                 <span>Zero Monthly Fees</span>
               </div>
-              <div className="flex items-center gap-1.5 text-cyan-400 font-semibold">
+              <div className={`flex items-center gap-1.5 font-semibold ${
+                isDark ? 'text-cyan-400' : 'text-blue-600'
+              }`}>
                 <Check className="w-4 h-4" />
                 <span>Sri Lanka VAT &amp; SSCL Ready</span>
               </div>
@@ -434,11 +438,13 @@ export default function ProductDetailPage({
 
       {/* 3. Section Divider with Header */}
       <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-        <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-cyan-400 mb-2 inline-block">
+        <span className={`text-[11px] font-bold tracking-[0.25em] uppercase mb-2 inline-block ${
+          isDark ? 'text-cyan-400' : 'text-blue-600'
+        }`}>
           INTERACTIVE MODULE WALKTHROUGH
         </span>
         <h2 className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
-          isDark ? 'text-white' : 'text-slate-950'
+          isDark ? 'text-white' : 'text-slate-900'
         }`}>
           Explore How {p.name} Powers Your Daily Operations
         </h2>
@@ -475,7 +481,7 @@ export default function ProductDetailPage({
 
                 {/* Main Module Title */}
                 <h3 className={`text-2xl sm:text-3xl lg:text-[34px] font-extrabold tracking-tight leading-[1.2] mb-4 ${
-                  isDark ? 'text-white' : 'text-slate-950'
+                  isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   {mod.title}
                 </h3>
@@ -495,7 +501,7 @@ export default function ProductDetailPage({
                         <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
                       </div>
                       <div className="text-xs sm:text-sm leading-relaxed">
-                        <strong className={`font-bold mr-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
+                        <strong className={`font-bold mr-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                           {b.label}:
                         </strong>
                         <span className={isDark ? 'text-slate-300' : 'text-slate-600'}>
