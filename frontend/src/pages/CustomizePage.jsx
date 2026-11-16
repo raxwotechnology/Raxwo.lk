@@ -417,16 +417,6 @@ export default function CustomizePage({
               ? 'bg-[#0a0f22]/95 border-slate-800/80 shadow-2xl' 
               : 'bg-white border-slate-200 shadow-xl'
           }`}>
-            
-            {/* App Icon */}
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-700 via-indigo-900 to-slate-900 border border-blue-500/40 flex items-center justify-center p-2.5 mb-4 shadow-md">
-              <svg className="w-full h-full text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="5" y="2" width="14" height="20" rx="3" />
-                <path d="M12 18h.01" />
-                <path d="M9 6h6" />
-                <path d="M8 12l2 2 4-4" stroke="#38bdf8" strokeWidth="2.5" />
-              </svg>
-            </div>
 
             {/* Title & Description */}
             <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
