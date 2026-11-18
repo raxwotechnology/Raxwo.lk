@@ -31,6 +31,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import SignInPage from './pages/SignInPage';
 
 import { CheckCircle2, X } from 'lucide-react';
+import AIChatWidget from './components/AIChatWidget';
 
 export default function App() {
   // Theme state: defaults to 'dark', persists in localStorage
@@ -894,6 +895,12 @@ export default function App() {
       />
 
 
+
+      {/* AI Chat Widget – visible to customers only */}
+      <AIChatWidget
+        isAdmin={currentUser && (currentUser.role === 'super_admin' || currentUser.role === 'sales_admin')}
+        isDark={isDark}
+      />
 
       {/* Floating Real-Time Toast Notification */}
       {toastMessage && (
