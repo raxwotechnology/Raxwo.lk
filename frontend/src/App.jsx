@@ -154,13 +154,28 @@ export default function App() {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       if (validRoutes.includes(hash)) {
+        if (hash === 'admin') {
+          let user = currentUser;
+          if (!user) {
+            try {
+              const saved = localStorage.getItem('raxwo_user');
+              if (saved) user = JSON.parse(saved);
+            } catch (e) {}
+          }
+          const isAdmin = user && (user.role === 'super_admin' || user.role === 'sales_admin');
+          if (!isAdmin) {
+            setIsAuthModalOpen(true);
+            return;
+          }
+        }
+        setIsAuthModalOpen(false);
         setCurrentRoute(hash);
       }
     };
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [currentUser]);
 
   // Scroll reveal animation observer
   useEffect(() => {
@@ -190,12 +205,25 @@ export default function App() {
     };
   }, [currentRoute]);
 
-  const handleRouteChange = (newRoute) => {
-    // If attempting to enter admin without permission, redirect to login
-    if (newRoute === 'admin' && (!currentUser || (currentUser.role !== 'super_admin' && currentUser.role !== 'sales_admin'))) {
-      setIsAuthModalOpen(true);
-      return;
+  const handleRouteChange = (newRoute, targetUser = null) => {
+    let effectiveUser = targetUser || currentUser;
+    if (!effectiveUser) {
+      try {
+        const saved = localStorage.getItem('raxwo_user');
+        if (saved) effectiveUser = JSON.parse(saved);
+      } catch (e) {}
     }
+
+    // If attempting to enter admin without permission, redirect to login
+    if (newRoute === 'admin') {
+      const isAdmin = effectiveUser && (effectiveUser.role === 'super_admin' || effectiveUser.role === 'sales_admin');
+      if (!isAdmin) {
+        setIsAuthModalOpen(true);
+        return;
+      }
+    }
+
+    setIsAuthModalOpen(false);
     setCurrentRoute(newRoute);
     window.location.hash = newRoute === 'home' ? '' : newRoute;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -264,6 +292,7 @@ export default function App() {
   // Auth Handlers
   const handleLoginSuccess = (user) => {
     setCurrentUser(user);
+    setIsAuthModalOpen(false);
     triggerToast(`Welcome back, ${user.name}!`);
     fetchMyOrders();
   };
@@ -751,7 +780,8 @@ export default function App() {
               lang={lang}
               onLoginSuccess={(user) => {
                 handleLoginSuccess(user);
-                handleRouteChange(user.role === 'super_admin' || user.role === 'sales_admin' ? 'admin' : 'home');
+                const isAdmin = user.role === 'super_admin' || user.role === 'sales_admin';
+                handleRouteChange(isAdmin ? 'admin' : 'home', user);
               }}
               onBackToHome={() => handleRouteChange('home')}
             />
@@ -772,7 +802,14 @@ export default function App() {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
-        onLoginSuccess={handleLoginSuccess}
+        onLoginSuccess={(user) => {
+          handleLoginSuccess(user);
+          setIsAuthModalOpen(false);
+          const isAdmin = user.role === 'super_admin' || user.role === 'sales_admin';
+          if (isAdmin) {
+            handleRouteChange('admin', user);
+          }
+        }}
         theme={theme}
       />
 

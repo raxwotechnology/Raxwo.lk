@@ -41,61 +41,6 @@ export default function SignInPage({
     setError('');
     setSuccess('');
 
-    // Pre-configured instant demo profiles for zero-friction access
-    if (email === 'admin@raxwo.lk') {
-      const adminUser = {
-        id: 'admin_demo_01',
-        name: 'Super Administrator',
-        email: 'admin@raxwo.lk',
-        role: 'super_admin',
-        company: 'Raxwo Next Level Tech'
-      };
-      localStorage.setItem('raxwo_token', 'demo_admin_jwt_token_2026');
-      localStorage.setItem('raxwo_user', JSON.stringify(adminUser));
-      setSuccess('Authenticated as Super Administrator. Redirecting...');
-      setTimeout(() => {
-        if (onLoginSuccess) onLoginSuccess(adminUser);
-      }, 500);
-      setLoading(false);
-      return;
-    }
-
-    if (email === 'sales@raxwo.lk') {
-      const salesUser = {
-        id: 'sales_demo_02',
-        name: 'Sales Manager',
-        email: 'sales@raxwo.lk',
-        role: 'sales_admin',
-        company: 'Raxwo Enterprise Sales'
-      };
-      localStorage.setItem('raxwo_token', 'demo_sales_jwt_token_2026');
-      localStorage.setItem('raxwo_user', JSON.stringify(salesUser));
-      setSuccess('Authenticated as Sales Manager. Redirecting...');
-      setTimeout(() => {
-        if (onLoginSuccess) onLoginSuccess(salesUser);
-      }, 500);
-      setLoading(false);
-      return;
-    }
-
-    if (email === 'buyer@raxwo.lk') {
-      const buyerUser = {
-        id: 'buyer_demo_03',
-        name: 'Sample Buyer',
-        email: 'buyer@raxwo.lk',
-        role: 'buyer',
-        company: 'Lanka Retail Mart'
-      };
-      localStorage.setItem('raxwo_token', 'demo_buyer_jwt_token_2026');
-      localStorage.setItem('raxwo_user', JSON.stringify(buyerUser));
-      setSuccess('Welcome back, Sample Buyer! Redirecting...');
-      setTimeout(() => {
-        if (onLoginSuccess) onLoginSuccess(buyerUser);
-      }, 500);
-      setLoading(false);
-      return;
-    }
-
     // Standard backend call
     try {
       const res = await fetch('/api/auth/login', {

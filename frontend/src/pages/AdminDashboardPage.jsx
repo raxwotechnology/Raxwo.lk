@@ -36,17 +36,20 @@ export default function AdminDashboardPage({ theme = 'dark', currentUser, onLogo
   });
   const [generatedQuote, setGeneratedQuote] = useState(null);
 
-  const token = localStorage.getItem('raxwo_token');
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('raxwo_token') || '';
+    return {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+  };
 
   // Fetch admin data
   const fetchAdminData = async () => {
     setLoading(true);
     setError('');
     try {
-      const headers = { 
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
+      const headers = getAuthHeaders();
 
       const [resAnalytics, resInquiries, resOrders] = await Promise.all([
         fetch('/api/admin/analytics', { headers }),
@@ -55,6 +58,9 @@ export default function AdminDashboardPage({ theme = 'dark', currentUser, onLogo
       ]);
 
       if (!resAnalytics.ok || !resInquiries.ok || !resOrders.ok) {
+        if (resAnalytics.status === 401 || resInquiries.status === 401 || resOrders.status === 401) {
+          throw new Error('Your administrative session has expired. Please sign in again.');
+        }
         throw new Error('Failed to load administrative records. Please verify login permissions.');
       }
 
@@ -92,10 +98,7 @@ export default function AdminDashboardPage({ theme = 'dark', currentUser, onLogo
     try {
       const res = await fetch(`/api/admin/inquiries/${inquiryId}`, {
         method: 'PATCH',
-        headers: { 
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json' 
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ status: newStatus })
       });
       const data = await res.json();
@@ -115,10 +118,7 @@ export default function AdminDashboardPage({ theme = 'dark', currentUser, onLogo
     try {
       const res = await fetch('/api/admin/quotes', {
         method: 'POST',
-        headers: { 
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json' 
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({
           inquiryId: quoteForm.inquiryId,
           customerName: quoteForm.customerName,
@@ -145,10 +145,7 @@ export default function AdminDashboardPage({ theme = 'dark', currentUser, onLogo
     try {
       const res = await fetch(`/api/admin/orders/${orderId}/status`, {
         method: 'PATCH',
-        headers: { 
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json' 
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ paymentStatus: 'completed', status: 'Active' })
       });
       const data = await res.json();
