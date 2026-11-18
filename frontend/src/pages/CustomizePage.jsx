@@ -289,13 +289,19 @@ export default function CustomizePage({
                         onClick={() => toggleFeature(feat)}
                         className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                           isSelected
-                            ? 'bg-blue-600/20 border-blue-500 text-cyan-300'
-                            : isDark ? 'bg-[#11172e] border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-700'
+                            ? isDark
+                              ? 'bg-blue-600/20 border-blue-500 text-white shadow-sm'
+                              : 'bg-blue-50 border-blue-600 text-slate-950 shadow-sm'
+                            : isDark
+                              ? 'bg-[#11172e] border-slate-800 text-slate-400 hover:border-slate-700'
+                              : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300'
                         }`}
                       >
-                        <span className="text-xs font-medium">{feat}</span>
-                        <div className={`w-5 h-5 rounded-md flex items-center justify-center ${
-                          isSelected ? 'bg-blue-600 text-white' : 'border border-slate-600'
+                        <span className={`text-xs ${isSelected ? 'font-bold' : 'font-medium'}`}>{feat}</span>
+                        <div className={`w-5 h-5 rounded-md flex items-center justify-center transition-all ${
+                          isSelected 
+                            ? 'bg-blue-600 text-white shadow-sm' 
+                            : isDark ? 'border border-slate-600' : 'border border-slate-300 bg-white'
                         }`}>
                           {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                         </div>
