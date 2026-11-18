@@ -15,7 +15,8 @@ const Sale = require('./models/Sale');
 const { router: authRouter, seedDefaultUsers } = require('./routes/auth');
 const adminRouter = require('./routes/admin');
 const ordersRouter = require('./routes/orders');
-const { verifyToken, requireRole } = require('./middleware/auth');
+const { verifyToken, requireRole, optionalAuth } = require('./middleware/auth');
+const { inMemoryInquiries, addInquiry, getProductOverrides, updateProductOverride } = require('./store');
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -616,7 +617,8 @@ app.get('/api/products', async (req, res) => {
     }
   }
 
-  let filtered = [...erpProducts];
+  const overrides = getProductOverrides();
+  let filtered = erpProducts.map(p => overrides[p.id] ? { ...p, ...overrides[p.id] } : p);
 
   if (category && category !== 'All') {
     filtered = filtered.filter(p => p.category.toLowerCase().includes(category.toLowerCase()));
@@ -639,9 +641,32 @@ app.get('/api/products', async (req, res) => {
   });
 });
 
-app.put('/api/products/:id', async (req, res) => {
+app.put('/api/products/:id', optionalAuth, async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
+
+  // Pricing changes are strictly restricted to Super Admin
+  if (updates.priceLKR !== undefined) {
+    if (!req.user || req.user.role !== 'super_admin') {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Permission denied. Only Super Administrator can change product prices.' 
+      });
+    }
+  }
+
+  // Photo updates require super_admin or sales_admin
+  if (updates.image !== undefined) {
+    if (!req.user || (req.user.role !== 'super_admin' && req.user.role !== 'sales_admin')) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Permission denied. Only Administrators can change product photos.' 
+      });
+    }
+  }
+
+  // Persist override to disk so it survives restarts
+  updateProductOverride(id, updates);
 
   if (isMongoConnected) {
     try {
@@ -729,6 +754,7 @@ app.post('/api/inquiries', async (req, res) => {
   };
 
   userInquiries.push(inquiry);
+  addInquiry(inquiry);
 
   if (isMongoConnected) {
     try {

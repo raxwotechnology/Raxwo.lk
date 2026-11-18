@@ -70,6 +70,19 @@ export default function App() {
   // Route state
   const [currentRoute, setCurrentRoute] = useState(() => {
     const hash = window.location.hash.replace('#', '');
+    if (hash === 'admin') {
+      try {
+        const saved = localStorage.getItem('raxwo_user');
+        const token = localStorage.getItem('raxwo_token');
+        if (saved && token) {
+          const u = JSON.parse(saved);
+          if (u.role === 'super_admin' || u.role === 'sales_admin') {
+            return 'admin';
+          }
+        }
+      } catch (e) {}
+      return 'signin';
+    }
     if (validRoutes.includes(hash)) {
       return hash;
     }
@@ -162,9 +175,12 @@ export default function App() {
               if (saved) user = JSON.parse(saved);
             } catch (e) {}
           }
-          const isAdmin = user && (user.role === 'super_admin' || user.role === 'sales_admin');
+          const token = localStorage.getItem('raxwo_token');
+          const isAdmin = user && token && (user.role === 'super_admin' || user.role === 'sales_admin');
           if (!isAdmin) {
-            setIsAuthModalOpen(true);
+            setIsAuthModalOpen(false);
+            setCurrentRoute('signin');
+            window.location.hash = 'signin';
             return;
           }
         }
@@ -214,11 +230,21 @@ export default function App() {
       } catch (e) {}
     }
 
-    // If attempting to enter admin without permission, redirect to login
+    const isAdmin = effectiveUser && (effectiveUser.role === 'super_admin' || effectiveUser.role === 'sales_admin');
+
+    // When logged in as admin, restrict view solely to admin portal (no other customer pages)
+    if (isAdmin && newRoute !== 'admin') {
+      setCurrentRoute('admin');
+      window.location.hash = 'admin';
+      return;
+    }
+
+    // If attempting to enter admin without permission, redirect to signin
     if (newRoute === 'admin') {
-      const isAdmin = effectiveUser && (effectiveUser.role === 'super_admin' || effectiveUser.role === 'sales_admin');
       if (!isAdmin) {
-        setIsAuthModalOpen(true);
+        setIsAuthModalOpen(false);
+        setCurrentRoute('signin');
+        window.location.hash = 'signin';
         return;
       }
     }
@@ -670,8 +696,15 @@ export default function App() {
           {currentRoute === 'order' && (
             <OrderCheckoutPage
               cartItem={cartItem}
+              onProceedToCheckout={() => handleRouteChange('checkout-customer')}
               onContinueToCustomer={() => handleRouteChange('checkout-customer')}
               onBackToProducts={() => handleRouteChange('products')}
+              onBackToHome={() => handleRouteChange('home')}
+              onEditCustomization={(prod) => {
+                const target = prod || cartItem?.product;
+                if (target) setSelectedProduct(target);
+                handleRouteChange('customize');
+              }}
               currency={currency}
               currencyRates={currencyRates}
               theme={theme}
@@ -789,8 +822,10 @@ export default function App() {
 
         </main>
 
-        {/* Global Footer */}
-        <Footer theme={theme} onRouteChange={handleRouteChange} lang={lang} />
+        {/* Global Footer (Hidden when logged in as admin to keep backoffice isolated) */}
+        {currentRoute !== 'admin' && (
+          <Footer theme={theme} onRouteChange={handleRouteChange} lang={lang} />
+        )}
 
       </div>
 

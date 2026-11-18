@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const { optionalAuth, verifyToken } = require('../middleware/auth');
+const { inMemoryOrders, addOrder, saveStore } = require('../store');
 
 // Sri Lanka Bank Details for Bank Transfer
 const BANK_DETAILS = {
@@ -12,9 +13,6 @@ const BANK_DETAILS = {
   accountNumber: "1000 8945 2311",
   swiftCode: "CCEYLKX"
 };
-
-// In-memory fallback orders store
-let inMemoryOrders = [];
 
 function isDBConnected() {
   return mongoose.connection && mongoose.connection.readyState === 1;
@@ -77,9 +75,9 @@ router.post('/create', optionalAuth, async (req, res) => {
       }
     }
 
-    // Always keep in memory store
+    // Always persist in local disk store
     orderData.id = orderData.id || `ord_${Date.now()}`;
-    inMemoryOrders.unshift(orderData);
+    addOrder(orderData);
 
     res.status(201).json({
       success: true,
@@ -197,6 +195,7 @@ router.post('/:orderId/upload-slip', async (req, res) => {
       memOrder.bankSlipNote = note;
       memOrder.paymentStatus = 'verified';
       memOrder.status = 'Processing';
+      saveStore();
       return res.json({
         success: true,
         message: 'Bank transfer slip submitted! Our finance team will verify within 1 hour.',

@@ -176,16 +176,20 @@ export default function AboutUsPage({
       <section className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 mb-12 sm:mb-16 reveal-on-scroll">
         <div className="max-w-5xl mx-auto text-center">
           
-          {/* Pill Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 border shadow-sm backdrop-blur-md bg-[#0094ff]/10 text-[#0094ff] border-[#0094ff]/30">
-            <Sparkles className="w-3.5 h-3.5 text-[#0094ff]" />
-            <span>
+          {/* Pill Tag — Dark Blue Badge */}
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-3.5 border shadow-sm backdrop-blur-md ${
+            isDark 
+              ? 'bg-blue-950/70 text-blue-300 border-blue-800' 
+              : 'bg-[#002b66]/10 text-[#002b66] border-[#002b66]/30'
+          }`}>
+            <Sparkles className={`w-3.5 h-3.5 ${isDark ? 'text-blue-300' : 'text-[#002b66]'}`} />
+            <span className="tracking-wide">
               {isSi ? 'RAXWO ගැන සරලව • අපගේ කතාව' : isTa ? 'RAXWO பற்றி • எங்களின் கதை' : 'ABOUT RAXWO • HONEST BUSINESS SOFTWARE'}
             </span>
           </div>
 
-          {/* Clean Main Title */}
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight ${
+          {/* Clean Main Title — Balanced, Refined Size */}
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-3.5 leading-snug ${
             isDark ? 'text-white' : 'text-slate-950'
           }`}>
             {isSi ? 'ඔබගේ ව්‍යාපාරයට සරල හා විශ්වාසනීය' : isTa ? 'உங்கள் வணிகத்திற்கான எளிய & நம்பகமான' : 'Simple, Reliable Software That You'}{' '}
@@ -194,9 +198,9 @@ export default function AboutUsPage({
             </span>
           </h1>
 
-          {/* Simple, Readable Subtitle for Everyone */}
-          <p className={`text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed ${
-            isDark ? 'text-slate-300' : 'text-slate-700'
+          {/* Simple, Readable Subtitle with Semi-Bold Weight & Moderate Font Size */}
+          <p className={`text-[13px] sm:text-sm md:text-[15px] font-semibold max-w-3xl mx-auto leading-relaxed ${
+            isDark ? 'text-slate-200' : 'text-slate-800'
           }`}>
             {isSi
               ? 'අපගේ අරමුණ වන්නේ සිල්ලර කඩ, සුපිරි වෙළඳසැල්, ආපනශාලා හෝ කර්මාන්තශාලා පවත්වාගෙන යන ඕනෑම කෙනෙකුට මාසික ගාස්තු හෝ පරිගණක ගැටලු නැතිව, පහසුවෙන් බිල්පත් ගසමින් ව්‍යාපාරය දියුණු කරගැනීමට අවශ්‍ය මෘදුකාංග සාධාරණ මිලකට ලබාදීමයි.'
@@ -206,7 +210,7 @@ export default function AboutUsPage({
           </p>
 
           {/* 3 Quick Simple Value Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mt-6 text-xs font-semibold">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mt-5 text-xs font-bold">
             <div className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border ${
               isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
             }`}>

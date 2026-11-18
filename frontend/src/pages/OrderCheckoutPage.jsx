@@ -7,9 +7,9 @@ import {
   ShieldCheck, 
   Plus, 
   Minus, 
-  ChevronDown,
   ShoppingBag,
   CheckCircle2,
+  Package,
   X
 } from 'lucide-react';
 
@@ -19,6 +19,7 @@ export default function OrderCheckoutPage({
   onBackToProducts, 
   onEditCustomization,
   onProceedToCheckout,
+  onContinueToCustomer,
   currency = 'LKR', 
   onCurrencyChange, 
   currencyRates,
@@ -53,19 +54,73 @@ export default function OrderCheckoutPage({
     return `LKR ${Number(lkrAmount).toLocaleString()}`;
   };
 
-  const handleCheckoutSubmit = (e) => {
+  const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const payload = {
+        customer: {
+          name: checkoutData.name,
+          email: checkoutData.email,
+          phone: checkoutData.phone,
+          company: 'Client Order',
+          address: 'Sri Lanka'
+        },
+        items: [
+          {
+            productId: item.id || 'mobixa',
+            name: item.name,
+            priceLKR: unitPrice,
+            priceUSD: Math.round(unitPrice * 0.0033),
+            quantity
+          }
+        ],
+        totalLKR: totalPrice,
+        totalUSD: Math.round(totalPrice * 0.0033),
+        currency: 'LKR',
+        paymentMethod: checkoutData.paymentMethod === 'Bank Transfer' ? 'bank_transfer' : 'payhere'
+      };
+
+      const token = localStorage.getItem('raxwo_token');
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      await fetch('/api/orders/create', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn('Checkout submission notice:', err);
+    }
     setCheckoutSuccess(true);
   };
 
+  const handleProceed = () => {
+    if (onProceedToCheckout) {
+      onProceedToCheckout();
+    } else if (onContinueToCustomer) {
+      onContinueToCustomer();
+    } else {
+      setIsCheckoutModalOpen(true);
+    }
+  };
+
+  const handleEdit = () => {
+    if (onEditCustomization) {
+      onEditCustomization(item);
+    } else if (onBackToProducts) {
+      onBackToProducts();
+    }
+  };
+
   return (
-    <div className="w-full pt-6 pb-24 px-6 sm:px-10 lg:px-16 xl:px-20">
+    <div className={`w-full pt-6 pb-24 px-6 sm:px-10 lg:px-16 xl:px-20 ${isDark ? 'text-white' : 'text-slate-900'}`}>
       
-      {/* Breadcrumb Navigation (Exact match to Image 5) */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8">
+      {/* Breadcrumb Navigation */}
+      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
         <button 
           onClick={onBackToHome}
-          className="hover:text-cyan-400 cursor-pointer transition-colors"
+          className="hover:text-[#0094ff] cursor-pointer transition-colors"
         >
           {lang === 'si' ? 'මුල් පිටුව' : lang === 'ta' ? 'முகப்பு' : 'Home'}
         </button>
@@ -75,25 +130,35 @@ export default function OrderCheckoutPage({
         </span>
       </nav>
 
-      {/* Heading section (Exact match to Image 5) */}
+      {/* Heading section with Pill Badge and Two-Tone Heading */}
       <div className="max-w-4xl mb-10 text-left">
-        <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 ${
-          isDark ? 'text-white' : 'text-slate-900'
+        {/* Solid Capsule Pill Badge */}
+        <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-sm mb-3 ${
+          isDark ? 'bg-white text-slate-950' : 'bg-[#0a0f24] text-white'
         }`}>
-          {lang === 'si' ? 'ඔබගේ ඇණවුම' : lang === 'ta' ? 'உங்கள் ஆர்டர்' : 'Your Order'}
+          <ShoppingBag className="w-3.5 h-3.5 text-[#0094ff]" />
+          <span>{lang === 'si' ? 'ඇණවුම් විස්තරය' : lang === 'ta' ? 'ஆர்டர் மேலோட்டம்' : 'Order Overview'}</span>
+        </div>
+
+        {/* Two-Tone Heading */}
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">
+          <span className={isDark ? 'text-white' : 'text-slate-900'}>
+            {lang === 'si' ? 'ඔබගේ ' : lang === 'ta' ? 'உங்கள் ' : 'Your '}
+          </span>
+          <span className="text-[#0094ff]">
+            {lang === 'si' ? 'ඇණවුම' : lang === 'ta' ? 'ஆர்டர்' : 'Order'}
+          </span>
         </h1>
-        <p className={`text-sm sm:text-base ${
-          isDark ? 'text-slate-400' : 'text-slate-600'
-        }`}>
+        <p className={`text-sm sm:text-base ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
           {lang === 'si' ? 'ගෙවීම් කිරීමට පෙර ඔබගේ තේරීම් පරීක්ෂා කරන්න.' : lang === 'ta' ? 'செக்அவுட் செய்வதற்கு முன் உங்கள் தேர்வுகளை மதிப்பாய்வு செய்யவும்.' : 'Review your choices before checkout.'}
         </p>
       </div>
 
       {isRemoved ? (
         <div className={`p-12 rounded-3xl border text-center max-w-xl mx-auto ${
-          isDark ? 'bg-[#0b1022] border-slate-800' : 'bg-white border-slate-200'
+          isDark ? 'bg-[#0c101d] border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
-          <ShoppingBag className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+          <ShoppingBag className="w-12 h-12 text-slate-400 mx-auto mb-4" />
           <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             {lang === 'si' ? 'ඔබගේ කරත්තය හිස්ව ඇත' : lang === 'ta' ? 'உங்கள் கூடை காலியாக உள்ளது' : 'Your cart is empty'}
           </h3>
@@ -102,7 +167,7 @@ export default function OrderCheckoutPage({
           </p>
           <button
             onClick={onBackToProducts}
-            className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs cursor-pointer shadow-md"
+            className="px-6 py-3 rounded-xl bg-[#0094ff] hover:bg-[#0080dd] text-white font-bold text-xs cursor-pointer shadow-lg shadow-[#0094ff]/25 transition-all"
           >
             {lang === 'si' ? 'නිෂ්පාදන බලන්න' : lang === 'ta' ? 'தயாரிப்புகளை ஆராய்க' : 'Explore Products'}
           </button>
@@ -111,35 +176,40 @@ export default function OrderCheckoutPage({
         /* Main 2-Column Grid: Left Item Card + Right Order Summary */
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Order Item Card (Exact match to Image 5) */}
+          {/* Left Column: Order Item Card */}
           <div className="lg:col-span-8 w-full">
             <div className={`rounded-3xl p-6 sm:p-8 border transition-all ${
               isDark 
-                ? 'bg-[#0a0f22]/90 border-slate-800/80 shadow-2xl' 
-                : 'bg-white border-slate-200 shadow-xl'
+                ? 'bg-[#0c101d] border-slate-800 shadow-xl' 
+                : 'bg-white border-slate-200 shadow-sm'
             }`}>
               
               {/* Item Header row */}
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b border-slate-800/60">
+              <div className={`flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b ${
+                isDark ? 'border-slate-800' : 'border-slate-200'
+              }`}>
                 <div className="flex items-start gap-4">
-                  {/* Mobixa App Icon */}
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-700 via-indigo-900 to-slate-900 border border-blue-500/40 flex items-center justify-center p-3 shrink-0 shadow-md">
-                    <svg className="w-full h-full text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="5" y="2" width="14" height="20" rx="3" />
-                      <path d="M12 18h.01" />
-                      <path d="M9 6h6" />
-                      <path d="M8 12l2 2 4-4" stroke="#38bdf8" strokeWidth="2.5" />
-                    </svg>
-                  </div>
+                  {/* Product Visual Avatar / Icon */}
+                  {item.image ? (
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="w-14 h-14 rounded-2xl object-cover border border-slate-800 shrink-0 shadow-md" 
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-2xl bg-[#0094ff]/10 border border-[#0094ff]/30 flex items-center justify-center p-3 shrink-0 shadow-md">
+                      <Package className="w-7 h-7 text-[#0094ff]" />
+                    </div>
+                  )}
 
                   <div>
-                    <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <h3 className={`text-lg sm:text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {item.name}
                     </h3>
-                    <span className="text-xs text-slate-400 block mt-0.5">
+                    <span className="text-xs text-slate-400 block mt-0.5 font-medium">
                       {item.subtitle || 'Professional Package'}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-medium mt-2">
+                    <span className="inline-flex items-center gap-1.5 text-xs text-[#0094ff] font-semibold mt-2 bg-[#0094ff]/10 px-2.5 py-0.5 rounded-full border border-[#0094ff]/20">
                       <Check className="w-3.5 h-3.5" />
                       <span>{lang === 'si' ? 'ඔබගේ ව්‍යාපාරයට ගැළපෙන පරිදි සකසා ඇත' : lang === 'ta' ? 'உங்கள் வணிகத்திற்கு ஏற்றவாறு தனிப்பயனாக்கப்பட்டது' : 'Customized for your business'}</span>
                     </span>
@@ -148,35 +218,39 @@ export default function OrderCheckoutPage({
 
                 {/* Price Display */}
                 <div className="text-left sm:text-right">
-                  <span className={`text-lg sm:text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <span className="text-xl sm:text-2xl font-black text-[#0094ff]">
                     {formatPrice(unitPrice)}
                   </span>
                 </div>
               </div>
 
-              {/* Bottom Row: Quantity Stepper, Edit Customization, Remove (Exact match to Image 5) */}
+              {/* Bottom Row: Quantity Stepper, Edit Customization, Remove */}
               <div className="pt-6 flex flex-wrap items-center justify-between gap-4">
                 
                 {/* Quantity Stepper */}
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-slate-400 font-medium">{lang === 'si' ? 'ප්‍රමාණය' : lang === 'ta' ? 'அளவு' : 'Quantity'}</span>
+                  <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    {lang === 'si' ? 'ප්‍රමාණය' : lang === 'ta' ? 'அளவு' : 'Quantity'}
+                  </span>
                   <div className={`flex items-center rounded-xl border p-1 ${
-                    isDark ? 'bg-[#11172e] border-slate-800' : 'bg-slate-50 border-slate-300'
+                    isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
                   }`}>
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-white cursor-pointer rounded-lg hover:bg-slate-800"
+                      className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-[#0094ff] cursor-pointer rounded-lg transition-colors"
+                      title="Decrease quantity"
                     >
-                      <Minus className="w-3 h-3" />
+                      <Minus className="w-3.5 h-3.5" />
                     </button>
                     <span className={`w-8 text-center text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-white cursor-pointer rounded-lg hover:bg-slate-800"
+                      className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-[#0094ff] cursor-pointer rounded-lg transition-colors"
+                      title="Increase quantity"
                     >
-                      <Plus className="w-3 h-3" />
+                      <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -184,20 +258,18 @@ export default function OrderCheckoutPage({
                 {/* Edit & Remove Buttons */}
                 <div className="flex items-center gap-3">
                   <button
-                    onClick={() => onEditCustomization(item)}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer border transition-colors ${
-                      isDark 
-                        ? 'bg-transparent text-cyan-400 border-cyan-800/50 hover:bg-cyan-950/40' 
-                        : 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50'
-                    }`}
+                    type="button"
+                    onClick={handleEdit}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer border transition-all bg-[#0094ff]/10 text-[#0094ff] border-[#0094ff]/30 hover:bg-[#0094ff] hover:text-white shadow-sm active:scale-95"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                     <span>{lang === 'si' ? 'වෙනස්කම් සකසන්න' : lang === 'ta' ? 'தனிப்பயனாக்கத்தைத் திருத்து' : 'Edit Customization'}</span>
                   </button>
 
                   <button
+                    type="button"
                     onClick={() => setIsRemoved(true)}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-rose-400 bg-rose-950/20 hover:bg-rose-950/40 border border-rose-900/40 cursor-pointer transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 cursor-pointer transition-all active:scale-95"
                   >
                     <X className="w-3.5 h-3.5" />
                     <span>{lang === 'si' ? 'ඉවත් කරන්න' : lang === 'ta' ? 'நீக்கு' : 'Remove'}</span>
@@ -209,45 +281,48 @@ export default function OrderCheckoutPage({
             </div>
           </div>
 
-          {/* Right Column: Order Summary Card (Exact match to Image 5) */}
+          {/* Right Column: Order Summary Card */}
           <div className="lg:col-span-4 w-full">
-            <div className={`rounded-3xl p-6 sm:p-7 border backdrop-blur-xl transition-all ${
+            <div className={`rounded-3xl p-6 sm:p-7 border transition-all ${
               isDark 
-                ? 'bg-[#0a0f22]/95 border-slate-800/80 shadow-2xl' 
-                : 'bg-white border-slate-200 shadow-xl'
+                ? 'bg-[#0c101d] border-slate-800 shadow-xl' 
+                : 'bg-white border-slate-200 shadow-sm'
             }`}>
               
-              <h4 className={`text-base font-bold mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                Order Summary
-              </h4>
+              <h2 className="text-lg font-extrabold tracking-tight mb-6">
+                <span className={isDark ? 'text-white' : 'text-slate-900'}>Order </span>
+                <span className="text-[#0094ff]">Summary</span>
+              </h2>
 
               {/* Rows */}
-              <div className="space-y-3.5 text-xs">
-                <div className="flex items-center justify-between text-slate-400">
-                  <span>Subtotal</span>
-                  <span className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <div className="space-y-4 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>Subtotal</span>
+                  <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between text-slate-400">
-                  <span>Customization</span>
-                  <span className="text-emerald-400 font-semibold">
+                <div className="flex items-center justify-between">
+                  <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>Customization</span>
+                  <span className="text-[#0094ff] font-bold">
                     Included
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-                  <span className="text-sm font-bold text-slate-400">Total</span>
-                  <span className={`text-base sm:text-lg font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                <div className={`pt-4 border-t flex items-center justify-between ${
+                  isDark ? 'border-slate-800' : 'border-slate-200'
+                }`}>
+                  <span className={`text-sm font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Total</span>
+                  <span className="text-xl font-black text-[#0094ff]">
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-slate-400">Currency</span>
-                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg border ${
-                    isDark ? 'bg-slate-900/60 text-slate-300 border-slate-800' : 'bg-slate-100 text-slate-700 border-slate-300'
+                <div className="flex items-center justify-between pt-1">
+                  <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>Currency</span>
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded-lg border ${
+                    isDark ? 'bg-slate-900 text-slate-300 border-slate-800' : 'bg-slate-100 text-slate-700 border-slate-200'
                   }`}>
                     LKR (Rs)
                   </span>
@@ -257,34 +332,34 @@ export default function OrderCheckoutPage({
               {/* Proceed to Checkout Button */}
               <div className="mt-8 space-y-3">
                 <button
-                  onClick={() => {
-                    if (onProceedToCheckout) {
-                      onProceedToCheckout();
-                    } else {
-                      setIsCheckoutModalOpen(true);
-                    }
-                  }}
-                  className="w-full py-3.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-500 cursor-pointer transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
+                  type="button"
+                  onClick={handleProceed}
+                  className="w-full py-4 rounded-2xl font-bold text-sm text-white bg-[#0094ff] hover:bg-[#0080dd] shadow-lg shadow-[#0094ff]/25 cursor-pointer transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2"
                 >
-                  <ArrowRight className="w-4 h-4" />
                   <span>Proceed to Checkout</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
 
                 <button
+                  type="button"
                   onClick={onBackToProducts}
-                  className="w-full text-center text-xs text-slate-400 hover:text-white cursor-pointer transition-colors block py-1"
+                  className={`w-full text-center text-xs py-1 transition-colors cursor-pointer ${
+                    isDark ? 'text-slate-400 hover:text-[#0094ff]' : 'text-slate-500 hover:text-[#0094ff]'
+                  }`}
                 >
                   Continue Shopping
                 </button>
               </div>
 
-              {/* Bottom Security Banner (Exact match to Image 5) */}
-              <div className={`mt-8 pt-5 border-t border-slate-800/80 flex items-center gap-3`}>
-                <ShieldCheck className="w-5 h-5 text-cyan-400 shrink-0" />
+              {/* Bottom Security Banner */}
+              <div className={`mt-8 pt-5 border-t flex items-center gap-3 ${
+                isDark ? 'border-slate-800' : 'border-slate-200'
+              }`}>
+                <ShieldCheck className="w-5 h-5 text-[#0094ff] shrink-0" />
                 <div className="text-left">
-                  <h5 className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <h3 className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     Safe and secure
-                  </h5>
+                  </h3>
                   <p className="text-[11px] text-slate-400">
                     Your information is protected.
                   </p>
@@ -297,11 +372,11 @@ export default function OrderCheckoutPage({
         </div>
       )}
 
-      {/* Interactive Checkout Modal */}
+      {/* Interactive Checkout Modal (Fallback) */}
       {isCheckoutModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
           <div className={`relative w-full max-w-md rounded-3xl border p-6 sm:p-7 text-left shadow-2xl ${
-            isDark ? 'bg-[#0b1022] border-slate-700' : 'bg-white border-slate-300'
+            isDark ? 'bg-[#0c101d] border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             <button
               onClick={() => setIsCheckoutModalOpen(false)}
@@ -324,7 +399,7 @@ export default function OrderCheckoutPage({
                     setIsCheckoutModalOpen(false);
                     onBackToHome();
                   }}
-                  className="mt-4 px-6 py-2.5 rounded-full bg-blue-600 text-white text-xs font-semibold shadow-md"
+                  className="mt-4 px-6 py-2.5 rounded-full bg-[#0094ff] hover:bg-[#0080dd] text-white text-xs font-bold shadow-md cursor-pointer"
                 >
                   Return to Home
                 </button>
@@ -341,38 +416,38 @@ export default function OrderCheckoutPage({
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Your Name *</label>
+                  <label className={`text-xs font-semibold block mb-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Your Name *</label>
                   <input
                     type="text"
                     required
                     value={checkoutData.name}
                     onChange={(e) => setCheckoutData({ ...checkoutData, name: e.target.value })}
-                    className={`w-full px-3.5 py-2 rounded-xl text-xs border ${
-                      isDark ? 'bg-[#11172e] border-slate-700 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs border focus:outline-none focus:border-[#0094ff] ${
+                      isDark ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
                     }`}
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Phone Number (WhatsApp) *</label>
+                  <label className={`text-xs font-semibold block mb-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Phone Number (WhatsApp) *</label>
                   <input
                     type="tel"
                     required
                     value={checkoutData.phone}
                     onChange={(e) => setCheckoutData({ ...checkoutData, phone: e.target.value })}
-                    className={`w-full px-3.5 py-2 rounded-xl text-xs border ${
-                      isDark ? 'bg-[#11172e] border-slate-700 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs border focus:outline-none focus:border-[#0094ff] ${
+                      isDark ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
                     }`}
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Payment Method</label>
+                  <label className={`text-xs font-semibold block mb-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Payment Method</label>
                   <select
                     value={checkoutData.paymentMethod}
                     onChange={(e) => setCheckoutData({ ...checkoutData, paymentMethod: e.target.value })}
-                    className={`w-full px-3.5 py-2 rounded-xl text-xs border ${
-                      isDark ? 'bg-[#11172e] border-slate-700 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs border focus:outline-none focus:border-[#0094ff] ${
+                      isDark ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
                     }`}
                   >
                     <option value="Bank Transfer">Commercial Bank / HNB Bank Transfer</option>
@@ -383,9 +458,9 @@ export default function OrderCheckoutPage({
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl font-semibold text-xs text-white bg-blue-600 hover:bg-blue-500 shadow-md cursor-pointer mt-2"
+                  className="w-full py-3.5 rounded-xl font-bold text-xs text-white bg-[#0094ff] hover:bg-[#0080dd] shadow-lg shadow-[#0094ff]/25 cursor-pointer mt-2"
                 >
-                  Confirm Order & Receive Source Code
+                  Confirm Order &amp; Receive Source Code
                 </button>
               </form>
             )}

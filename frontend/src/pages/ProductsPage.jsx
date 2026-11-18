@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Search, Play, ArrowRight, Sparkles, Layers, Check, Zap, X, 
-  Filter, Code2, Plus, Image as ImageIcon, Edit3, ExternalLink 
+  Filter, Code2, Plus, Edit3, ExternalLink 
 } from 'lucide-react';
 import { getTranslation } from '../i18n/translations';
 
@@ -56,11 +56,8 @@ export default function ProductsPage({
   const [searchQuery, setSearchQuery] = useState('');
   const [compareList, setCompareList] = useState([]);
   
-  // Custom Product List state (supports adding/editing images)
+  // Custom Product List state
   const [productList, setProductList] = useState(products);
-  const [imageModalProduct, setImageModalProduct] = useState(null);
-  const [customImageUrl, setCustomImageUrl] = useState('');
-  const [isSavingImage, setIsSavingImage] = useState(false);
 
   // Sync with prop when products update
   React.useEffect(() => {
@@ -117,38 +114,6 @@ export default function ProductsPage({
       }
       setCompareList([...compareList, product]);
     }
-  };
-
-  // Handle image update for product
-  const handleOpenImageModal = (product, e) => {
-    if (e) e.stopPropagation();
-    setImageModalProduct(product);
-    setCustomImageUrl(product.image || defaultProductImages[product.id] || '');
-  };
-
-  const handleSaveProductImage = async () => {
-    if (!imageModalProduct) return;
-    setIsSavingImage(true);
-    const updatedImg = customImageUrl.trim();
-
-    try {
-      // Send update to backend API
-      await fetch(`/api/products/${imageModalProduct.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: updatedImg })
-      });
-    } catch (e) {
-      console.warn('API update failed, updating locally:', e);
-    }
-
-    // Update local product list
-    setProductList(prev => prev.map(p => 
-      p.id === imageModalProduct.id ? { ...p, image: updatedImg } : p
-    ));
-
-    setIsSavingImage(false);
-    setImageModalProduct(null);
   };
 
   const filteredProducts = productList.filter(p => {
@@ -367,15 +332,6 @@ export default function ProductsPage({
 
                   {/* Top-Right: Category Badge & Compare button */}
                   <div className="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5">
-                    
-                    {/* Change / Add Image Button */}
-                    <button
-                      onClick={(e) => handleOpenImageModal(product, e)}
-                      title="Change or upload image for this ERP"
-                      className="p-1.5 rounded-lg bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20 transition-all cursor-pointer backdrop-blur-md"
-                    >
-                      <ImageIcon className="w-3.5 h-3.5" />
-                    </button>
 
                     {/* Compare Button */}
                     <button
@@ -539,122 +495,6 @@ export default function ProductsPage({
               <Layers className="w-3.5 h-3.5" />
               <span>Compare Matrix</span>
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================
-          ADD / EDIT PRODUCT IMAGE MODAL
-         ======================================================== */}
-      {imageModalProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
-          <div className={`w-full max-w-lg p-6 sm:p-7 rounded-3xl border shadow-2xl transition-colors ${
-            isDark ? 'bg-[#0e1329] border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-900'
-          }`}>
-            <div className="flex items-center justify-between pb-3 border-b border-slate-700/50 mb-4">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-blue-600 text-white">
-                  <ImageIcon className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold">Change Product Image</h3>
-                  <p className="text-xs text-slate-400">{imageModalProduct.name}</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setImageModalProduct(null)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Live Preview */}
-            <div className="mb-4">
-              <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-slate-400">
-                Live Preview
-              </label>
-              <div className="w-full h-44 rounded-2xl overflow-hidden bg-slate-950 border border-slate-700 relative">
-                {customImageUrl ? (
-                  <img 
-                    src={customImageUrl} 
-                    alt="Preview" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = defaultProductImages.mobixa; }}
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 text-xs">
-                    <ImageIcon className="w-8 h-8 mb-1" />
-                    <span>Paste an image URL or choose preset below</span>
-                  </div>
-                )}
-                <div className="absolute bottom-2.5 left-3 px-2 py-0.5 rounded bg-black/70 text-white text-[10px] font-mono">
-                  {imageModalProduct.name} Preview
-                </div>
-              </div>
-            </div>
-
-            {/* Input URL */}
-            <div className="mb-4">
-              <label className="block text-xs font-semibold mb-1.5">
-                Custom Image URL:
-              </label>
-              <input
-                type="text"
-                value={customImageUrl}
-                onChange={e => setCustomImageUrl(e.target.value)}
-                placeholder="https://images.unsplash.com/photo-..."
-                className={`w-full px-3.5 py-2.5 rounded-xl text-xs focus:outline-none transition-all ${
-                  isDark 
-                    ? 'bg-slate-900 border border-slate-700 text-white focus:border-cyan-400' 
-                    : 'bg-slate-50 border border-slate-300 text-slate-900 focus:border-blue-500'
-                }`}
-              />
-            </div>
-
-            {/* Curated Presets */}
-            <div className="mb-5">
-              <label className="block text-xs font-semibold mb-2">
-                Or pick from curated ERP presets:
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-36 overflow-y-auto pr-1">
-                {curatedPresets.map((preset, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setCustomImageUrl(preset.url)}
-                    className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-left truncate transition-colors cursor-pointer border ${
-                      customImageUrl === preset.url
-                        ? 'bg-blue-600 text-white border-blue-500 font-bold'
-                        : isDark
-                          ? 'bg-slate-900/90 text-slate-300 border-slate-800 hover:bg-slate-800'
-                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-700/50">
-              <button
-                type="button"
-                onClick={() => setImageModalProduct(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveProductImage}
-                disabled={isSavingImage}
-                className="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-md shadow-blue-500/30 cursor-pointer transition-all"
-              >
-                {isSavingImage ? 'Saving...' : 'Apply Image'}
-              </button>
-            </div>
           </div>
         </div>
       )}

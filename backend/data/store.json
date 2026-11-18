@@ -1,0 +1,119 @@
+{
+  "users": [
+    {
+      "id": "usr_admin",
+      "_id": "usr_admin",
+      "name": "Super Administrator",
+      "email": "admin@raxwo.lk",
+      "password": "$2b$10$Uo5QlEg4uvf1tIXeySSX8uNUktZ0hdDFPRXHmJwgVy8tMz1qLvQ8G",
+      "role": "super_admin",
+      "company": "Raxwo Next Level Tech",
+      "phone": "+94 77 123 4567"
+    },
+    {
+      "id": "usr_sales",
+      "_id": "usr_sales",
+      "name": "Sales Manager",
+      "email": "sales@raxwo.lk",
+      "password": "$2b$10$JjIazMBUQo5vxUwmZp0XROeJ5z0HbVpufNf0K8QDUxpTiBBFY3XsW",
+      "role": "sales_admin",
+      "company": "Raxwo Enterprise Sales",
+      "phone": "+94 77 234 5678"
+    },
+    {
+      "id": "usr_buyer",
+      "_id": "usr_buyer",
+      "name": "Sample Buyer",
+      "email": "buyer@raxwo.lk",
+      "password": "$2b$10$OUe9YO6VDYlRIphuxlofCe9Q2VcYiD9E5lmkxBovUvLA2R/xb7SkK",
+      "role": "buyer",
+      "company": "Lanka Retail Mart",
+      "phone": "+94 77 345 6789"
+    },
+    {
+      "id": "usr_1794987719013",
+      "_id": "usr_1794987719013",
+      "name": "Hasindu Ketipe",
+      "email": "hashkatipe2004@gmail.com",
+      "password": "$2b$10$7UEc3bJPTsVbPeH1JLIucOa.Ywpn/jy6NM5Pz1Qxdkc9ReDrO6.7e",
+      "phone": "",
+      "company": "Client Account",
+      "role": "buyer"
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "ORD-2026-419602",
+      "userId": null,
+      "customer": {
+        "name": "hasuu",
+        "email": "aaaa@gmail.com",
+        "phone": "+94 77 123 4567",
+        "company": "Nimal Mobile Center",
+        "address": "No 45, Galle Road, Colombo 03"
+      },
+      "items": [
+        {
+          "productId": "gymora",
+          "name": "Gymora",
+          "priceLKR": 120000,
+          "priceUSD": 396,
+          "quantity": 1
+        }
+      ],
+      "totalLKR": 120000,
+      "totalUSD": 396,
+      "currency": "LKR",
+      "paymentMethod": "bank_transfer",
+      "paymentStatus": "completed",
+      "status": "Active",
+      "licenseKey": "RAXWO-L44F-9WVL-SUEG",
+      "invoiceNumber": "INV-2026-419602",
+      "paidAt": "2026-11-18T07:45:46.827Z",
+      "createdAt": "2026-11-18T07:44:57.844Z",
+      "id": "ord_1794987897844"
+    },
+    {
+      "orderId": "ORD-2026-10482",
+      "id": "ord_demo_01",
+      "customer": {
+        "name": "Saman Kumara",
+        "email": "saman@gmail.com",
+        "phone": "077 987 6543",
+        "company": "Saman Textiles (Pvt) Ltd"
+      },
+      "items": [
+        {
+          "productId": "mobixa",
+          "name": "Mobixa Mobile Shop ERP",
+          "priceLKR": 85000,
+          "priceUSD": 280,
+          "quantity": 1
+        }
+      ],
+      "totalLKR": 85000,
+      "totalUSD": 280,
+      "currency": "LKR",
+      "paymentMethod": "bank_transfer",
+      "paymentStatus": "completed",
+      "status": "Active",
+      "licenseKey": "RAXWO-MBX-8821-KL40",
+      "invoiceNumber": "INV-2026-10482",
+      "createdAt": "2026-11-18T05:27:06.697Z"
+    }
+  ],
+  "inquiries": [
+    {
+      "id": "INQ-1794800001",
+      "name": "Kasun Jayawardena",
+      "phone": "071 234 5678",
+      "email": "kasun@gmail.com",
+      "businessType": "Mobile & Accessories Retail",
+      "requirements": "Need 3 counter POS terminals with IMEI tracking",
+      "preferredErp": "Mobixa",
+      "status": "new",
+      "source": "website",
+      "submittedAt": "2026-11-18T06:27:06.698Z"
+    }
+  ]
+}

@@ -27,11 +27,12 @@ export default function Navbar({
   const isAdmin = currentUser && (currentUser.role === 'super_admin' || currentUser.role === 'sales_admin');
   const t = (k) => getTranslation(currentLang, k);
 
-  const navLinks = [
+  const navLinks = isAdmin ? [
+    { label: t('adminPortal'), route: 'admin', isSpecial: true }
+  ] : [
     { label: t('home'), route: 'home' },
     { label: t('products'), route: 'products' },
     { label: t('pricing'), route: 'pricing' },
-    ...(isAdmin ? [{ label: t('adminPortal'), route: 'admin', isSpecial: true }] : []),
     { label: t('support'), route: 'support' },
     { label: t('about'), route: 'about' },
     { label: t('contact'), route: 'contact' }

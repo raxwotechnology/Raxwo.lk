@@ -6,46 +6,16 @@ const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
 const { verifyToken, JWT_SECRET } = require('../middleware/auth');
+const { inMemoryUsers, addUser, findUserByEmail, saveStore } = require('../store');
 
-// Brute-force protection on login
+// Brute-force protection on login (generous limit for development/testing)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
-  message: { success: false, message: 'Too many authentication attempts. Please try again after 15 minutes.' },
+  max: 60,
+  message: { success: false, message: 'Too many authentication attempts. Please try again after a few minutes.' },
   standardHeaders: true,
   legacyHeaders: false
 });
-
-// Resilient in-memory fallback users store (ensures authentication ALWAYS works even if DB is offline)
-let inMemoryUsers = [
-  {
-    id: 'usr_admin',
-    _id: 'usr_admin',
-    name: 'Super Administrator',
-    email: 'admin@raxwo.lk',
-    password: bcrypt.hashSync('Admin@12345', 10),
-    role: 'super_admin',
-    company: 'Raxwo Next Level Tech'
-  },
-  {
-    id: 'usr_sales',
-    _id: 'usr_sales',
-    name: 'Sales Manager',
-    email: 'sales@raxwo.lk',
-    password: bcrypt.hashSync('Sales@12345', 10),
-    role: 'sales_admin',
-    company: 'Raxwo Enterprise Sales'
-  },
-  {
-    id: 'usr_buyer',
-    _id: 'usr_buyer',
-    name: 'Sample Buyer',
-    email: 'buyer@raxwo.lk',
-    password: bcrypt.hashSync('Buyer@12345', 10),
-    role: 'buyer',
-    company: 'Lanka Retail Mart'
-  }
-];
 
 function isDBConnected() {
   return mongoose.connection && mongoose.connection.readyState === 1;
@@ -97,10 +67,16 @@ router.post('/register', async (req, res) => {
 
     const normalizedEmail = email.toLowerCase().trim();
 
+    // Check if account already exists in persistent store
+    const memExisting = findUserByEmail(normalizedEmail);
+    if (memExisting) {
+      return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
+    }
+
     // 1. If MongoDB is connected, attempt MongoDB registration
     if (isDBConnected()) {
       try {
-        const existing = await User.findOne({ email: normalizedEmail });
+        const existing = await User.findOne({ email: normalizedEmail }).maxTimeMS(2000);
         if (existing) {
           return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
         }
@@ -116,8 +92,22 @@ router.post('/register', async (req, res) => {
 
         await user.save();
 
+        // Also persist in local store so it survives MongoDB disconnections
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        addUser({
+          id: user._id.toString(),
+          _id: user._id.toString(),
+          name: user.name,
+          email: normalizedEmail,
+          password: hashedPassword,
+          phone,
+          company: company || 'Client Account',
+          role: 'buyer'
+        });
+
         const token = jwt.sign(
-          { id: user._id, role: user.role, email: user.email, name: user.name },
+          { id: user._id.toString(), role: user.role, email: user.email, name: user.name },
           JWT_SECRET,
           { expiresIn: '7d' }
         );
@@ -127,7 +117,7 @@ router.post('/register', async (req, res) => {
           message: 'Account registered successfully',
           token,
           user: {
-            id: user._id,
+            id: user._id.toString(),
             name: user.name,
             email: user.email,
             role: user.role,
@@ -139,12 +129,7 @@ router.post('/register', async (req, res) => {
       }
     }
 
-    // 2. In-Memory Fallback Registration (ensures sign up always succeeds even when DB is offline)
-    const memExisting = inMemoryUsers.find(u => u.email.toLowerCase() === normalizedEmail);
-    if (memExisting) {
-      return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
-    }
-
+    // 2. Persistent Disk/Store Fallback Registration
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const newUserId = `usr_${Date.now()}`;
@@ -155,12 +140,13 @@ router.post('/register', async (req, res) => {
       name: name.trim(),
       email: normalizedEmail,
       password: hashedPassword,
-      phone,
+      phone: phone || '',
       company: company || 'Client Account',
       role: 'buyer'
     };
 
-    inMemoryUsers.push(newUser);
+    // Save to persistent file on disk
+    addUser(newUser);
 
     const token = jwt.sign(
       { id: newUser.id, role: newUser.role, email: newUser.email, name: newUser.name },
@@ -199,12 +185,12 @@ router.post('/login', authLimiter, async (req, res) => {
     // 1. If MongoDB is connected, attempt DB lookup
     if (isDBConnected()) {
       try {
-        const user = await User.findOne({ email: normalizedEmail });
+        const user = await User.findOne({ email: normalizedEmail }).maxTimeMS(2000);
         if (user) {
           const isMatch = await user.comparePassword(password);
           if (isMatch) {
             const token = jwt.sign(
-              { id: user._id, role: user.role, email: user.email, name: user.name },
+              { id: user._id.toString(), role: user.role, email: user.email, name: user.name },
               JWT_SECRET,
               { expiresIn: '7d' }
             );
@@ -214,7 +200,7 @@ router.post('/login', authLimiter, async (req, res) => {
               message: 'Login successful',
               token,
               user: {
-                id: user._id,
+                id: user._id.toString(),
                 name: user.name,
                 email: user.email,
                 role: user.role,
@@ -230,8 +216,8 @@ router.post('/login', authLimiter, async (req, res) => {
       }
     }
 
-    // 2. In-Memory Fallback Lookup
-    const memUser = inMemoryUsers.find(u => u.email.toLowerCase() === normalizedEmail);
+    // 2. Persistent Store Lookup (Immediate & Reliable)
+    const memUser = findUserByEmail(normalizedEmail);
     if (!memUser) {
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }
@@ -242,7 +228,7 @@ router.post('/login', authLimiter, async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: memUser.id, role: memUser.role, email: memUser.email, name: memUser.name },
+      { id: memUser.id || memUser._id, role: memUser.role, email: memUser.email, name: memUser.name },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -252,7 +238,7 @@ router.post('/login', authLimiter, async (req, res) => {
       message: 'Login successful',
       token,
       user: {
-        id: memUser.id,
+        id: memUser.id || memUser._id,
         name: memUser.name,
         email: memUser.email,
         role: memUser.role,
@@ -270,7 +256,7 @@ router.get('/me', verifyToken, async (req, res) => {
   try {
     if (isDBConnected()) {
       try {
-        const user = await User.findById(req.user.id).select('-password');
+        const user = await User.findById(req.user.id).select('-password').maxTimeMS(2000);
         if (user) {
           return res.json({
             success: true,
