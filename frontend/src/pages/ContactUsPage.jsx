@@ -144,9 +144,11 @@ export default function ContactUsPage({
       <section className="w-full px-4 sm:px-8 lg:px-16 xl:px-20 mb-16 sm:mb-20">
         <div className="max-w-4xl mx-auto text-center">
           
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-5 bg-[#0094ff]/10 text-[#0094ff] border border-[#0094ff]/30">
-            <span>{lang === 'si' ? 'සම්බන්ධ වන්න' : lang === 'ta' ? 'எங்களைத் தொடர்பு கொள்ள' : 'GET IN TOUCH'}</span>
-          </div>
+          <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-5 shadow-sm ${
+            isDark ? 'bg-white text-slate-950' : 'bg-[#0a0f24] text-white'
+          }`}>
+            {lang === 'si' ? 'සම්බන්ධ වන්න' : lang === 'ta' ? 'எங்களைத் தொடர்பு கொள்ள' : 'Get In Touch'}
+          </span>
 
           <h1 className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4 ${
             isDark ? 'text-white' : 'text-[#0a0827]'
@@ -831,9 +833,7 @@ export default function ContactUsPage({
             <div className={`p-7 rounded-3xl border ${
               isDark ? 'bg-[#0a0f24]/95 border-slate-800' : 'bg-white border-slate-200'
             }`}>
-              <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2 ${
-                isDark ? 'text-cyan-400' : 'text-[#0094ff]'
-              }`}>
+              <h4 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2 text-[#0094ff]">
                 <ShieldCheck className="w-4 h-4" />
                 <span>{lang === 'si' ? 'Raxwo තෝරාගත යුත්තේ ඇයි' : lang === 'ta' ? 'Raxwo-வை ஏன் தேர்ந்தெடுக்க வேண்டும்' : 'Why Partner with Raxwo'}</span>
               </h4>
@@ -875,10 +875,18 @@ export default function ContactUsPage({
         <div className="max-w-3xl mx-auto">
           
           <div className="text-center mb-10">
-            <h2 className={`text-2xl sm:text-3xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              {lang === 'si' ? 'නිතර අසන ප්‍රශ්න' : lang === 'ta' ? 'அடிக்கடி கேட்கப்படும் கேள்விகள்' : 'Frequently Asked Questions'}
+            <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-4 shadow-sm ${
+              isDark ? 'bg-white text-slate-950' : 'bg-[#0a0f24] text-white'
+            }`}>
+              {lang === 'si' ? 'පොදු ප්‍රශ්න' : lang === 'ta' ? 'பொதுவான கேள்விகள்' : 'FAQ'}
+            </span>
+            <h2 className={`text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              {lang === 'si' ? 'නිතර අසන' : lang === 'ta' ? 'அடிக்கடி கேட்கப்படும்' : 'Frequently Asked'}
+              <span className="text-[#0094ff] block mt-1">
+                {lang === 'si' ? 'ප්‍රශ්න සහ පිළිතුරු' : lang === 'ta' ? 'கேள்விகள் மற்றும் பதில்கள்' : 'Questions & Answers'}
+              </span>
             </h2>
-            <p className={`text-sm mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            <p className={`text-sm mt-3 max-w-xl mx-auto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               {lang === 'si' ? 'අපගේ මෘදුකාංග, බලපත්‍ර සහ දෘඩාංග පිළිබඳ පොදු ප්‍රශ්න.' : lang === 'ta' ? 'மென்பொருள், உரிமங்கள் மற்றும் வன்பொருள் பற்றிய பொதுவான கேள்விகள்.' : 'Common questions about our software deployments, licenses, and hardware.'}
             </p>
           </div>
@@ -900,8 +908,8 @@ export default function ContactUsPage({
                     onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
                     className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
                   >
-                    <span className={`text-sm sm:text-base font-bold ${
-                      isDark ? 'text-white' : 'text-slate-900'
+                    <span className={`text-sm sm:text-base font-bold transition-colors ${
+                      isOpen ? 'text-[#0094ff]' : isDark ? 'text-white' : 'text-slate-900'
                     }`}>
                       {faq.q}
                     </span>

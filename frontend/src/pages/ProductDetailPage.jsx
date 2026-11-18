@@ -306,6 +306,73 @@ export default function ProductDetailPage({
     }
   ];
 
+  const getProductAdvantages = (prod) => {
+    const id = prod?.id?.toLowerCase() || '';
+    if (id === 'mobixa') {
+      return [
+        'Complete end-to-end mobile shop & phone repair management in one platform',
+        'User-friendly interface for cashiers, technicians, and store owners',
+        'Cloud-ready with offline-first local database reliability',
+        'Improves efficiency, IMEI tracking accuracy, and customer satisfaction',
+        'TRCSL-ready compliance and data-driven dashboards for smarter decisions'
+      ];
+    }
+    if (id === 'dineflow') {
+      return [
+        'Complete end-to-end restaurant, cafe & bar management in one platform',
+        'User-friendly interface for waiters, kitchen staff, and managers',
+        'Cloud-ready with high-speed offline POS hardware reliability',
+        'Improves table turnover, KDS order routing, and customer satisfaction',
+        'Real-time ingredient depletion and data-driven sales dashboards'
+      ];
+    }
+    if (id === 'lankapos') {
+      return [
+        'Complete end-to-end supermarket, grocery & retail management in one platform',
+        'User-friendly high-speed cashier barcode checkout interface',
+        'Cloud-ready and scalable across multi-counter and multi-branch stores',
+        'Improves counter throughput, stock replenishment, and customer satisfaction',
+        'Sri Lanka VAT & SSCL ready with data-driven analytics for smarter decisions'
+      ];
+    }
+    if (id === 'pharmacare') {
+      return [
+        'Complete end-to-end pharmacy & medical clinic inventory in one platform',
+        'User-friendly interface for pharmacists, dispensers, and cashiers',
+        'Cloud-ready with expiry batch tracking and NMRA compliance alerts',
+        'Improves dispensing speed, prescription tracking, and patient satisfaction',
+        'Real-time generic drug substitution and data-driven stock dashboards'
+      ];
+    }
+    if (id === 'gymora') {
+      return [
+        'Complete end-to-end gym, fitness club & wellness center management in one platform',
+        'User-friendly interface for trainers, front desk, and members',
+        'Cloud-ready with RFID biometric turnstile access control integration',
+        'Improves member retention, subscription renewal rates, and operational efficiency',
+        'Automated WhatsApp payment alerts and data-driven attendance dashboards'
+      ];
+    }
+    if (id === 'salon' || id.includes('salon')) {
+      return [
+        'Complete end-to-end salon management in one platform',
+        'User-friendly interface for admins, staff, and customers',
+        'Cloud-ready and scalable for growing salons',
+        'Improves efficiency, revenue, and customer satisfaction',
+        'SEO-friendly and data-driven dashboards for smarter decisions'
+      ];
+    }
+    return [
+      `Complete end-to-end ${prod?.name || 'business'} management in one platform`,
+      'User-friendly interface for admins, staff, and customers',
+      'Cloud-ready and scalable for growing businesses',
+      'Improves operational efficiency, revenue, and customer satisfaction',
+      'Data-driven dashboards and reports for smarter, faster decisions'
+    ];
+  };
+
+  const productAdvantages = getProductAdvantages(p);
+
   return (
     <div className={`w-full pt-8 pb-32 px-4 sm:px-8 lg:px-16 xl:px-20 transition-colors duration-300 ${
       isDark ? 'bg-[#070a16] text-white' : 'bg-[#f8fafc] text-slate-900'
@@ -343,7 +410,9 @@ export default function ProductDetailPage({
           <div className="max-w-3xl">
             {/* Category Badge & Tech Tag */}
             <div className="flex flex-wrap items-center gap-2.5 mb-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-600 text-white shadow-sm">
+              <span className={`text-[11px] font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm ${
+                isDark ? 'bg-white text-slate-950' : 'bg-slate-900 text-white'
+              }`}>
                 {p.badge || p.category}
               </span>
               <span className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
@@ -357,7 +426,7 @@ export default function ProductDetailPage({
             <h1 className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${
               isDark ? 'text-white' : 'text-slate-900'
             }`}>
-              {p.name}{p.subtitle ? ` – ${p.subtitle}` : ''}
+              {p.name} <span className="text-[#0094ff]">{p.subtitle ? `– ${p.subtitle}` : ''}</span>
             </h1>
 
             <p className={`text-sm sm:text-base mt-3 leading-relaxed ${
@@ -436,6 +505,42 @@ export default function ProductDetailPage({
         </div>
       </div>
 
+      {/* 2.5 "Our Advantages" Section (Exact match to User Reference Picture 1) */}
+      <div className={`max-w-7xl mx-auto rounded-3xl p-8 sm:p-12 border mb-20 transition-all ${
+        isDark 
+          ? 'bg-black border-slate-800/90 shadow-2xl' 
+          : 'bg-[#060814] text-white border-slate-900 shadow-2xl'
+      }`}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Pill Badge & Two-tone Title */}
+          <div className="lg:col-span-5">
+            <span className="text-xs font-bold px-4 py-1.5 rounded-full bg-white text-black inline-block mb-4 shadow-sm">
+              Our Advantages
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+              Why Choose Raxwo’s
+              <span className="text-[#0094ff] block mt-1.5">
+                {p.name} {p.name?.toLowerCase().includes('erp') || p.name?.toLowerCase().includes('pos') ? '' : 'ERP'}?
+              </span>
+            </h2>
+          </div>
+
+          {/* Right Column: 5 Advantages with Cyan/Blue CheckCircle2 Icons */}
+          <div className="lg:col-span-7 space-y-4">
+            {productAdvantages.map((adv, aIdx) => (
+              <div key={aIdx} className="flex items-start gap-3.5">
+                <CheckCircle2 className="w-5 h-5 text-[#0094ff] shrink-0 mt-0.5" />
+                <span className="text-sm sm:text-base text-slate-200 font-medium leading-relaxed">
+                  {adv}
+                </span>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
       {/* 3. Section Divider with Header */}
       <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
         <span className={`text-[11px] font-bold tracking-[0.25em] uppercase mb-2 inline-block ${
@@ -474,8 +579,10 @@ export default function ProductDetailPage({
               <div className={`lg:col-span-5 flex flex-col items-start text-left ${
                 isReverse ? 'lg:order-2' : 'lg:order-1'
               }`}>
-                {/* Module Subtitle in Gold/Amber (Exact match to Reference Photos) */}
-                <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-amber-400 mb-2.5 inline-block">
+                {/* Module Pill Badge (Exact match to Picture 1 "Our Advantages" pill style) */}
+                <span className={`text-[11px] font-bold tracking-wider uppercase px-3.5 py-1 rounded-full mb-3.5 inline-block shadow-sm ${
+                  isDark ? 'bg-white text-slate-950' : 'bg-slate-900 text-white'
+                }`}>
                   {mod.moduleNumber}
                 </span>
 
@@ -493,13 +600,11 @@ export default function ProductDetailPage({
                   {mod.description}
                 </p>
 
-                {/* 4 Bullets with Custom Cloche/Icon Indicators (Exact match to Photos) */}
+                {/* Bullets with Circular Checkmark Icons (Exact match to Picture 1) */}
                 <div className="space-y-3.5 w-full">
                   {mod.bullets.map((b, bIdx) => (
                     <div key={bIdx} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 text-cyan-400 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
-                      </div>
+                      <CheckCircle2 className="w-5 h-5 text-[#0094ff] shrink-0 mt-0.5" />
                       <div className="text-xs sm:text-sm leading-relaxed">
                         <strong className={`font-bold mr-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                           {b.label}:

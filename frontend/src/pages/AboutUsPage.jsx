@@ -177,8 +177,8 @@ export default function AboutUsPage({
         <div className="max-w-5xl mx-auto text-center">
           
           {/* Pill Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 border shadow-sm backdrop-blur-md bg-blue-500/10 text-blue-500 border-blue-500/30">
-            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 border shadow-sm backdrop-blur-md bg-[#0094ff]/10 text-[#0094ff] border-[#0094ff]/30">
+            <Sparkles className="w-3.5 h-3.5 text-[#0094ff]" />
             <span>
               {isSi ? 'RAXWO ගැන සරලව • අපගේ කතාව' : isTa ? 'RAXWO பற்றி • எங்களின் கதை' : 'ABOUT RAXWO • HONEST BUSINESS SOFTWARE'}
             </span>
@@ -216,7 +216,7 @@ export default function AboutUsPage({
             <div className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border ${
               isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800 shadow-sm'
             }`}>
-              <Check className="w-3.5 h-3.5 text-blue-500 font-bold" />
+              <Check className="w-3.5 h-3.5 text-[#0094ff] font-bold" />
               <span>{isSi ? 'ඉන්ටනෙට් නැතත් බිල්පත් මුද්‍රණය' : isTa ? '100% ஆஃப்லைனில் இயங்கும்' : 'Works 100% Offline'}</span>
             </div>
             <div className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border ${
@@ -342,7 +342,7 @@ export default function AboutUsPage({
         <div className="max-w-5xl mx-auto">
           
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-[11px] font-extrabold uppercase tracking-widest text-blue-500 block mb-1">
+            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#0094ff] block mb-1">
               {isSi ? 'අපගේ විශේෂත්වය' : isTa ? 'எங்கள் சிறப்பு' : 'WHY BUSINESSES CHOOSE US'}
             </span>
             <h2 className={`text-2xl sm:text-3xl font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-950'}`}>
@@ -371,7 +371,7 @@ export default function AboutUsPage({
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="w-11 h-11 rounded-2xl bg-blue-500/15 border border-blue-500/30 text-blue-500 flex items-center justify-center">
+                      <div className="w-11 h-11 rounded-2xl bg-[#0094ff]/15 border border-[#0094ff]/30 text-[#0094ff] flex items-center justify-center">
                         <Icon className="w-5 h-5" />
                       </div>
                       <span className={`text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full ${
