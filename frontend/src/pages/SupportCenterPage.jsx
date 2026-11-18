@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Headphones, MessageCircle, Mail, Clock } from 'lucide-react';
+import { ChevronDown, Headphones, MessageCircle, Mail, Clock } from 'lucide-react';
 
 export default function SupportCenterPage({
   theme = 'dark',
@@ -87,7 +87,7 @@ export default function SupportCenterPage({
   };
 
   return (
-    <div className="w-full pt-8 pb-28 px-6 sm:px-10 lg:px-16 xl:px-20">
+    <div className={`w-full pt-10 pb-28 px-6 sm:px-10 lg:px-16 xl:px-20 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
       
       {/* Page Header */}
       <div className="max-w-4xl mx-auto text-center mb-14">
@@ -142,14 +142,16 @@ export default function SupportCenterPage({
               return (
                 <div
                   key={index}
-                  className={`border-b transition-all pb-4 ${
-                    isDark ? 'border-slate-800/80' : 'border-slate-200'
+                  className={`rounded-2xl border transition-all overflow-hidden ${
+                    isDark 
+                      ? 'bg-[#0a0f24]/90 border-slate-800' 
+                      : 'bg-white border-slate-200 shadow-sm'
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="w-full flex items-center justify-between text-left py-2 cursor-pointer group"
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
                   >
                     <span className={`text-sm sm:text-base font-bold transition-colors ${
                       isOpen
@@ -158,20 +160,16 @@ export default function SupportCenterPage({
                     }`}>
                       {faq.question}
                     </span>
-                    <span className={`p-1 rounded-lg transition-colors ${
-                      isOpen ? 'text-[#0094ff]' : 'text-slate-400'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform ${
+                      isOpen ? 'rotate-180 bg-[#0094ff] text-white' : isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-700'
                     }`}>
-                      {isOpen ? (
-                        <ChevronUp className="w-5 h-5 text-[#0094ff]" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5" />
-                      )}
-                    </span>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
                   </button>
 
                   {isOpen && (
-                    <div className={`pt-2 pb-2 pr-6 text-xs sm:text-sm leading-relaxed animate-fade-in ${
-                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    <div className={`px-5 sm:px-6 pb-6 pt-1 text-sm leading-relaxed border-t ${
+                      isDark ? 'text-slate-300 border-slate-800/80' : 'text-slate-600 border-slate-100'
                     }`}>
                       {faq.answer}
                     </div>
